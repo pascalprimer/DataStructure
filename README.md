@@ -24,4 +24,4 @@ DDL  :   week 12
 #### Notice (coding style)
 1. Naming conventions: 
 [Google Naming Style](http://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/) 
-2. Space ! ! ! especially on both sides of binary operators
+2. Space ! ! !    especially on both sides of binary operators
