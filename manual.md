@@ -330,7 +330,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>buy_ticket(train_id, Date, start_staion, finish_staion, TrainLevel, int)</th>
+	    <th>buy_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)</th>
 	    <th>买票或失败</th>
 	  </tr>
 	  <tr>
@@ -459,4 +459,27 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
   |bool|refund_ticket(start_station, finish_station, TrainLevel, int)|买票, 判断**区间是否可加**|
  |bool|start_sale()|开始发售|
  |bool|finish_sale()|结束发售|
+ 
+ 
+ #### Tickets
+
+|类型|成员|描述|
+|:------:|:------:|:------:|
+|string|train_id|车次|
+|Date|depature_time|发车时间|
+|string|start_station|起点|
+|string|finish_station|终点|
+|int|number|张数|
+
+|返回类型|成员函数|功能|
+|:------:|:------:|:------:|
+|bool|operator <(lhs, rhs)|按照车次和时间双关键字的偏序|
+|int|query_number()|返回张数|
+|bool|modify_number(int delta)|加或者减, 若小于0, 返回失败|
+
+
 ## 特色功能
+待讨论
+1. 音效？？？
+2. 模糊搜索
+3. 管理员一段时间统一操作
