@@ -1,9 +1,9 @@
 # Data Structure-Ticketing System
 ****
-<br>
+
 #### SJTU 2016 ACM Class Data Structure Project
 Member：jzh ( Leader ) , Lmy, Gzd, Yg
-<br>
+
 
 #### Calendar：
 First group discussion: week 7
