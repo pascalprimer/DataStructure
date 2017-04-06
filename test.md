@@ -29,7 +29,7 @@
 	    <td>lib</td>
 	  </tr>
 	  <tr>
-	    <td>Log</td>
+	    <td>*Log(只有一个string？？？)</td>
 	    <td>日志</td>
 	  </tr>
 	  <tr>
@@ -66,3 +66,48 @@
 	  </tr>
     </table>
 </div>
+
+### 具体实现
+
+#### Log
+**星号表示待讨论**
+
+空构造，拷贝构造一定要有
+*operator =
+
+<div>
+    <table border="0">
+	  <tr>
+	    <th>类型</th>
+	    <th>成员</th>
+	    <th>功能</th>
+	  </tr>
+	  <tr>
+	    <th>string</th>
+	    <th>information</th>
+	    <th>记录日志（每加一条信息，再其后加 \n）</th>
+	  </tr>
+    </table>
+</div>
+
+<div>
+    <table border="0">
+	  <tr>
+	    <th>类型</th>
+	    <th>成员函数</th>
+	    <th>功能</th>
+	  </tr>
+	  <tr>
+	    <th>void</th>
+	    <th>add(string)</th>
+	    <th>添加信息（不必是一整条）</th>
+	  </tr>
+	  <tr>
+	    <th>void</th>
+	    <th>newline()</th>
+	    <th>添加一个换行</th>
+	  </tr>
+    </table>
+</div>
+
+### 特色功能
