@@ -74,7 +74,7 @@
 	    <td>单趟单日列车</td>
 	  </tr>
 	  <tr>
-	    <td>Ticket</td>
+	    <td>Tickets</td>
 	    <td>哪趟火车起点终点张数</td>
 	  </tr>
     </table>
@@ -269,7 +269,7 @@ kFirstClass, kSecondClass, kNoSeat
 	  </tr>
 	   <tr>
 	    <th>string</th>
-	    <th>id</th>
+	    <th>user_id</th>
 	    <th>用户id</th>
 	  </tr>
 	   <tr>
@@ -293,9 +293,9 @@ kFirstClass, kSecondClass, kNoSeat
 	    <th>用户日志</th>
 	  </tr>
 	   <tr>
-	    <th>Map</th>
-	    <th>my_tickets：Ticket -> int</th>
-	    <th>订票信息,某趟车多少张票</th>
+	    <th>Set</th>
+	    <th>my_ticket (Tickets) </th>
+	    <th>订票信息</th>
 	  </tr>
     </table>
 </div>
@@ -310,7 +310,7 @@ kFirstClass, kSecondClass, kNoSeat
 	  <tr>
 	    <th>string</th>
 	    <th>query_my_info()</th>
-	    <th>返回用户基本信息，包括 id， name，password </th>
+	    <th>返回用户基本信息，包括 user_id， name，password </th>
 	  </tr>
 	  <tr>
 	    <th>bool</th>
@@ -329,16 +329,16 @@ kFirstClass, kSecondClass, kNoSeat
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>buy_ticket(SingleRoute, Station start, Station target, TrainLevel, int)</th>
+	    <th>buy_ticket(SingleRoute, start_staion, finish_staion, TrainLevel, int)</th>
 	    <th>买票或失败</th>
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>refund_ticket(SingleRoute, Station start, Station target, TrainLevel, int)</th>
+	    <th>refund_ticket(SingleRoute, start_station, finish_station, TrainLevel, int)</th>
 	    <th>退票或失败</th>
 	  </tr>
 	  <tr>
-	    <th>string</th>
+	    <th> vector(Tickets) </th>
 	    <th>query_my_tickets()</th>
 	    <th>返回我买的票</th>
 	  </tr>
@@ -369,4 +369,39 @@ kFirstClass, kSecondClass, kNoSeat
  |bool|start_daily_sale(SingleRoute, Date finish_time,)|开始发售时间段内单趟车车票|
  |bool|finish_daily_sale(SingleRoute, Date finish_time)|结束发售时间段内单趟列车车票|
 
+
+#### User
+内嵌GeneralUser和Admin
+若操作时尚未登录，则返回空容器，并提醒
+
+|类型|成员|描述|
+|:------:|:------:|:------:|
+|map: user_id -> * User|Member|所有用户|
+|*User|now|现在登录是谁或NULL|
+ 
+|返回类型|成员函数|功能|
+|:------:|:------:|:------:|
+|bool|login(user_id, password)|登录并判断是否具有管理员权限|
+|vector(Tickets)|query_ticket_by_id(string train_id, Date start_time, Date finish_time, int number)|根据车次和时间段以及张数查询所有列车情况, 并且若天数大于30天，只返回30天内的|
+|vector(Tickets)|query_ticket(start_time,  finish_time, start_station, finish_station, int number)|根据时间段，站点( 模糊搜索 ), 张数返回至多30天的车票|
+|string|query_my_info()|返回个人信息，直接调用GeneralUser里的，判断now是否空|
+|string|query_info()|返回任意非管理员且存在的用户的信息,，判断权限|
+|vector(Tickets)|query_my_tickets()|返回我买的票|
+|string|query_log()|返回log|
+|string|query_log(user_id)|返回任意存在且非管理员的log, 判断权限|
+|bool|modify_name(string)|改用户名, 判断登录|
+|bool|modfiy_password(string, string)|改密码, 判断登录|
+|bool|buy_ticket(SingleRoute, start_station, finish_station, TrainLevel, int)|买票, 判断登录|
+|bool|refund_ticket(SingleRoute, start_station, finish_station, TrainLevel, int)|退票, 判断登录|
+ |bool|add_single_route(SingleRoute)|增加单趟单日列车, 判断权限|
+ |bool|delete_single_route(SingleRoute)|增加单趟单日列车, 判断权限|
+ |bool|add_daily_route(SingleRoute, Date finish_time,)|增加时间段内单趟列车, 判断权限|
+ |bool|delete_daily_route(SingleRoute, Date finish_time)|删去时间段内单趟列车, 判断权限|
+ |bool|start_single_sale(SingleRoute)|开始发售单趟单日车车票, 判断权限|
+ |bool|finish_single_sale(SingleRoute)|结束发售单趟单日车车票, 判断权限|
+ |bool|start_daily_sale(SingleRoute, Date finish_time,)|开始发售时间段内单趟车车票, 判断权限|
+ |bool|finish_daily_sale(SingleRoute, Date finish_time)|结束发售时间段内单趟列车车票, 判断权限|
+ 
+ 
+ 
 ## 特色功能
