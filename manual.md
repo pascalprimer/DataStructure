@@ -277,7 +277,6 @@ kFirstClass, kSecondClass, kNoSeat
 	    <th>name</th>
 	    <th>用户名字</th>
 	  </tr>
-	  
 	   <tr>
 	    <th>string</th>
 	    <th>password</th>
