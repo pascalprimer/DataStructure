@@ -4,6 +4,7 @@
 ## 注意
 1. 文件名与类名保持一致
 2. 每个逻辑块都要大括号
+3. 传入参数尽量用const引用 
 
 ## 模块
 星号表示待讨论
@@ -15,23 +16,23 @@
 	    <th>功能</th>
 	  </tr>
 	  <tr>
-	    <th>*ptr</th>
-	    <th>智能指针</th>
+	    <th>shared_ptr</th>
+	    <th>智能指针（lib）</th>
 	  </tr>
 	  <tr>
-	    <td>*Set</td>
+	    <td>set</td>
 	    <td>lib</td>
 	  </tr>
 	  <tr>
-	    <td>Map</td>
+	    <td>map</td>
 	    <td>lib</td>
 	  </tr>
 	  <tr>
-	    <td>Vector</td>
+	    <td>vector</td>
 	    <td>lib</td>
 	  </tr>
 	  <tr>
-	    <td>Pair</td>
+	    <td>pair</td>
 	    <td>lib</td>
 	  </tr>
 	  <tr>
@@ -67,10 +68,6 @@
 	    <td>火车站点</td>
 	  </tr>
 	  <tr>
-	    <td>RailwayMinistry</td>
-	    <td>所有火车所有时间</td>
-	  </tr>
-	  <tr>
 	    <td>Train</td>
 	    <td>单趟单日列车</td>
 	  </tr>
@@ -95,6 +92,8 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 
 #### Log
 
+形式为buy/refund:train_id date, start_station, finish_station, TicketLevel,number 
+
 <div>
     <table border="0">
 	  <tr>
@@ -103,9 +102,9 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	    <th>功能</th>
 	  </tr>
 	  <tr>
-	    <th>string</th>
+	    <th>vector(string)</th>
 	    <th>information</th>
-	    <th>记录日志（每加一条信息，再其后加 \n）</th>
+	    <th>记录日志</th>
 	  </tr>
     </table>
 </div>
@@ -120,12 +119,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	  <tr>
 	    <th>void</th>
 	    <th>add(string)</th>
-	    <th>添加信息（不必是一整条）</th>
-	  </tr>
-	  <tr>
-	    <th>void</th>
-	    <th>newline()</th>
-	    <th>添加一个换行</th>
+	    <th>添加信息</th>
 	  </tr>
 	  <tr>
 	    <th>void</th>
@@ -188,7 +182,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	  <tr>
 	    <th>构造函数</th>
 	    <th>Date(string)</th>
-	    <th>通过字符串构造日期()</th>
+	    <th>通过字符串构造日期()，考虑有没有hour,minute</th>
 	  </tr>
 	  <tr>
 	    <th>bool </th>
@@ -201,12 +195,12 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	    <th>下一天</th>
 	  </tr>
 	  <tr>
-	    <th>Date</th>
+	    <th>Date(暂时不写)</th>
 	    <th>operator +(Date, int )</th>
 	    <th>时间向后顺延多少分钟,考虑月份里的日子数和润年，一天一天暴力</th>
 	  </tr>
 	  <tr>
-	    <th>int</th>
+	    <th>int(暂时不写)</th>
 	    <th>operator -(Date, Date)</th>
 	    <th>时间差(分钟)</th>
 	  </tr>
@@ -219,6 +213,16 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	    <th>bool</th>
 	    <th>operator >Date, Date)</th>
 	    <th>比较大于</th>
+	  </tr>
+	   <tr>
+	    <th>bool</th>
+	    <th>operator <=(Date, Date)</th>
+	    <th>比较小于=</th>
+	  </tr>
+	   <tr>
+	    <th>bool</th>
+	    <th>operator >=Date, Date)</th>
+	    <th>比较大于=</th>
 	  </tr>
 	  <tr>
 	    <th>string</th>
@@ -236,6 +240,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 4. 用户不存在
 5. 密码错误
 6. 无管理员权限
+7. 票数不够
 
 <div>
     <table border="0">
@@ -261,6 +266,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 #### GeneralUser
 默认密码000000
 构造时强制传入user_id
+不能买票
 
 <div>
     <table border="0">
@@ -290,9 +296,9 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	    <th>是否是管理员</th>
 	  </tr>
 	   <tr>
-	    <th>Log</th>
+	    <th>pair(Log,Log)</th>
 	    <th>my_log</th>
-	    <th>用户日志</th>
+	    <th>用户日志(订票，退票)</th>
 	  </tr>
 	   <tr>
 	    <th>Set</th>
@@ -312,7 +318,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	  <tr>
 	    <th>string</th>
 	    <th>query_my_info()</th>
-	    <th>返回用户基本信息，包括 user_id， name，password </th>
+	    <th>返回用户基本信息，包括 user_id， name</th>
 	  </tr>
 	  <tr>
 	    <th>bool</th>
@@ -332,12 +338,12 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	  <tr>
 	    <th>bool</th>
 	    <th>buy_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)</th>
-	    <th>买票或失败</th>
+	    <th>买票或失败, 管理员不能买票</th>
 	  </tr>
 	  <tr>
 	    <th>bool</th>
 	    <th>refund_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)</th>
-	    <th>退票或失败</th>
+	    <th>退票或失败，管理员不能退票</th>
 	  </tr>
 	  <tr>
 	    <th> vector(Tickets) </th>
@@ -346,8 +352,8 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	  </tr>
 	  <tr>
 	    <th>string</th>
-	    <th>query_log()</th>
-	    <th>返回log(注意权限)</th>
+	    <th>query_log(type)</th>
+	    <th>返回log(注意权限), 注意返回哪种log</th>
 	  </tr>
     </table>
 </div>
@@ -355,6 +361,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 
 #### Admin
 继承GeneralUser
+不能买票
 
 |类型|成员|描述|
 |:------:|:------:|:------:|
@@ -362,50 +369,45 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
  
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
- |bool|add_single_route(Train)|增加单趟单日列车|
- |bool|delete_single_route(Train)|删去单趟单日列车, 能否删|
- |bool|add_daily_route(Train, Date finish_time,)|增加时间段内单趟列车|
- |bool|delete_daily_route(Train, Date finish_time)|删去时间段内单趟列车, 能否删|
- |bool|start_single_sale(train_id)|开始发售单趟单日车车票|
- |bool|finish_single_sale(train_id)|结束发售单趟单日车车票|
- |bool|start_daily_sale(train_id, start_time, finish_time,)|开始发售时间段内单趟车车票|
- |bool|finish_daily_sale(train_id, start_time, finish_time)|结束发售时间段内单趟列车车票|
-
+|bool|add_daily_route(Train, finish_time,)|增加时间段内单趟列车,最多30天，判断权限|
+ |bool|delete_daily_route(Train, finish_time)|删去时间段内单趟列车,最多30天，判断权限|
+ |bool|start_daily_sale(train_id, start_time, finish_time,)|开始发售时间段内单趟车车票, 判断权限|
+ |bool|finish_daily_sale(train_id, start_time,  finish_time)|结束发售时间段内单趟列车车票, 判断权限|
 
 #### User
 内嵌GeneralUser和Admin
 若操作时尚未登录，则返回空容器，并提醒
+查询票信息的时候要根据具体站点的时间，而不是车次的时间
 
 |类型|成员|描述|
 |:------:|:------:|:------:|
-|map: user_id -> * User|Member|所有用户|
-|*User|now|现在登录是谁或NULL|
+|map: user_id -> * GeneralUser|Member|所有用户|
+|*GeneralUser|now|现在登录是谁或NULL|
 |static long long|now_id|目前分配到的id|
+ |map: (train_id, Date) -> *SingleRoute|single_line|单日单趟线路|
  
+ ## 标题 ##
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
-|string|regigster(user_id, password1, password2)|注册, 判密码, 返回id|
+|string|register(user_id, password1, password2，identifying_code)|注册, id为空生成一个，id判重，判密码, 返回id，管理员要check验证码|
 |bool|login(user_id, password)|登录并判断是否具有管理员权限|
-|vector(Tickets)|query_ticket_by_id(string train_id, Date start_time, Date finish_time, TicketLevel, int number)|根据车次和时间段以及张数查询所有列车情况, 并且若天数大于30天，只返回30天内的|
-|vector(Tickets)|query_ticket(start_time,  finish_time, start_station, finish_station, TicketLevel, int number)|根据时间段，站点( 模糊搜索 ), 张数返回至多30天的车票|
-|string|query_my_info()|返回个人信息，直接调用GeneralUser里的，判断now是否空|
-|string|query_info()|返回任意非管理员且存在的用户的信息,，判断权限|
+|bool|logout(user_id, password)|推出当前帐号|
+|vector(string)|query_station(string train_id)|返回车次的所有站名|
+|vector(Tickets)|query_ticket_by_id(string train_id, start_station, finish_station, Date start_time, Date finish_time, TicketLevel, int number)|根据车次和时间段以及张数查询所有列车情况, 并且若天数大于30天，只返回30天内的|
+|vector(Tickets)|query_ticket(start_time,  finish_time, start_station, finish_station, TicketLevel, int number)|根据时间段，站点( 模糊搜索,判前两个字是否完全一样 ), 张数返回至多30天的车票|
+|string|query_my_info()|返回个人信息，直接调用GeneralUser里的，判断now是否空,不包括密码|
+|string|query_info()|返回任意非管理员且存在的用户的信息,判断权限|
 |vector(Tickets)|query_my_tickets()|返回我买的票|
-|string|query_log()|返回log|
+|string|query_log(type)|返回log|
 |string|query_log(user_id)|返回任意存在且非管理员的log, 判断权限|
 |bool|modify_name(string)|改用户名, 判断登录|
 |bool|modfiy_password(string, string)|改密码, 判断登录|
 |bool|buy_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)|买票, 判断登录|
 |bool|refund_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)|退票, 判断登录|
- |bool|add_single_route(Train)|增加单趟单日列车, 判断权限|
- |bool|delete_single_route(Train)|删去单趟单日列车, 判断权限|
- |bool|add_daily_route(Train, Date finish_time,)|增加时间段内单趟列车, 判断权限|
- |bool|delete_daily_route(Train, Date finish_time)|删去时间段内单趟列车, 判断权限|
- |bool|start_single_sale(train_id, Date)|开始发售单趟单日车车票, 判断权限|
- |bool|finish_single_sale(train_id, Date)|结束发售单趟单日车车票, 判断权限|
- |bool|start_daily_sale(train_id, Date, Date finish_time,)|开始发售时间段内单趟车车票, 判断权限|
- |bool|finish_daily_sale(train_id, Date, Date finish_time)|结束发售时间段内单趟列车车票, 判断权限|
- 
+ |bool|add_daily_route(Train, finish_time,)|增加时间段内单趟列车,最多30天，判断权限|
+ |bool|delete_daily_route(Train, finish_time)|删去时间段内单趟列车,最多30天，判断权限|
+ |bool|start_daily_sale(train_id, start_time, finish_time,)|开始发售时间段内单趟车车票, 判断权限|
+ |bool|finish_daily_sale(train_id, start_time,  finish_time)|结束发售时间段内单趟列车车票, 判断权限|
  
  #### Station
 
@@ -413,39 +415,19 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 |:------:|:------:|:------:|
  |string|location|站名|
  |static const|MAX|人数上限2000, 用于初始化和上限判断|
+ |Date|arrival_time|到站时间|
+ |double|price|价格|
  |int[3]|left_number|火车开到该站该下车的人下车，该上车的人上车后的剩余人数|
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
  |string|query_location()|站点|
+ |Date|query_arrival_time()|站点|到站时间
  |double|query_price()|某种档次票价|
- |bool|is_same_location(string another_location)|模糊判断是否同一处|
+ |bool|is_same_location(string another_location)|模糊判断是否同一处，取前两个字|
  |int&|left_number|返回剩余张数|
  
- 
- #### RailwayMinistry
-
-|类型|成员|描述|
-|:------:|:------:|:------:|
- |map: (train_id, Date) -> *SingleRoute|single_line|单日单趟线路|
-
-|返回类型|成员函数|功能|
-|:------:|:------:|:------:|
-|vector(Tickets)|query_ticket_by_id(string train_id, Date start_time, Date finish_time, TicketLevel, int number)|根据车次和时间段以及张数查询所有列车情况, 并且若天数大于30天，只返回30天内的|
-|vector(Tickets)|query_ticket(start_time,  finish_time, start_station, finish_station, TicketLevel, int number)|根据时间段，站点( 模糊搜索 ), 张数返回至多30天的车票|
-|bool|buy_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)|买票, 判断登录|
-|bool|refund_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)|退票, 判断登录|
- |bool|add_single_route(Train)|增加单趟单日列车|
- |bool|delete_single_route(Train)|删去单趟单日列车|
- |bool|add_daily_route(Train, Date finish_time,)|增加时间段内单趟列车|
- |bool|delete_daily_route(Train, Date finish_time)|删去时间段内单趟列车|
- |bool|start_single_sale(train_id, Date)|开始发售单趟单日车车票|
- |bool|finish_single_sale(train_id, Date)|结束发售单趟单日车车票|
- |bool|start_daily_sale(train_id, Date, Date finish_time,)|开始发售时间段内单趟车车票|
- |bool|finish_daily_sale(train_id, Date, Date finish_time)|结束发售时间段内单趟列车车票|
- 
- 
- #### Train
+  #### Train
 
 |类型|成员|描述|
 |:------:|:------:|:------:|
@@ -453,11 +435,12 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
  |vector(Station)|route|线路|
  |string|train_id|车次|
  |Data|departure_time|发车时间|
+ |int|level_existence|每种票型是否存在的状态|
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
  |bool|buy_ticket(start_station, finish_station, TrainLevel, int)|买票, 判断**区间是否可减**|
-  |bool|refund_ticket(start_station, finish_station, TrainLevel, int)|买票, 判断**区间是否可加**|
+  |bool|refund_ticket(start_station, finish_station, TrainLevel, int)|退票, 判断**区间是否可加**|
  |bool|start_sale()|开始发售|
  |bool|finish_sale()|结束发售|
  
@@ -470,17 +453,30 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 |Date|depature_time|发车时间|
 |string|start_station|起点|
 |string|finish_station|终点|
+|TicketLevel|level|票的级别|
 |int|number|张数|
+|double|price|单张价格（终点起点价格差）|
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
-|bool|operator <(lhs, rhs)|按照车次和时间双关键字的偏序|
-|int|query_number()|返回张数|
+|bool|operator <(lhs, rhs)|建立按照所有关键字的偏序，尽量先比较短的，后比较长的|
+|const int|query_number()|返回张数|
+|const string|query_id()|返回id|
+|const Date|query_date()|返回date|
+|const TicketLevel|query_level()|返回level|
+|const string|query_start_station()|返回起点|
+|const string|query_finish_station()|返回终点|
 |bool|modify_number(int delta)|加或者减, 若小于0, 返回失败|
 
 
 ## 特色功能
-待讨论
 1. 音效？？？
 2. 模糊搜索
 3. 管理员一段时间统一操作
+4. 所有车的所有站点列表
+
+## 待讨论
+1. 火车型号处理
+2. 密码查询方式
+3. 同一天不能有两个同样的train_id？？？
+4. file的处理方式？？？？？？？
