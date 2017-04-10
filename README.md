@@ -18,7 +18,7 @@ DDL  :   week 12
 **Jzh** : 
 1. Qt
 2. Smart pointer(shared_ptr)
-3. exceptions
+3. Exceptions
 4. Revise codes
 
 **Lmy**:
@@ -30,11 +30,11 @@ DDL  :   week 12
 
 **Gzd**:
 1. pair
-2. train
+2. Train
 
 **Yg**:
 1. vector
-2. log 
+2. Log 
 3. Tickets
 
 #### Notice (coding style)
