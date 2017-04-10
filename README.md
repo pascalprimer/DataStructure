@@ -16,10 +16,25 @@ DDL  :   week 12
 #### Division of labour(to discuss)
 **Jzh** : 
 1. Qt
-2. Revise codes
+2. Smart pointer(shared_ptr)
+3. exceptions
+4. Revise codes
+
 **Lmy**:
+1. map
+2. set
+3. GeneralUser
+4. Admin
+5. Qt
+
 **Gzd**:
+1. pair
+2. train
+
 **Yg**:
+1. vector
+2. log 
+3. Tickets
 
 #### Notice (coding style)
 1. Naming conventions: 
