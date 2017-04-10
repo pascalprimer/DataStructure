@@ -6,7 +6,8 @@ Member：jzh ( Leader ) , Lmy, Gzd, Yg
 
 
 #### Calendar：
-First group discussion: week 7
+~~First group discussion: week 7~~
+First edition ddl:  Friday, week11
 DDL  :   week 12
 
 #### Things to learn
