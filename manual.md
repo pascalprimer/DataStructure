@@ -75,6 +75,10 @@
 	    <td>Tickets</td>
 	    <td>哪趟火车起点终点张数</td>
 	  </tr>
+	  <tr>
+	    <td>File</td>
+	    <td>文件读入输出</td>
+	  </tr>
     </table>
 </div>
 
@@ -236,7 +240,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 #### Exceptions
 1. 车次不存在
 2. 日期不存在
-3. 站点不存在或不存在与当前车次
+3. 站点不存在或不存在于当前车次
 4. 用户不存在
 5. 密码错误
 6. 无管理员权限
@@ -386,7 +390,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 |static long long|now_id|目前分配到的id|
  |map: (train_id, Date) -> *SingleRoute|single_line|单日单趟线路|
  
- ## 标题 ##
+
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
 |string|register(user_id, password1, password2，identifying_code)|注册, id为空生成一个，id判重，判密码, 返回id，管理员要check验证码|
