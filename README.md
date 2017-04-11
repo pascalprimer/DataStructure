@@ -19,7 +19,9 @@ DDL  :   week 12
 1. Qt
 2. Smart pointer(shared_ptr)
 3. Exceptions
-4. Revise codes
+4. File
+5. Revise codes
+6. User
 
 **Lmy**:
 1. map
