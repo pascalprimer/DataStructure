@@ -44,3 +44,4 @@ DDL  :   week 12
 [Google Naming Style](http://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/) 
 2. Space ! ! !    especially on both sides of binary operators
 3. Using braces on both sides of every logical block
+4. namespace sjtu!!!
