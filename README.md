@@ -33,10 +33,11 @@ DDL  :   week 12
 **Gzd**:
 1. pair
 2. Train
+3. Log
 
 **Yg**:
 1. vector
-2. Log 
+2. Date
 3. Tickets
 
 #### Notice (coding style)

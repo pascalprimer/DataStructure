@@ -14,70 +14,82 @@
 	  <tr>
 	    <th>类名</th>
 	    <th>功能</th>
+	    <th> 情况</th>
 	  </tr>
 	  <tr>
-	    <th>shared_ptr</th>
-	    <th>智能指针（lib）</th>
+	    <th> shared_ptr </th>
+	    <th> 智能指针（lib）</th>
+	    <th> finished </th>
 	  </tr>
 	  <tr>
 	    <td>set</td>
 	    <td>lib</td>
+	    <th></th>
 	  </tr>
 	  <tr>
 	    <td>map</td>
 	    <td>lib</td>
+	    <th> </th>
 	  </tr>
 	  <tr>
 	    <td>vector</td>
 	    <td>lib</td>
+	    <th>  </th>
 	  </tr>
 	  <tr>
 	    <td>pair</td>
 	    <td>lib</td>
+	    <th> finished </th>
 	  </tr>
 	  <tr>
-	    <td>*File</td>
+	    <td> File</td>
 	    <td>文件</td>
+	    <th> finished </th>
 	  </tr>
 	  <tr>
 	    <td>Log</td>
 	    <td>日志</td>
+	    <th>   </th>
 	  </tr>
 	  <tr>
 	    <td>Date</td>
 	    <td>时间</td>
+	    <th>  </th>
 	  </tr>
 	  <tr>
-	    <td>*Exceptions(那些要)</td>
+	    <td>Exceptions(哪些要)</td>
 	    <td>异常处理</td>
+	    <th> finished  </th>
 	  </tr>
 	  <tr>
 	    <td>User</td>
 	    <td>关于所有用户</td>
+	    <th>  </th>
 	  </tr>
 	  <tr>
 	    <td>GeneralUser</td>
 	    <td>一般用户</td>
+	    <th>   </th>
 	  </tr>
 	  <tr>
 	    <td>Admin</td>
 	    <td>管理员</td>
+	    <th>   </th>
 	  </tr>
 	  <tr>
 	    <td>Station</td>
 	    <td>火车站点</td>
+	    <th>  </th>
 	  </tr>
 	  <tr>
 	    <td>Train</td>
 	    <td>单趟单日列车</td>
+	    <th>  </th>
 	  </tr>
 	  <tr>
 	    <td>Tickets</td>
 	    <td>哪趟火车起点终点张数</td>
-	  </tr>
-	  <tr>
-	    <td>File</td>
-	    <td>文件读入输出</td>
+	    <th>  </th>
 	  </tr>
     </table>
 </div>
@@ -91,12 +103,11 @@
 **以下所有＊均表示智能指针，禁止使用裸指针**
 
 #### TicketLevel
-枚举类型，表示一等座、二等座、无座的级别
-kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
+注意：考虑到每趟车有不完全一样的两到三种票型（一等座,商务座,无座,硬座,特等座,二等座,硬卧下,软卧下,软座,高级软卧），特改为string
 
 #### Log
 
-形式为buy/refund:train_id date, start_station, finish_station, TicketLevel,number 
+形式为buy/refund:train_id date, start_station, finish_station, TicketLevel(string),number 
 
 <div>
     <table border="0">
@@ -305,8 +316,8 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	    <th>用户日志(订票，退票)</th>
 	  </tr>
 	   <tr>
-	    <th>Set</th>
-	    <th>my_ticket (Tickets) </th>
+	    <th>Set (Tickets) </th>
+	    <th>my_ticket</th>
 	    <th>订票信息</th>
 	  </tr>
     </table>
@@ -341,12 +352,12 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>buy_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)</th>
+	    <th>buy_ticket(train_id, Date, start_station, finish_station, string level, int)</th>
 	    <th>买票或失败, 管理员不能买票</th>
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>refund_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)</th>
+	    <th>refund_ticket(train_id, Date, start_station, finish_station, string level, int)</th>
 	    <th>退票或失败，管理员不能退票</th>
 	  </tr>
 	  <tr>
@@ -397,8 +408,8 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 |bool|login(user_id, password)|登录并判断是否具有管理员权限|
 |bool|logout(user_id, password)|推出当前帐号|
 |vector(string)|query_station(string train_id)|返回车次的所有站名|
-|vector(Tickets)|query_ticket_by_id(string train_id, start_station, finish_station, Date start_time, Date finish_time, TicketLevel, int number)|根据车次和时间段以及张数查询所有列车情况, 并且若天数大于30天，只返回30天内的|
-|vector(Tickets)|query_ticket(start_time,  finish_time, start_station, finish_station, TicketLevel, int number)|根据时间段，站点( 模糊搜索,判前两个字是否完全一样 ), 张数返回至多30天的车票|
+|vector(Tickets)|query_ticket_by_id(string train_id, start_station, finish_station, Date start_time, Date finish_time, level vector<string>, int number)|根据车次和时间段以及张数查询所有列车情况, 并且若天数大于30天，只返回30天内的|
+|vector(Tickets)|query_ticket(start_time,  finish_time, start_station, finish_station, level vector<string>, int number)|根据时间段，站点( 模糊搜索,判前两个字是否完全一样 ), 张数返回至多30天的车票|
 |string|query_my_info()|返回个人信息，直接调用GeneralUser里的，判断now是否空,不包括密码|
 |string|query_info()|返回任意非管理员且存在的用户的信息,判断权限|
 |vector(Tickets)|query_my_tickets()|返回我买的票|
@@ -406,8 +417,8 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 |string|query_log(user_id)|返回任意存在且非管理员的log, 判断权限|
 |bool|modify_name(string)|改用户名, 判断登录|
 |bool|modfiy_password(string, string)|改密码, 判断登录|
-|bool|buy_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)|买票, 判断登录|
-|bool|refund_ticket(train_id, Date, start_station, finish_station, TrainLevel, int)|退票, 判断登录|
+|bool|buy_ticket(train_id, Date, start_station, finish_station, string level, int)|买票, 判断登录|
+|bool|refund_ticket(train_id, Date, start_station, finish_station, string level, int)|退票, 判断登录|
  |bool|add_daily_route(Train, finish_time,)|增加时间段内单趟列车,最多30天，判断权限|
  |bool|delete_daily_route(Train, finish_time)|删去时间段内单趟列车,最多30天，判断权限|
  |bool|start_daily_sale(train_id, start_time, finish_time,)|开始发售时间段内单趟车车票, 判断权限|
@@ -422,6 +433,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
  |Date|arrival_time|到站时间|
  |double|price|价格|
  |int[3]|left_number|火车开到该站该下车的人下车，该上车的人上车后的剩余人数|
+ |int|dist|前缀里程|
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
@@ -439,12 +451,11 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
  |vector(Station)|route|线路|
  |string|train_id|车次|
  |Data|departure_time|发车时间|
- |int|level_existence|每种票型是否存在的状态|
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
- |bool|buy_ticket(start_station, finish_station, TrainLevel, int)|买票, 判断**区间是否可减**|
-  |bool|refund_ticket(start_station, finish_station, TrainLevel, int)|退票, 判断**区间是否可加**|
+ |bool|buy_ticket(start_station, finish_station, string level, int)|买票, 判断**区间是否可减**|
+  |bool|refund_ticket(start_station, finish_station, string level, int)|退票, 判断**区间是否可加**|
  |bool|start_sale()|开始发售|
  |bool|finish_sale()|结束发售|
  
@@ -457,7 +468,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 |Date|depature_time|发车时间|
 |string|start_station|起点|
 |string|finish_station|终点|
-|TicketLevel|level|票的级别|
+|string|level|票的级别|
 |int|number|张数|
 |double|price|单张价格（终点起点价格差）|
 
@@ -467,7 +478,7 @@ kFirstClass = 0, kSecondClass = 1, kNoSeat = 2, kAnyone = 3
 |const int|query_number()|返回张数|
 |const string|query_id()|返回id|
 |const Date|query_date()|返回date|
-|const TicketLevel|query_level()|返回level|
+|const string|query_level()|返回level|
 |const string|query_start_station()|返回起点|
 |const string|query_finish_station()|返回终点|
 |bool|modify_number(int delta)|加或者减, 若小于0, 返回失败|
