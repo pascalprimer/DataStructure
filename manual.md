@@ -352,12 +352,12 @@
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>buy_ticket(train_id, Date, start_station, finish_station, string level, int)</th>
+	    <th>buy_ticket(string train_id, Date, string start_station, string finish_station, string string level, int)</th>
 	    <th>买票或失败, 管理员不能买票</th>
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>refund_ticket(train_id, Date, start_station, finish_station, string level, int)</th>
+	    <th>refund_ticket(string train_id, Date, string start_station, string finish_station, string level, int)</th>
 	    <th>退票或失败，管理员不能退票</th>
 	  </tr>
 	  <tr>
@@ -366,7 +366,7 @@
 	    <th>返回我买的票</th>
 	  </tr>
 	  <tr>
-	    <th>string</th>
+	    <th>pair <Log,Log></th>
 	    <th>query_log(type)</th>
 	    <th>返回log(注意权限), 注意返回哪种log</th>
 	  </tr>
