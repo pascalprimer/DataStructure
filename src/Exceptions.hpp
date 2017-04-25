@@ -31,6 +31,12 @@ namespace sjtu {
 	
 	class NotAdmin: public Exception {
 	};
+
+	class PasswordIsNotValid: public Exception{
+	};
+
+	class MoneyIsNotEnough: public Exception{
+	};
 }
 
 #endif
