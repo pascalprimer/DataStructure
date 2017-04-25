@@ -8,7 +8,7 @@ namespace sjtu {
 	class Exception {
 		std::string detail;
 	public:
-		constexpr Exception() {}
+		Exception():detail() {}
 		Exception(const std::string &rhs): detail(rhs) {}
 		Exception(const Exception &ec) : detail(ec.detail) {}
 	};
