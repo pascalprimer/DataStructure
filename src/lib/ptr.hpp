@@ -1,6 +1,9 @@
 #ifndef SHARED_PTR_HPP
 #define SHARED_PTR_HPP
+
 #include <iostream>
+
+namespace sjtu {
 
 template<class T>
 inline void swap(T& a, T& b) {
@@ -120,5 +123,7 @@ public:
 		return *cnt;
 	}
 };
+
+}
 
 #endif

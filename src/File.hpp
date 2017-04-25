@@ -1,5 +1,5 @@
-//attention：写完一个文件务必flush()
-//attention：如果强行想要关闭当前文件，就用指针只向这个类，让它自己析构
+//attention：写完一个out文件务必flush()
+//attention：如果强行想要关闭当前文件，就用智能指针只向这个类，让它自己析构
 
 #ifndef FILE_HPP
 #define FILE_HPP
