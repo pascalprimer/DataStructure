@@ -4,9 +4,11 @@
 #include <string>
 
 namespace sjtu {
+
 	class Exception {
 		std::string detail;
 	public:
+		constexpr Exception() {}
 		Exception(const std::string &rhs): detail(rhs) {}
 		Exception(const Exception &ec) : detail(ec.detail) {}
 	};
@@ -30,6 +32,15 @@ namespace sjtu {
 	};
 	
 	class NotAdmin: public Exception {
+	};
+	
+	class IndexOutOfBound: public Exception {
+	};
+
+	class InvalidIterator: public Exception {
+	};
+	
+	class MoneyNotEnough: public Exception {
 	};
 }
 
