@@ -9,9 +9,9 @@
 #include <cstddef>
 #include <iostream>
 //#include "utility.hpp"
-#include "./lib/pair.hpp"
-#include "Exceptions.hpp"
-#include "File.hpp"
+#include "./pair.hpp"
+#include "../Exceptions.hpp"
+#include "../File.hpp"
 #include <cassert>
 
 using std::cin;

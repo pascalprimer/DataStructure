@@ -4,7 +4,7 @@
 #include<string>
 #include"Exceptions.hpp"
 #include"File.hpp"
-#include"ptr.hpp"
+#include"lib/ptr.hpp"
 
 using std::string;
 using namespace sjtu
