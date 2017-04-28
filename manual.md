@@ -256,6 +256,8 @@
 5. 密码错误
 6. 无管理员权限
 7. 票数不够
+8. 用户密码设置不合理(密码长度为6-15位)
+9. 余额不足
 
 <div>
     <table border="0">
@@ -319,6 +321,9 @@
 	    <th>Set (Tickets) </th>
 	    <th>my_ticket</th>
 	    <th>订票信息</th>
+	    <th>double </th>
+	    <th>money</th>
+	    <th>账户余额</th>
 	  </tr>
     </table>
 </div>
@@ -342,8 +347,13 @@
 	  </tr>
 	  <tr>
 	    <th>bool</th>
-	    <th>modify_password(string, string)</th>
-	    <th>修改用户密码，先验证原密码，并且新密码不长于15</th>
+	    <th>modify_password(string, string,string)</th>
+	    <th>修改用户密码，先验证原密码，并且新密码不长于15，后面两个新密码要一样！！！</th>
+	  </tr>
+	    <tr>
+	    <th>bool</th>
+	    <th>login(string)</th>
+	    <th>检验用户登录是否成功</th>
 	  </tr>
 	  <tr>
 	    <th>bool</th>
@@ -361,13 +371,23 @@
 	    <th>退票或失败，管理员不能退票</th>
 	  </tr>
 	  <tr>
+	    <th>bool</th>
+	    <th>charge(double)</th>
+	    <th>往账户中充钱，管理员不能充值</th>
+	  </tr>
+	  <tr>
+	    <th>double</th>
+	    <th>query_money()</th>
+	    <th>询问账户余额</th>
+	  </tr>
+	  <tr>
 	    <th> vector(Tickets) </th>
 	    <th>query_my_tickets()</th>
 	    <th>返回我买的票</th>
 	  </tr>
 	  <tr>
 	    <th>pair <Log,Log></th>
-	    <th>query_log(type)</th>
+	    <th>query_log()</th>
 	    <th>返回log(注意权限), 注意返回哪种log</th>
 	  </tr>
     </table>
@@ -454,8 +474,8 @@
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
- |bool|buy_ticket(start_station, finish_station, string level, int)|买票, 判断**区间是否可减**|
-  |bool|refund_ticket(start_station, finish_station, string level, int)|退票, 判断**区间是否可加**|
+ |bool|buy_ticket(string start_station,string  finish_station, string level, int,double &money)|买票, 判断**区间是否可减以及余额是否够**|
+  |bool|refund_ticket(string start_station, string finish_station, string level, int，double &money)|退票, 判断**区间是否可加**|
  |bool|start_sale()|开始发售|
  |bool|finish_sale()|结束发售|
  
