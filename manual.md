@@ -105,44 +105,29 @@
 #### TicketLevel
 注意：考虑到每趟车有不完全一样的两到三种票型（一等座,商务座,无座,硬座,特等座,二等座,硬卧下,软卧下,软座,高级软卧），特改为string
 
-#### Log
+####log
+单纯使用string
+存中文语句（日期＋购买/退订/修改名字/修改密码/充值/...）
 
-形式为buy/refund:train_id date, start_station, finish_station, TicketLevel(string),number 
+|类型|成员|功能|
+|:------:|:------:|:------:|
+|vector<string>|information|记录log|
 
-<div>
-    <table border="0">
-	  <tr>
-	    <th>类型</th>
-	    <th>成员</th>
-	    <th>功能</th>
-	  </tr>
-	  <tr>
-	    <th>vector(string)</th>
-	    <th>information</th>
-	    <th>记录日志</th>
-	  </tr>
-    </table>
-</div>
-
-<div>
-    <table border="0">
-	  <tr>
-	    <th>返回类型</th>
-	    <th>成员函数</th>
-	    <th>功能</th>
-	  </tr>
-	  <tr>
-	    <th>void</th>
-	    <th>add(string)</th>
-	    <th>添加信息</th>
-	  </tr>
-	  <tr>
-	    <th>void</th>
-	    <th>print(file_name)</th>
-	    <th>输出信息</th>
-	  </tr>
-    </table>
-</div>
+|返回类型|成员函数|功能|
+|:------:|:------:|:------:|
+|BinaryInput|operator >>|文件读入|
+|BinaryOutput|operator <<|文件输出|
+|void|print_buying|历史上买票的信息|
+|void|print_refunding|历史上退票的信息|
+|void|modify_name(Date now, string new_name)|某时改name|
+|void|modify_password(Date now, string new_password)|改password|
+|void|buy_tickets(Date now, Tickets new_tickets)|买票|
+|void|refund_tickets(Date now, Tickets new tickets)|退票|
+|void|charge(double money)|用户充值|
+|void|add_daily_route(Date now, Train new_train, Date finish_time)|增加一段时间的车次|
+|void|delete_daily_route(Date now, Train new_train, Date finish_time)|取消一段时间的车次|
+|void|start_daily_sale(Date now, Train new_train, Date finish_time)|开始发售一段时间的车次的车票|
+|void|finish_daily_sale(Date now, Train new_train, Date finish_time)|停止发售一段时间的车次的车票|
 
 
 #### Date
@@ -321,6 +306,8 @@
 	    <th>Set (Tickets) </th>
 	    <th>my_ticket</th>
 	    <th>订票信息</th>
+	    </tr>
+	    <tr>
 	    <th>double </th>
 	    <th>money</th>
 	    <th>账户余额</th>
