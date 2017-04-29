@@ -107,6 +107,7 @@
 
 ####log
 单纯使用string
+存中文语句（日期＋购买/退订/修改名字/修改密码/充值/...）
 
 |类型|成员|功能|
 |:------:|:------:|:------:|
@@ -116,6 +117,8 @@
 |:------:|:------:|:------:|
 |BinaryInput|operator >>|文件读入|
 |BinaryOutput|operator <<|文件输出|
+|void|print_buying|历史上买票的信息|
+|void|print_refunding|历史上退票的信息|
 |void|modify_name(Date now, string new_name)|某时改name|
 |void|modify_password(Date now, string new_password)|改password|
 |void|buy_tickets(Date now, Tickets new_tickets)|买票|
