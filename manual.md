@@ -416,10 +416,10 @@
 
 |类型|成员|描述|
 |:------:|:------:|:------:|
-|map: user_id -> * GeneralUser|Member|所有用户|
+|map: user_id -> GeneralUser|user|所有用户|
 |*GeneralUser|now|现在登录是谁或NULL|
 |static long long|now_id|目前分配到的id|
- |map: (train_id, Date) -> *SingleRoute|single_line|单日单趟线路|
+ |map: (train_id, Date) -> Train|train|单日单趟线路|
  
 
 |返回类型|成员函数|功能|
@@ -514,4 +514,4 @@
 1. 火车型号处理
 2. 密码查询方式
 3. 同一天不能有两个同样的train_id？？？
-4. file的处理方式？？？？？？？
+4. file的处理方式？？？？？？？rain
