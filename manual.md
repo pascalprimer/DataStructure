@@ -124,7 +124,7 @@
 |void|modify_password(Date now, string new_password)|改password|
 |void|buy_tickets(Date now, Tickets new_tickets)|买票|
 |void|refund_tickets(Date now, Tickets new tickets)|退票|
-|void|charge(double money)|用户充值|
+|void|charge(Date now, double money)|用户充值|
 |void|add_daily_route(Date now, Train new_train, Date finish_time)|增加一段时间的车次|
 |void|delete_daily_route(Date now, Train new_train, Date finish_time)|取消一段时间的车次|
 |void|start_daily_sale(Date now, Train new_train, Date finish_time)|开始发售一段时间的车次的车票|
