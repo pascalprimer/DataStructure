@@ -105,7 +105,7 @@
 #### TicketLevel
 注意：考虑到每趟车有不完全一样的两到三种票型（一等座,商务座,无座,硬座,特等座,二等座,硬卧下,软卧下,软座,高级软卧），特改为string
 
-#### log
+#### Log
 单纯使用string
 
 |类型|成员|功能|
@@ -116,6 +116,9 @@
 |:------:|:------:|:------:|
 |BinaryInput|operator >>|文件读入|
 |BinaryOutput|operator <<|文件输出|
+|log|buy_log()|只返回买票历史|
+|log|refund_log()|只返回退票历史|
+|log|buy_refund_log()|买票退票信息|
 |void|modify_name(Date now, string new_name)|某时改name|
 |void|modify_password(Date now, string new_password)|改password|
 |void|buy_tickets(Date now, Tickets new_tickets)|买票|
@@ -368,8 +371,8 @@
 	    <th>返回我买的票</th>
 	  </tr>
 	  <tr>
-	    <th>pair <Log,Log></th>
-	    <th>query_log()</th>
+	    <th>*log</th>
+	    <th>query_log(LogType)</th>
 	    <th>返回log(注意权限), 注意返回哪种log</th>
 	  </tr>
 </div>
