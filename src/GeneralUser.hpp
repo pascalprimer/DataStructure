@@ -12,8 +12,8 @@ using namespace sjtu
 	class GeneralUser
 	{
 	private:
-		string user_id,name,password;
-		bool admin_or_not; Log my_log;
+		const string user_id; string name,password;
+		const bool admin_or_not; Log my_log;
 		set <Tickets> my_ticket; double money;
 		friend Tickets;
 	public:
@@ -59,6 +59,9 @@ using namespace sjtu
 		//是否是管理员
 		bool is_admin() const { return admin_or_not; }
 
+		//返回用户id
+		string get_id() const { return user_id; }
+		
 		//买票或失败, 管理员不能买票
 		bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const Date &date,const string &start_station,const string &finish_station,const string &level,int num)
 		{
