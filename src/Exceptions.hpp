@@ -33,6 +33,9 @@ namespace sjtu {
 	
 	class NotAdmin: public Exception {
 	};
+
+	class NotUser: public Exception{
+	};
 	
 	class IndexOutOfBound: public Exception {
 	};

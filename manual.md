@@ -119,11 +119,12 @@
 |log|buy_log()|只返回买票历史|
 |log|refund_log()|只返回退票历史|
 |log|buy_refund_log()|买票退票信息|
+|log|charge_log()|充值信息|
 |void|modify_name(Date now, string new_name)|某时改name|
 |void|modify_password(Date now, string new_password)|改password|
 |void|buy_tickets(Date now, Tickets new_tickets)|买票|
 |void|refund_tickets(Date now, Tickets new tickets)|退票|
-|void|charge(double money)|用户充值|
+|void|charge(Date now, double money)|用户充值|
 |void|add_daily_route(Date now, Train new_train, Date finish_time)|增加一段时间的车次|
 |void|delete_daily_route(Date now, Train new_train, Date finish_time)|取消一段时间的车次|
 |void|start_daily_sale(Date now, Train new_train, Date finish_time)|开始发售一段时间的车次的车票|
@@ -188,6 +189,11 @@
 	    <th>bool </th>
 	    <th>is_same_day(Date, Date)</th>
 	    <th>是否同一天</th>
+	  </tr>
+	  <tr>
+	    <th>Date </th>
+	    <th>current_time()</th>
+	    <th>返回当前时间</th>
 	  </tr>
 	  <tr>
 	    <th>void </th>
@@ -306,6 +312,7 @@
 	    <th>Set (Tickets) </th>
 	    <th>my_ticket</th>
 	    <th>订票信息</th>
+	   <tr>
 	    <th>double </th>
 	    <th>money</th>
 	    <th>账户余额</th>

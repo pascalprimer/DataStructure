@@ -13,15 +13,18 @@ using namespace sjtu
 	{
 	private:
 		string user_id,name,password;
-		bool admin_or_not; pair <Log,Log> my_log;
+		bool admin_or_not; Log my_log;
 		set <Tickets> my_ticket; double money;
-		// 构造函数部分
+		friend Tickets;
 	public:
+		enum LogType {All,Buy,Refund,BuyAndRefund,Charge};
+
+		// 构造函数部分
 		GeneralUser(const string &_user_id,const string &_name,const string &_password,bool _admin_or_not):
 			user_id(_user_id),name(_name),password(_password),admin_or_not(_admin_or_not)
 		{
 			if (password.length() < 6||password.length() > 15)
-				throw PasswordIsNotValid();
+				throw PasswordIsNotValid("密码不合法！长度需在6到15之间。\n");
 		}
 
 		//默认析构函数
@@ -39,16 +42,18 @@ using namespace sjtu
 		bool modify_name(const string &_name) 
 		{
 			if (_name.length()&&_name.length() > 15) return false;
-			name = _name; return true;
+			name = _name; my_log.modify_name(Date::current_time(),_name);
+			return true;
 		}
 
 		//修改密码
 		bool modify_password(const string &_password,const string &npassword1,const string &npassword2)
 		{
-			if (_password != password) return false;
-			if (npassword1.length() < 6||npassword1.length() > 15) return false;
-			if (npassword1 != npassword2) return false;
-			password != npassword1; return true;
+			if (_password != password) { throw WrongPassword("原密码输入错误！\n"); return false; }
+			if (npassword1.length() < 6||npassword1.length() > 15) { throw WrongPassword("密码不合法！长度需在6到15之间。\n"); return false; }
+			if (npassword1 != npassword2) { throw WrongPassword("两次密码输入不一致！\n") return false; }
+			password = npassword1; my_log.modify_password(Date::current_time,npassword1);
+			return true;
 		}
 		
 		//是否是管理员
@@ -57,10 +62,16 @@ using namespace sjtu
 		//买票或失败, 管理员不能买票
 		bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const Date &date,const string &start_station,const string &finish_station,const string &level,int num)
 		{
-			if (admin_or_not) return false;
-			if (obj->buy_ticket(start_station,finish_station,level,num))
+			if (admin_or_not) { throw NotUser("您是管理员，无法购票。\n"); return false; }
+			double tmoney = money,UnitPrice;
+			if (obj->buy_ticket(start_station,finish_station,level,num,money))
 			{
-				auto it = my_ticket.find()
+				UnitPrice = (tmoney-money)/num;
+				Tickets new_tickets = Tickets(train_id,date,start_station,finish_station,level,num,UnitPrice);
+				my_log.buy_ticket(Date::current_time(),new_tickets);
+				auto it = my_ticket.find(new_tickets);
+				if (it == my_ticket.end()) my_ticket.insert(new_tickets);
+				else it->number += num;
 				return true;
 			}
 			return false;
@@ -69,18 +80,26 @@ using namespace sjtu
 		//退票或失败，管理员不能退票
 		bool refund_ticket(shared_ptr <Train> obj,const string &train_id,const Date &date,const string &start_station,const string &finish_station,const string &level,int num)
 		{
-			if (admin_or_not) return false;
-			if (obj->refund_ticket(start_station,finish_station,level,num))
-			{
-				return true;
-			}
+			if (admin_or_not) { throw NotUser("您是管理员，无法退票。\n"); return false; }
+			Tickets new_tickets = Tickets(train_id,date,start_station,finish_station,level,num,0);
+			auto it = my_ticket.find(new_tickets);
+			if (it != my_ticket.end()&&it->number >= num)
+				if (obj->refund_ticket(start_station,finish_station,level,num,money))
+				{
+					new_tickets.price = it->price;
+					my_log.refund_ticket(Date::current_time(),new_tickets);
+					if (it->number > num) it -> number -= num;
+					else my_ticket.erase(it);
+				}
+			throw TicketsNotEnough("您的票数不够，无法退票。\n");
 			return false;
 		}
+		
 		//往账户里面充钱
 		bool charge(double inc)
 		{
-			if (admin_or_not) return false;
-			money += inc; return true;
+			if (admin_or_not) { throw NotUser("您是管理员，无法充值。\n"); return false; }
+			money += inc; my_log.charge(Date::current_time(),inc); return true;
 		}
 
 		//查询账户余额
@@ -96,11 +115,20 @@ using namespace sjtu
 		}
 
 		//返回log(注意权限), 注意返回哪种log
-		shared_ptr < pair <Log,Log> > query_log() const
+		shared_ptr <Log> query_log(const LogType &_logtype)
 		{
-			shared_ptr < pair <Log,Log> > ret = new pair <Log,Log> (my_log);
+			shared_ptr <Log> ret;
+			switch (_logtype)
+			{
+			case All: ret = new Log (my_log); break;
+			case Buy: ret = new Log (my_log.buy_log()); break;
+			case Refund: ret = new Log (my_log.refund_log()); break;
+			case BuyAndRefund: ret = new Log (my_log.buy_refund_log())break;
+			default: ret = new Log (my_log.charge_log()); break;
+			}
 			return ret;
 		}
+
 	}
 }
 
