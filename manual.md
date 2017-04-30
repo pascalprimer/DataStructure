@@ -190,6 +190,11 @@
 	    <th>是否同一天</th>
 	  </tr>
 	  <tr>
+	    <th>Date </th>
+	    <th>current_time()</th>
+	    <th>返回当前时间</th>
+	  </tr>
+	  <tr>
 	    <th>void </th>
 	    <th>get_next_day()</th>
 	    <th>下一天</th>
@@ -306,6 +311,7 @@
 	    <th>Set (Tickets) </th>
 	    <th>my_ticket</th>
 	    <th>订票信息</th>
+	   <tr>
 	    <th>double </th>
 	    <th>money</th>
 	    <th>账户余额</th>
