@@ -72,9 +72,9 @@
 	    <th> 待测  </th>
 	  </tr>
 	  <tr>
-	    <td>~~Admin~~</td>
+	    <td> Admin</td>
 	    <td>管理员</td>
-	    <th>   </th>
+	    <th> 取消 </th>
 	  </tr>
 	  <tr>
 	    <td>Station</td>
