@@ -372,13 +372,13 @@
 	    <th>query_log()</th>
 	    <th>返回log(注意权限), 注意返回哪种log</th>
 	  </tr>
-    </table>
+</div>
+||||
 |:------:|:------:|:------:|
 |bool|add_daily_route(Train, finish_time,)|增加时间段内单趟列车,最多30天，判断权限|
  |bool|delete_daily_route(Train, finish_time)|删去时间段内单趟列车,最多30天，判断权限|
  |bool|start_daily_sale(train_id, start_time, finish_time,)|开始发售时间段内单趟车车票, 判断权限|
  |bool|finish_daily_sale(train_id, start_time,  finish_time)|结束发售时间段内单趟列车车票, 判断权限|
-</div>
 
 
 #### Admin
