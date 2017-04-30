@@ -23,8 +23,8 @@ using namespace sjtu
 		GeneralUser(const string &_user_id,const string &_name,const string &_password,bool _admin_or_not):
 			user_id(_user_id),name(_name),password(_password),admin_or_not(_admin_or_not)
 		{
-			if (password.length() < 6||password.length() > 15)
-				throw PasswordIsNotValid("密码不合法！长度需在6到15之间。\n");
+			//if (password.length() < 6||password.length() > 15)
+			//	throw PasswordIsNotValid("密码不合法！长度需在6到15之间。\n");
 		}
 
 		//默认析构函数
@@ -41,18 +41,18 @@ using namespace sjtu
 		//修改用户名字, 不能长于15
 		bool modify_name(const string &_name) 
 		{
-			if (_name.length()&&_name.length() > 15) return false;
+			//if (_name.length()&&_name.length() > 15) return false;
 			name = _name; my_log.modify_name(Date::current_time(),_name);
 			return true;
 		}
 
 		//修改密码
-		bool modify_password(const string &_password,const string &npassword1,const string &npassword2)
+		bool modify_password(const string &_password)
 		{
-			if (_password != password) { throw WrongPassword("原密码输入错误！\n"); return false; }
-			if (npassword1.length() < 6||npassword1.length() > 15) { throw WrongPassword("密码不合法！长度需在6到15之间。\n"); return false; }
-			if (npassword1 != npassword2) { throw WrongPassword("两次密码输入不一致！\n") return false; }
-			password = npassword1; my_log.modify_password(Date::current_time,npassword1);
+			//if (_password != password) { throw WrongPassword("原密码输入错误！\n"); return false; }
+			//if (npassword1.length() < 6||npassword1.length() > 15) { throw WrongPassword("密码不合法！长度需在6到15之间。\n"); return false; }
+			//if (npassword1 != npassword2) { throw WrongPassword("两次密码输入不一致！\n") return false; }
+			password = _password; my_log.modify_password(Date::current_time,_password);
 			return true;
 		}
 		
@@ -62,14 +62,18 @@ using namespace sjtu
 		//返回用户id
 		string get_id() const { return user_id; }
 		
+		bool check_password(const string &input_password) {
+			return password == input_password;
+		}
+		
 		//买票或失败, 管理员不能买票
-		bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const Date &date,const string &start_station,const string &finish_station,const string &level,int num)
+		bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const string &start_station,const string &finish_station,const string &level,int num)
 		{
-			if (admin_or_not) { throw NotUser("您是管理员，无法购票。\n"); return false; }
-			double tmoney = money,UnitPrice;
+			if (admin_or_not) { throw NotUser("您是管理员，无法购票。"); return false; }
+			double tmoney = money, UnitPrice;
 			if (obj->buy_ticket(start_station,finish_station,level,num,money))
 			{
-				UnitPrice = (tmoney-money)/num;
+				UnitPrice = int(round((tmoney-money)/num));
 				Tickets new_tickets = Tickets(train_id,date,start_station,finish_station,level,num,UnitPrice);
 				my_log.buy_ticket(Date::current_time(),new_tickets);
 				auto it = my_ticket.find(new_tickets);
@@ -83,7 +87,7 @@ using namespace sjtu
 		//退票或失败，管理员不能退票
 		bool refund_ticket(shared_ptr <Train> obj,const string &train_id,const Date &date,const string &start_station,const string &finish_station,const string &level,int num)
 		{
-			if (admin_or_not) { throw NotUser("您是管理员，无法退票。\n"); return false; }
+			if (admin_or_not) { throw NotUser("您是管理员，无法退票。"); return false; }
 			Tickets new_tickets = Tickets(train_id,date,start_station,finish_station,level,num,0);
 			auto it = my_ticket.find(new_tickets);
 			if (it != my_ticket.end()&&it->number >= num)
@@ -94,14 +98,14 @@ using namespace sjtu
 					if (it->number > num) it -> number -= num;
 					else my_ticket.erase(it);
 				}
-			throw TicketsNotEnough("您的票数不够，无法退票。\n");
+			throw TicketsNotEnough("您的票数不够，无法退票。");
 			return false;
 		}
 		
 		//往账户里面充钱
 		bool charge(double inc)
 		{
-			if (admin_or_not) { throw NotUser("您是管理员，无法充值。\n"); return false; }
+			//if (admin_or_not) { throw NotUser("您是管理员，无法充值。\n"); return false; }
 			money += inc; my_log.charge(Date::current_time(),inc); return true;
 		}
 

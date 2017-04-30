@@ -197,6 +197,11 @@
 	  </tr>
 	  <tr>
 	    <th>void </th>
+	    <th>go_one_day()</th>
+	    <th>变为下一天</th>
+	  </tr>
+	  <tr>
+	    <th>void </th>
 	    <th>get_next_day()</th>
 	    <th>下一天</th>
 	  </tr>
@@ -416,25 +421,28 @@
 |:------:|:------:|:------:|
 |map: user_id -> GeneralUser|user|所有用户|
 |*GeneralUser|now|现在登录是谁或NULL|
-|static long long|now_id|目前分配到的id|
+| long long|now_id|目前分配到的id|
+|string|official_identifying_code|管理员注册验证码|
  |map: (train_id, Date) -> Train|train|单日单趟线路|
  
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
-|string|register(user_id, password1, password2，identifying_code)|注册, id为空生成一个，id判重，判密码, 返回id，管理员要check验证码|
+|string|register(name, password1, password2)|普通用户注册, id为空生成一个，id判重，判密码, 返回id|
+|string|admin_register(name, password1, password2，identifying_code)|管理员注册, id生成一个，id判重，判密码, 返回id，管理员要check验证码|
 |bool|login(user_id, password)|登录并判断是否具有管理员权限|
 |bool|logout(user_id, password)|推出当前帐号|
-|vector(string)|query_station(string train_id)|返回车次的所有站名|
+|void|set_identifying_code(original_code, new_code)|重置验证码,强制admin|
+|vector(string)|query_station(string train_id, Date time)|返回车次的所有站名|
 |vector(Tickets)|query_ticket_by_id(string train_id, start_station, finish_station, Date start_time, Date finish_time, level vector<string>, int number)|根据车次和时间段以及张数查询所有列车情况, 并且若天数大于30天，只返回30天内的|
 |vector(Tickets)|query_ticket(start_time,  finish_time, start_station, finish_station, level vector<string>, int number)|根据时间段，站点( 模糊搜索,判前两个字是否完全一样 ), 张数返回至多30天的车票|
 |string|query_my_info()|返回个人信息，直接调用GeneralUser里的，判断now是否空,不包括密码|
 |string|query_info()|返回任意非管理员且存在的用户的信息,判断权限|
 |vector(Tickets)|query_my_tickets()|返回我买的票|
-|string|query_log(type)|返回log|
-|string|query_log(user_id)|返回任意存在且非管理员的log, 判断权限|
+|shared_ptr(Log)|query_log(user_id, LogType)|返回任意存在且非管理员的log, 判断权限|
 |bool|modify_name(string)|改用户名, 判断登录|
 |bool|modfiy_password(string, string)|改密码, 判断登录|
+|bool|charge(double)|充值|
 |bool|buy_ticket(train_id, Date, start_station, finish_station, string level, int)|买票, 判断登录|
 |bool|refund_ticket(train_id, Date, start_station, finish_station, string level, int)|退票, 判断登录|
  |bool|add_daily_route(Train, finish_time,)|增加时间段内单趟列车,最多30天，判断权限|
@@ -468,12 +476,17 @@
  |bool|on_sale|是否在卖|
  |vector(Station)|route|线路|
  |string|train_id|车次|
- |Data|departure_time|发车时间|
+ |Date|departure_time|发车时间|
 
 |返回类型|成员函数|功能|
 |:------:|:------:|:------:|
- |bool|buy_ticket(string start_station,string  finish_station, string level, int,double &money)|买票, 判断**区间是否可减以及余额是否够**|
-  |bool|refund_ticket(string start_station, string finish_station, string level, int，double &money)|退票, 判断**区间是否可加**|
+|string|get_id|返回id|
+||Train(Train, date)|通过一个Train的所有其他信息和一个日期**构造**Train|
+|Date|get_time()|返回发车时间|
+|Tickets|get_ticket(start_station, finish_station, start_time,  finish_time, level, number)|返回出站(start_time)在start_time到finish_time之间的票，票数不够就返回所有的票,无票throw|
+|shared_ptr(vector(string))|query_station()|所有站名|
+ |bool|buy_ticket(string start_station,string  finish_station, string level, int,double &money)|买票, 判断**区间是否可减以及余额是否够**，若true则减少money，且若true则改区间信息|
+  |bool|refund_ticket(string start_station, string finish_station, string level, int，double &money)|退票, 增加money,改区间信息|
  |bool|start_sale()|开始发售|
  |bool|finish_sale()|结束发售|
  

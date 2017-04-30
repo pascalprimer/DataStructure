@@ -13,6 +13,12 @@ namespace sjtu {
 		Exception(const Exception &ec) : detail(ec.detail) {}
 	};
 	
+	class FailBuy: public Exception {
+	};
+	
+	class FailRefund: public Exception {
+	};
+	
 	class TrainNotExist: public Exception {
 	};
 	
@@ -22,7 +28,25 @@ namespace sjtu {
 	class StationNotFound: public Exception {
 	};
 	
+	class UserAlreadyExist: public Exception {
+	};
+	
 	class UserNotExist: public Exception {
+	};
+	
+	class AlreadyLogin: public Exception {
+	};
+	
+	class AlreadyLogout: public Exception {
+	};
+	
+	class NameTooLong: public Exception {
+	};
+	
+	class InconsistentPassword : public Exception {
+	};
+	
+	class WrongIdentifyingCode : public Exception {
 	};
 	
 	class WrongPassword: public Exception {
@@ -33,9 +57,6 @@ namespace sjtu {
 	
 	class NotAdmin: public Exception {
 	};
-
-	class NotUser: public Exception{
-	};
 	
 	class IndexOutOfBound: public Exception {
 	};
@@ -44,6 +65,12 @@ namespace sjtu {
 	};
 	
 	class MoneyNotEnough: public Exception {
+	};
+	
+	class NotLogin: public Exception {
+	};
+	
+	class InsufficientPriviledge: public Exception {
 	};
 }
 
