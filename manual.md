@@ -119,6 +119,7 @@
 |log|buy_log()|只返回买票历史|
 |log|refund_log()|只返回退票历史|
 |log|buy_refund_log()|买票退票信息|
+|log|charge_log()|充值信息|
 |void|modify_name(Date now, string new_name)|某时改name|
 |void|modify_password(Date now, string new_password)|改password|
 |void|buy_tickets(Date now, Tickets new_tickets)|买票|
