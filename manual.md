@@ -376,6 +376,7 @@
 	    <th>返回log(注意权限), 注意返回哪种log</th>
 	  </tr>
 </div>
+
 ||||
 |:------:|:------:|:------:|
 |bool|add_daily_route(Train, finish_time,)|增加时间段内单趟列车,最多30天，判断权限|
