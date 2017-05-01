@@ -5,6 +5,7 @@
 #include"Exceptions.hpp"
 #include"File.hpp"
 #include"lib/ptr.hpp"
+#include"Train.hpp"
 
 using std::string;
 using namespace sjtu
