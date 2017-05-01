@@ -1,5 +1,5 @@
-#ifndef SJTU_GENERALUSER_HPP
-#define SJTU_GENERALUSER_HPP
+#ifndef SJTU_TRAIN_HPP
+#define SJTU_TRAIN_HPP
 
 #include<string>
 #include"Exceptions.hpp"
