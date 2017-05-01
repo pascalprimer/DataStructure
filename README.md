@@ -29,10 +29,11 @@ DDL  :   week 12
 3. GeneralUser
 4. Admin
 5. Qt
+6. Train
 
 **Gzd**:
 1. pair
-2. Train
+2. Station
 3. Log
 
 **Yg**:

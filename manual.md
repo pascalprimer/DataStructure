@@ -457,6 +457,7 @@
  |string|location|站名|
  |static const|MAX|人数上限2000, 用于初始化和上限判断|
  |Date|arrival_time|到站时间|
+ |Date|departure_time|出发时间|
  |double|price|价格|
  |int[3]|left_number|火车开到该站该下车的人下车，该上车的人上车后的剩余人数|
  |int|dist|前缀里程|
