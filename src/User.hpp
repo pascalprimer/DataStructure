@@ -14,12 +14,27 @@
 
 using std::string;
 namespace sjtu {
+
+	class Compare_Date {
+		bool operator()(const pair<string, GeneralUser> &lhs, const pair<string, GeneralUser> &rhs) {
+			if (lhs.first != rhs.first) {
+				return lhs.first < rhs.first;
+			}
+			if (lhs.second.get_year != rhs.second.get_year) {
+				return lhs.get_year < rhs.get_year;
+			}
+			if (lhs.second.get_month != rhs.second.get_month) {
+				return lhs.get_month < rhs.get_month;
+			}
+			return lhs.second.get_day < rhs.second.get_day;
+		}
+	};
 	
 	class User {
 		long long now_id;
 		shared_ptr<GeneralUser> now;
 		map<string, GeneralUser> user;
-		map<pair<string, Date>, Train> train;
+		map<pair<string, Date>, Train, Compare_Date> train;
 		string official_idenfitying_code;
 		
 		//下一个合法user_id

@@ -41,6 +41,15 @@ public:
 		}
 	}
 	date() : year(0) , month(0) , day(0) , hour(0) , minute(0) {};         //empty constructor 
+	const int get_year() const {
+		return year;
+	}
+	const int get_month() const {
+		return month;
+	}
+	const int get_day() const {
+		return day;
+	}
 	bool is_same_day (date &obj1 , date &obj2) {
 		return obj1.year == obj2.year && obj1.month == obj2.month && obj1.day == obj2.day && obj1.hour == obj2.hour && obj1.minute == obj2.minute;
 	}
