@@ -79,7 +79,7 @@ namespace sjtu {
 	class RunTimeError: public Exception {
 	};
 	
-	class Waterloo: public Exception {
+	class Yangezuishuai: public Exception {
 	};
 }
 
