@@ -72,6 +72,12 @@ namespace sjtu {
 	
 	class InsufficientPriviledge: public Exception {
 	};
+	
+	class ContainerIsEmpty: public Exception {
+	};
+	
+	class RunTimeError: public Exception {
+	};
 }
 
 #endif
