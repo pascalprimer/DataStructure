@@ -44,7 +44,7 @@ public:
 	bool is_same_day (date &obj1 , date &obj2) {
 		return obj1.year == obj2.year && obj1.month == obj2.month && obj1.day == obj2.day && obj1.hour == obj2.hour && obj1.minute == obj2.minute;
 	}
-	date current_time() {
+	static date current_time() {
 		time_t tt = time(NULL);
 		//tm *t = localtime(&tt);
 		shared_ptr<tm> t(localtime(&tt));
