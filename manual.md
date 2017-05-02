@@ -490,6 +490,7 @@
   |bool|refund_ticket(string start_station, string finish_station, string level, int，double &money)|退票, 增加money,改区间信息|
  |bool|start_sale()|开始发售|
  |bool|finish_sale()|结束发售|
+ |bool|query_on_sale()|返回是否售票|
  
  
  #### Tickets
