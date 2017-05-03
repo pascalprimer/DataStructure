@@ -40,6 +40,21 @@ public:
 			minute = (s[14] - '0') * 10 + s[15] - '0'; 
 		}
 	}
+	date(const date &obj) {
+		year = obj.year;
+		month = obj.month;
+		day = obj.day;
+		hour = obj.hour;
+		minute = obj.minute;
+	}
+	date &operator = (const date& obj) {
+		date tmp;
+		tmp.year = obj.year;
+		tmp.month = obj.month;
+		tmp.day = obj.day;
+		tmp.hour = obj.hour;
+		tmp.minute = obj.minute;
+	}
 	date() : year(0) , month(0) , day(0) , hour(0) , minute(0) {};         //empty constructor 
 	const int get_year() const {
 		return year;
@@ -67,10 +82,40 @@ public:
 		return tmp;
 	}
 	void get_next_day(date &obj) {
-		obj.day += 1;
+		int m[13] = {0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31};
+		if (obj.year % 4 == 0 && obj.year % 100 != 0 || obj.year % 400 == 0) {
+			m[2] = 29;
+		}
+		if (obj.day = m[obj.month]) {
+			obj.day = 1;
+			++obj.month;
+			if (obj.month > 12) {
+				++obj.year;
+				obj.month = 1;
+			}
+		}
+		else {
+			++obj.day;
+		}
+		return;
 	}
 	void go_one_day (date &obj) {
-		obj.day += 1;
+		int m[13] = {0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31};
+		if (obj.year % 4 == 0 && obj.year % 100 != 0 || obj.year % 400 == 0) {
+			m[2] = 29;
+		}
+		if (obj.day = m[obj.month]) {
+			obj.day = 1;
+			++obj.month;
+			if (obj.month > 12) {
+				++obj.year;
+				obj.month = 1;
+			}
+		}
+		else {
+			++obj.day;
+		}
+		return;
 	}
 	bool operator < (date &obj) {
 		if (year < obj.year) return true;
