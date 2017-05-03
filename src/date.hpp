@@ -9,6 +9,9 @@
 //please remember when you use the constructor,the string you transferred should be one of the two following types
 //2012-11-03
 //2012-11-03,15:30
+//
+//you can use the following way to get the current time
+//string s = sjtu::date::current_time().print(); 
 
 using std::string;
 
