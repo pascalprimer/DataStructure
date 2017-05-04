@@ -1,14 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "login.h"
 #include <QDateTimeEdit>
 #include <QDebug>
 #include <QDateTime>
 #include <QTimer>
+#include <QMessageBox>
 #include <iostream>
+#include <QString>
 
-using sjtu::shared_ptr;
+using namespace sjtu;
 
 //MainWindow::MainWindow(shared_ptr<QWidget> parent) :
+void MainWindow::set_user(shared_ptr<User> _user) {
+    user = _user;
+}
+
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::MainWindow())
@@ -16,8 +23,6 @@ MainWindow::MainWindow(QWidget *parent):
     ui -> setupUi(this);
     setWindowTitle("羊羊火车票");
     setWindowIcon(QIcon(":images/pictures/班徽.png"));
-
-    sjtu::User user();
     /*QDateTime time = QDateTime::currentDateTime();
     QString str = time.toString("yyyy-MM-dd hh:mm:ss ddd");
     ui -> label -> setText(str);
@@ -46,3 +51,20 @@ MainWindow::~MainWindow()
 /*void onDateChanged(const QDate &date) {
     qDebug() << "QDate : " << date;
 }*/
+
+void MainWindow::on_login_button_clicked()
+{
+    Login login;
+    login.set_user(this -> user);
+    login.exec();
+    if (user -> check_login()) {
+        ui -> now_user -> setText(QString::fromStdString(user -> query_now_id()));
+    }
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    user -> logout();
+    QMessageBox::information(nullptr, "Notice", "登出");
+    ui -> now_user -> setText(tr("未登录"));
+}

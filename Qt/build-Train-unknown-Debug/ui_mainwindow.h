@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -32,6 +33,7 @@ public:
     QPushButton *login_button;
     QPushButton *regigster_button;
     QPushButton *pushButton_2;
+    QLabel *now_user;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -55,6 +57,9 @@ public:
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(520, 340, 99, 27));
+        now_user = new QLabel(centralWidget);
+        now_user->setObjectName(QStringLiteral("now_user"));
+        now_user->setGeometry(QRect(610, 20, 111, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -78,6 +83,7 @@ public:
         login_button->setText(QApplication::translate("MainWindow", "\347\231\273\345\275\225", 0));
         regigster_button->setText(QApplication::translate("MainWindow", "\346\263\250\345\206\214", 0));
         pushButton_2->setText(QApplication::translate("MainWindow", "\347\231\273\345\207\272", 0));
+        now_user->setText(QApplication::translate("MainWindow", "\346\234\252\347\231\273\345\275\225", 0));
     } // retranslateUi
 
 };

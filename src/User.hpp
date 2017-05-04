@@ -12,6 +12,8 @@
 #include "lib/pair.hpp"
 #include "lib/ptr.hpp"
 #include <string>
+#include <cassert>
+#include <iostream>
 //#include "Train.hpp"
 
 using std::string;
@@ -51,18 +53,42 @@ namespace sjtu {
 	public:
 		//construction
 		User() {
+            //std::cout << "123213211" << std::endl;
 			now_id = 0;
 			now = nullptr;
 			user.clear();
 //			train.clear();
             official_identifying_code = "";
+            //std::cout << "123213211" << std::endl;
+/*if (now.check_null()) {
+    std::cout << "123213211" << std::endl;
+}*/
 		}
 		
 		//deconstruction
 		~User() {}
 		
+
+        bool check_login() {
+            return now != nullptr;
+        }
+
+        /*bool check_exist(const string &id, const string &pwd) {
+            map<string, GeneralUser>::iterator it = user.find(id);
+            if ((it != user.end()) && ((it -> second).password == pwd)) {
+                return true;
+            } else {
+                return false;
+            }
+        }*/
+
+        const string query_now_id() const {
+            if (!!now) {
+                return string("ID: " + now -> get_id() + "  名字: " + now -> get_name());
+            }
+        }
 		//普通注册
-		string regigster(const string &user_name, const string &password1, const string &password2) {
+		string create_user(const string &user_name, const string &password1, const string &password2) {
 			if (password1 != password2) {
                 throw InconsistentPassword(string("密码不一致。"));
 			}
@@ -71,12 +97,12 @@ namespace sjtu {
             string user_id = get_next_user_id();
 			//user[user_id] = GeneralUser(user_id, user_name, password1, 0);
 			user.insert(pair<string, GeneralUser>(user_id, GeneralUser(user_id, user_name, password1, 0)));
-			login(user_id, password1);
+            //login(user_id, password1);
 			return user_id;
 		}
 		
 		//admin注册
-		string admin_regigster(const string &user_name, const string &password1, const string &password2, const string &identifying_code) {
+		string create_admin(const string &user_name, const string &password1, const string &password2, const string &identifying_code) {
 			if (password1 != password2) {
 				throw InconsistentPassword("密码不一致。");
 			}
@@ -87,29 +113,29 @@ namespace sjtu {
 			}
             string user_id = get_next_user_id();
 			user.insert(pair<string, GeneralUser>(user_id, GeneralUser(user_id, user_name, password1, 1)));
-			login(user_id, password1);
+            //login(user_id, password1);
 			return user_id;
         }
 		
 		//login
 		bool login(const string &user_id, const string &password) {
-			if (!now) {
-				throw AlreadyLogin("不能重复登录。");
-			}
+            if (!(!now)) {
+				throw Exception("不能重复登录。");
+            }
             map<string, GeneralUser>::iterator it = user.find(user_id);
 			if (it == user.end()) {
-				throw UserNotExist("用户不存在。");
+				throw Exception("用户不存在。");
 			}
             if ((it -> second).check_password(password)) {
                 now = &(it -> second);
 			} else {
-				throw WrongPassword("密码错误。");
+				throw Exception("密码错误。");
 			}
 			return true;
 		}
 		
 		//logout
-		void logout(const string &user_id, const string &password) {
+        void logout() {
 			now = nullptr;
 			//return true;
 		}

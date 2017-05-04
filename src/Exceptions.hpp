@@ -6,6 +6,7 @@
 namespace sjtu {
 
 	class Exception {
+	public:
 		std::string detail;
 	public:
 		Exception():detail() {}

@@ -19,12 +19,19 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void set_user(shared_ptr<User> _user);
     //explicit MainWindow(shared_ptr<QWidget> parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_login_button_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
-    //Ui::MainWindow *ui;
-    shared_ptr<Ui::MainWindow> ui;
+    shared_ptr<User> user;
+    Ui::MainWindow *ui;
+    //shared_ptr<Ui::MainWindow> ui;
 };
 
 #endif // MAINWINDOW_H

@@ -49,12 +49,16 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Train/main.cpp \
-		../Train/mainwindow.cpp qrc_image.cpp \
-		moc_mainwindow.cpp
+		../Train/mainwindow.cpp \
+		../Train/login.cpp qrc_image.cpp \
+		moc_mainwindow.cpp \
+		moc_login.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		login.o \
 		qrc_image.o \
-		moc_mainwindow.o
+		moc_mainwindow.o \
+		moc_login.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -121,8 +125,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../src/lib/ptr.hpp \
 		../../src/lib/pair.hpp \
 		../../src/lib/map.hpp \
-		../../src/Exceptions.hpp ../Train/main.cpp \
-		../Train/mainwindow.cpp
+		../../src/Exceptions.hpp \
+		../../src/Date.hpp \
+		../../src/File.hpp \
+		../../src/Station.hpp \
+		../../src/ticket.hpp \
+		../Train/login.h ../Train/main.cpp \
+		../Train/mainwindow.cpp \
+		../Train/login.cpp
 QMAKE_TARGET  = Train
 DESTDIR       = 
 TARGET        = Train
@@ -131,7 +141,7 @@ TARGET        = Train
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_login.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Train/Train.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -276,9 +286,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/image.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../Train/mainwindow.h ../../src/User.hpp ../../src/GeneralUser.hpp ../../src/lib/vector.hpp ../../src/lib/set.hpp ../../src/lib/ptr.hpp ../../src/lib/pair.hpp ../../src/lib/map.hpp ../../src/Exceptions.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Train/main.cpp ../Train/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Train/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/mainwindow.h ../../src/User.hpp ../../src/GeneralUser.hpp ../../src/lib/vector.hpp ../../src/lib/set.hpp ../../src/lib/ptr.hpp ../../src/lib/pair.hpp ../../src/lib/map.hpp ../../src/Exceptions.hpp ../../src/Date.hpp ../../src/File.hpp ../../src/Station.hpp ../../src/ticket.hpp ../Train/login.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/main.cpp ../Train/mainwindow.cpp ../Train/login.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/mainwindow.ui ../Train/login.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -307,9 +317,9 @@ compiler_rcc_clean:
 qrc_image.cpp: ../Train/image.qrc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name image ../Train/image.qrc -o qrc_image.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_login.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_login.cpp
 moc_mainwindow.cpp: ../../src/lib/ptr.hpp \
 		../../src/GeneralUser.hpp \
 		../../src/Exceptions.hpp \
@@ -320,13 +330,19 @@ moc_mainwindow.cpp: ../../src/lib/ptr.hpp \
 		../Train/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/mainwindow.h -o moc_mainwindow.cpp
 
+moc_login.cpp: ../Train/login.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/login.h -o moc_login.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_login.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_login.h
 ui_mainwindow.h: ../Train/mainwindow.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/mainwindow.ui -o ui_mainwindow.h
+
+ui_login.h: ../Train/login.ui
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/login.ui -o ui_login.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -359,11 +375,18 @@ mainwindow.o: ../Train/mainwindow.cpp ../Train/mainwindow.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Train/mainwindow.cpp
 
+login.o: ../Train/login.cpp ../Train/login.h \
+		ui_login.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o login.o ../Train/login.cpp
+
 qrc_image.o: qrc_image.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_image.o qrc_image.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_login.o: moc_login.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_login.o moc_login.cpp
 
 ####### Install
 

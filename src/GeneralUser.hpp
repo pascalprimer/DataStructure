@@ -13,11 +13,12 @@ namespace sjtu
 	class GeneralUser
 	{
 	private:
-		const string user_id; string name,password;
+        const string user_id;
+        string name,password;
         const bool admin_or_not; //Log my_log;
         //set <Tickets> my_ticket; double money;
         //friend Tickets;
-	public:
+    public:
 		enum LogType {All,Buy,Refund,BuyAndRefund,Charge};
 
 		// 构造函数部分
@@ -62,6 +63,10 @@ namespace sjtu
 
 		//返回用户id
 		string get_id() const { return user_id; }
+
+        const string get_name() const {
+            return name;
+        }
 		
 		bool check_password(const string &input_password) {
 			return password == input_password;
