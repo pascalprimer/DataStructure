@@ -49,9 +49,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Train/main.cpp \
-		../Train/mainwindow.cpp moc_mainwindow.cpp
+		../Train/mainwindow.cpp qrc_image.cpp \
+		moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		qrc_image.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -111,7 +113,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../Train/Train.pro ../Train/mainwindow.h ../Train/main.cpp \
+		../Train/Train.pro ../Train/mainwindow.h \
+		../../src/User.hpp \
+		../../src/GeneralUser.hpp \
+		../../src/lib/vector.hpp \
+		../../src/lib/set.hpp \
+		../../src/lib/ptr.hpp \
+		../../src/lib/pair.hpp \
+		../../src/lib/map.hpp \
+		../../src/Exceptions.hpp ../Train/main.cpp \
 		../Train/mainwindow.cpp
 QMAKE_TARGET  = Train
 DESTDIR       = 
@@ -183,6 +193,7 @@ Makefile: ../Train/Train.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../Train/Train.pro \
+		../Train/image.qrc \
 		/usr/lib/x86_64-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Gui.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Core.prl
@@ -246,6 +257,7 @@ Makefile: ../Train/Train.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf:
 ../Train/Train.pro:
+../Train/image.qrc:
 /usr/lib/x86_64-linux-gnu/libQt5Widgets.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Gui.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Core.prl:
@@ -263,7 +275,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Train/mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/image.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/mainwindow.h ../../src/User.hpp ../../src/GeneralUser.hpp ../../src/lib/vector.hpp ../../src/lib/set.hpp ../../src/lib/ptr.hpp ../../src/lib/pair.hpp ../../src/lib/map.hpp ../../src/Exceptions.hpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/main.cpp ../Train/mainwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/mainwindow.ui $(DISTDIR)/
 
@@ -288,12 +301,23 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_image.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_image.cpp
+qrc_image.cpp: ../Train/image.qrc
+	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name image ../Train/image.qrc -o qrc_image.cpp
+
 compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../Train/mainwindow.h
+moc_mainwindow.cpp: ../../src/lib/ptr.hpp \
+		../../src/GeneralUser.hpp \
+		../../src/Exceptions.hpp \
+		../../src/File.hpp \
+		../../src/User.hpp \
+		../../src/lib/map.hpp \
+		../../src/lib/pair.hpp \
+		../Train/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
@@ -310,16 +334,33 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
-main.o: ../Train/main.cpp ../Train/mainwindow.h
+main.o: ../Train/main.cpp ../Train/mainwindow.h \
+		../../src/lib/ptr.hpp \
+		../../src/GeneralUser.hpp \
+		../../src/Exceptions.hpp \
+		../../src/File.hpp \
+		../../src/User.hpp \
+		../../src/lib/map.hpp \
+		../../src/lib/pair.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Train/main.cpp
 
 mainwindow.o: ../Train/mainwindow.cpp ../Train/mainwindow.h \
+		../../src/lib/ptr.hpp \
+		../../src/GeneralUser.hpp \
+		../../src/Exceptions.hpp \
+		../../src/File.hpp \
+		../../src/User.hpp \
+		../../src/lib/map.hpp \
+		../../src/lib/pair.hpp \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Train/mainwindow.cpp
+
+qrc_image.o: qrc_image.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_image.o qrc_image.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

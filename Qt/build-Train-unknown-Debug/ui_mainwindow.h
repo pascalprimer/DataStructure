@@ -13,13 +13,12 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QColumnView>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -29,13 +28,10 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayout;
+    QTableView *tableView;
+    QPushButton *login_button;
+    QPushButton *regigster_button;
     QPushButton *pushButton_2;
-    QPushButton *pushButton;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_4;
-    QColumnView *columnView;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -44,44 +40,25 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
+        MainWindow->resize(765, 446);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayoutWidget = new QWidget(centralWidget);
-        gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(20, 60, 206, 131));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        pushButton_2 = new QPushButton(gridLayoutWidget);
+        tableView = new QTableView(centralWidget);
+        tableView->setObjectName(QStringLiteral("tableView"));
+        tableView->setGeometry(QRect(150, 60, 551, 251));
+        login_button = new QPushButton(centralWidget);
+        login_button->setObjectName(QStringLiteral("login_button"));
+        login_button->setGeometry(QRect(360, 340, 99, 27));
+        regigster_button = new QPushButton(centralWidget);
+        regigster_button->setObjectName(QStringLiteral("regigster_button"));
+        regigster_button->setGeometry(QRect(200, 340, 99, 27));
+        pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-
-        gridLayout->addWidget(pushButton_2, 2, 1, 1, 1);
-
-        pushButton = new QPushButton(gridLayoutWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-
-        gridLayout->addWidget(pushButton, 2, 0, 1, 1);
-
-        pushButton_3 = new QPushButton(gridLayoutWidget);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-
-        gridLayout->addWidget(pushButton_3, 1, 0, 1, 1);
-
-        pushButton_4 = new QPushButton(gridLayoutWidget);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
-
-        gridLayout->addWidget(pushButton_4, 1, 1, 1, 1);
-
-        columnView = new QColumnView(centralWidget);
-        columnView->setObjectName(QStringLiteral("columnView"));
-        columnView->setGeometry(QRect(250, 50, 256, 192));
+        pushButton_2->setGeometry(QRect(520, 340, 99, 27));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 25));
+        menuBar->setGeometry(QRect(0, 0, 765, 25));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -98,10 +75,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        pushButton_4->setText(QApplication::translate("MainWindow", "PushButton", 0));
+        login_button->setText(QApplication::translate("MainWindow", "\347\231\273\345\275\225", 0));
+        regigster_button->setText(QApplication::translate("MainWindow", "\346\263\250\345\206\214", 0));
+        pushButton_2->setText(QApplication::translate("MainWindow", "\347\231\273\345\207\272", 0));
     } // retranslateUi
 
 };

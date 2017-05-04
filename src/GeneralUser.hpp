@@ -5,18 +5,18 @@
 #include"Exceptions.hpp"
 #include"File.hpp"
 #include"lib/ptr.hpp"
-#include"Train.hpp"
+//#include"Train.hpp"
 
 using std::string;
-using namespace sjtu
+namespace sjtu
 {
 	class GeneralUser
 	{
 	private:
 		const string user_id; string name,password;
-		const bool admin_or_not; Log my_log;
-		set <Tickets> my_ticket; double money;
-		friend Tickets;
+        const bool admin_or_not; //Log my_log;
+        //set <Tickets> my_ticket; double money;
+        //friend Tickets;
 	public:
 		enum LogType {All,Buy,Refund,BuyAndRefund,Charge};
 
@@ -36,14 +36,14 @@ using namespace sjtu
 			string ret = "";
 			ret += "User ID: " + user_id + "\n";
 			ret += "姓名： " + name + "\n";
-			return string;
+            return ret;
 		}
 
 		//修改用户名字, 不能长于15
 		bool modify_name(const string &_name) 
 		{
 			//if (_name.length()&&_name.length() > 15) return false;
-			name = _name; my_log.modify_name(Date::current_time(),_name);
+            name = _name;// my_log.modify_name(Date::current_time(),_name);
 			return true;
 		}
 
@@ -53,7 +53,7 @@ using namespace sjtu
 			//if (_password != password) { throw WrongPassword("原密码输入错误！\n"); return false; }
 			//if (npassword1.length() < 6||npassword1.length() > 15) { throw WrongPassword("密码不合法！长度需在6到15之间。\n"); return false; }
 			//if (npassword1 != npassword2) { throw WrongPassword("两次密码输入不一致！\n") return false; }
-			password = _password; my_log.modify_password(Date::current_time,_password);
+            password = _password; //my_log.modify_password(Date::current_time,_password);
 			return true;
 		}
 		
@@ -68,7 +68,7 @@ using namespace sjtu
 		}
 		
 		//买票或失败, 管理员不能买票
-		bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const string &start_station,const string &finish_station,const string &level,int num)
+        /*bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const string &start_station,const string &finish_station,const string &level,int num)
 		{
 			if (admin_or_not) { throw NotUser("您是管理员，无法购票。"); return false; }
 			double tmoney = money, UnitPrice;
@@ -136,8 +136,8 @@ using namespace sjtu
 			}
 			return ret;
 		}
-
-	}
+*/
+    };
 }
 
 #endif

@@ -5,17 +5,19 @@
 
 #include <string>
 #include "File.hpp"
-#include "Exception.hpp"
+#include "Exceptions.hpp"
 #include "GeneralUser.hpp"
-#include "Admin.hpp"
+//#include "Admin.hpp"
 #include "lib/map.hpp"
 #include "lib/pair.hpp"
-#include "ptr.hpp"
+#include "lib/ptr.hpp"
+#include <string>
+//#include "Train.hpp"
 
 using std::string;
 namespace sjtu {
 
-	class Compare_Date {
+    /*class Compare_Date {
 		bool operator()(const pair<string, GeneralUser> &lhs, const pair<string, GeneralUser> &rhs) {
 			if (lhs.first != rhs.first) {
 				return lhs.first < rhs.first;
@@ -28,14 +30,14 @@ namespace sjtu {
 			}
 			return lhs.second.get_day < rhs.second.get_day;
 		}
-	};
+    };*/
 	
 	class User {
 		long long now_id;
 		shared_ptr<GeneralUser> now;
 		map<string, GeneralUser> user;
-		map<pair<string, Date>, Train, Compare_Date> train;
-		string official_idenfitying_code;
+        //map<pair<string, Date>, Train, Compare_Date> train;
+        string official_identifying_code;
 		
 		//下一个合法user_id
 		long long get_next_user_id() {
@@ -51,8 +53,8 @@ namespace sjtu {
 			now_id = 0;
 			now = nullptr;
 			user.clear();
-			train.clear();
-			official_identifying_code = "";
+//			train.clear();
+            official_identifying_code = "";
 		}
 		
 		//deconstruction
@@ -61,11 +63,11 @@ namespace sjtu {
 		//普通注册
 		string regigster(const string &user_name, const string &password1, const string &password2) {
 			if (password1 != password2) {
-				throw InconsistentPassword("密码不一致。");
+                throw InconsistentPassword(string("密码不一致。"));
 			}
 			if (password1.length() < 6||password1.length() > 15)
 				throw PasswordIsNotValid("密码不合法！长度需在6到15之间。");
-			LL user_id = get_next_user_id();
+            long long user_id = get_next_user_id();
 			now[user_id] = GeneralUser(user_id, user_name, password1, 0);
 			login(user_id, password1);
 			return user_id;
@@ -81,23 +83,23 @@ namespace sjtu {
 			if (identifying_code != official_identifying_code) {
 				throw WrongIdentifyingCode("验证码错误。");
 			}
-			LL user_id = get_next_user_id();
+            long long user_id = get_next_user_id();
 			now[user_id] = GeneralUser(user_id, user_name, password1, 1);
 			login(user_id, password1);
 			return user_id;
-		}
+        }
 		
 		//login
 		bool login(const string &user_id, const string &password) {
 			if (!now) {
 				throw AlreadyLogin("不能重复登录。");
 			}
-			map<string, GeneralUser>::iterator it = M.find(user_id);
+            map<string, GeneralUser>::iterator it = user.find(user_id);
 			if (it == M.end()) {
 				throw UserNotExist("用户不存在。");
 			}
-			if (it -> second -> check_password(password)) {
-				now = it -> second;
+            if ((it -> second).check_password(password)) {
+                now = &(it -> second);
 			} else {
 				throw WrongPassword("密码错误。");
 			}
@@ -121,7 +123,7 @@ namespace sjtu {
 			official_identifying_code = new_code;
 		}
 		
-		shared_ptr<vector<string> > query_station(const string &train_id, const Date &time) {
+        /*shared_ptr<vector<string> > query_station(const string &train_id, const Date &time) {
 			map<pair<string, Date>, Train>::iterator it = train.find(pair<string, Date>(train_id, time));
 			if (it == train.end()) {
 				throw TrainNotExist("列车不存在。");
@@ -376,7 +378,7 @@ namespace sjtu {
 			return true;
 		}
 		
-		
+        */
 	};
 
 }

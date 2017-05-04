@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>pictures/班徽.png</file>
+    </qresource>
+</RCC>
