@@ -11,13 +11,13 @@
 //2012-11-03,15:30
 //
 //you can use the following way to get the current time
-//string s = sjtu::date::current_time().print(); 
+//string s = sjtu::Date::current_time().print(); 
 
 using std::string;
 
 namespace sjtu {
 
-class date{
+class Date{
 private:
 	int year;
 	int month;
@@ -26,7 +26,7 @@ private:
 	int minute;
 	
 public:
-	date(string s) {
+	Date(string s) {
 		int l = s.length();
 		if (l == 10) {
 			year = (s[0] - '0') * 1000 + (s[1] - '0') * 100 + (s[2] - '0') * 10 + (s[3] - '0');
@@ -43,22 +43,22 @@ public:
 			minute = (s[14] - '0') * 10 + s[15] - '0'; 
 		}
 	}
-	date(const date &obj) {
+	Date(const Date &obj) {
 		year = obj.year;
 		month = obj.month;
 		day = obj.day;
 		hour = obj.hour;
 		minute = obj.minute;
 	}
-	date &operator = (const date& obj) {
-		date tmp;
+	Date &operator = (const Date& obj) {
+		Date tmp;
 		tmp.year = obj.year;
 		tmp.month = obj.month;
 		tmp.day = obj.day;
 		tmp.hour = obj.hour;
 		tmp.minute = obj.minute;
 	}
-	date() : year(0) , month(0) , day(0) , hour(0) , minute(0) {};         //empty constructor 
+	Date() : year(0) , month(0) , day(0) , hour(0) , minute(0) {};         //empty constructor 
 	const int get_year() const {
 		return year;
 	}
@@ -68,14 +68,14 @@ public:
 	const int get_day() const {
 		return day;
 	}
-	bool is_same_day (date &obj1 , date &obj2) {
+	bool is_same_day (Date &obj1 , Date &obj2) {
 		return obj1.year == obj2.year && obj1.month == obj2.month && obj1.day == obj2.day && obj1.hour == obj2.hour && obj1.minute == obj2.minute;
 	}
-	static date current_time() {
+	static Date current_time() {
 		time_t tt = time(NULL);
 		//tm *t = localtime(&tt);
 		shared_ptr<tm> t(localtime(&tt));
-		date tmp;
+		Date tmp;
 		tmp.year = t -> tm_year + 1900;
 		tmp.month = t -> tm_mon + 1;
 		tmp.day = t -> tm_mday;
@@ -84,7 +84,7 @@ public:
 		
 		return tmp;
 	}
-	void get_next_day(date &obj) {
+	void get_next_day(Date &obj) {
 		int m[13] = {0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31};
 		if (obj.year % 4 == 0 && obj.year % 100 != 0 || obj.year % 400 == 0) {
 			m[2] = 29;
@@ -102,7 +102,7 @@ public:
 		}
 		return;
 	}
-	void go_one_day (date &obj) {
+	void go_one_day (Date &obj) {
 		int m[13] = {0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31};
 		if (obj.year % 4 == 0 && obj.year % 100 != 0 || obj.year % 400 == 0) {
 			m[2] = 29;
@@ -120,7 +120,7 @@ public:
 		}
 		return;
 	}
-	bool operator < (date &obj) {
+	bool operator < (Date &obj) {
 		if (year < obj.year) return true;
 		if (year == obj.year) {
 			if (month < obj.month) return true;
@@ -136,7 +136,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator > (date &obj) {
+	bool operator > (Date &obj) {
 		if (year > obj.year) return true;
 		if (year == obj.year) {
 			if (month > obj.month) return true;
@@ -152,7 +152,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator <= (date &obj) {
+	bool operator <= (Date &obj) {
 		if (year < obj.year) return true;
 		if (year == obj.year) {
 			if (month < obj.month) return true;
@@ -168,7 +168,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator >= (date &obj) {
+	bool operator >= (Date &obj) {
 		if (year > obj.year) return true;
 		if (year == obj.year) {
 			if (month > obj.month) return true;

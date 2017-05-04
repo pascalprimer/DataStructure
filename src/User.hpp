@@ -15,6 +15,7 @@
 //#include "Train.hpp"
 
 using std::string;
+using sjtu::InconsistentPassword;
 namespace sjtu {
 
     /*class Compare_Date {
@@ -40,11 +41,11 @@ namespace sjtu {
         string official_identifying_code;
 		
 		//下一个合法user_id
-		long long get_next_user_id() {
-			while (user.find(to_string(now_id)) != user.end()) {
+		string get_next_user_id() {
+			while (user.find(std::to_string(now_id)) != user.end()) {
 				now_id++;
 			}
-			return now_id;
+			return std::to_string(now_id);
 		}
 		
 	public:
@@ -67,8 +68,9 @@ namespace sjtu {
 			}
 			if (password1.length() < 6||password1.length() > 15)
 				throw PasswordIsNotValid("密码不合法！长度需在6到15之间。");
-            long long user_id = get_next_user_id();
-			now[user_id] = GeneralUser(user_id, user_name, password1, 0);
+            string user_id = get_next_user_id();
+			//user[user_id] = GeneralUser(user_id, user_name, password1, 0);
+			user.insert(pair<string, GeneralUser>(user_id, GeneralUser(user_id, user_name, password1, 0)));
 			login(user_id, password1);
 			return user_id;
 		}
@@ -83,8 +85,8 @@ namespace sjtu {
 			if (identifying_code != official_identifying_code) {
 				throw WrongIdentifyingCode("验证码错误。");
 			}
-            long long user_id = get_next_user_id();
-			now[user_id] = GeneralUser(user_id, user_name, password1, 1);
+            string user_id = get_next_user_id();
+			user.insert(pair<string, GeneralUser>(user_id, GeneralUser(user_id, user_name, password1, 1)));
 			login(user_id, password1);
 			return user_id;
         }
@@ -95,7 +97,7 @@ namespace sjtu {
 				throw AlreadyLogin("不能重复登录。");
 			}
             map<string, GeneralUser>::iterator it = user.find(user_id);
-			if (it == M.end()) {
+			if (it == user.end()) {
 				throw UserNotExist("用户不存在。");
 			}
             if ((it -> second).check_password(password)) {
