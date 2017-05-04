@@ -28,11 +28,21 @@ using namespace sjtu
 		//返回发车时间
 		Date get_time() const { return departure_time; }
 
-		//返回出站(start_time)在start_time到finish_time之间的票，票数不够就返回所有的票,无票throw
-		// Tickets get_ticket(const string &start_station,const string &finish_station,const Date &start_time,const Date &finish_time,const string &level,int number) const
-		// {
-			
-		// }
+		//返回出站在start_time到finish_time之间的票，票数不够就返回所有的票,无票throw
+		Tickets get_ticket(const string &start_station,const string &finish_station,const Date &start_time,const Date &finish_time,const string &level,int number) const
+		{
+			int p1 = -1,p2 = -1;
+			for (int i = 0;(p1 == -1||p2 == -1)&&i < route.size();++i)
+			{
+				if (route[i].location == start_station) p1 = i;
+				if (route[i].location == start_station) p2 = i;
+			}
+			if (p1 == -1||p2 == -1||p1 >= p2) throw TicketsNotFound("查无此票。\n");
+			for (int i = p1;i < p2;++i) mn = min(mn,query_single_number(level));
+			double cost = route[p2].query_single_price(level);
+			if (p1) cout -= route[p1-1].query_single_price(level);
+			return Tickets(train_id,departure_time,start_station,finish_station,level,number,cost);
+		}
 
 		//所有站名
 		shared_ptr < vector <string> > query_station() const
@@ -55,7 +65,7 @@ using namespace sjtu
 			int mn = 1<<30;
 			for (int i = p1;i < p2;++i) mn = min(mn,query_single_number(level));
 			if (mn < number) { throw TicketsNotEnouge("票数不足。\n"); return false; }
-			int cost = route[p2].query_single_price(level);
+			double cost = route[p2].query_single_price(level);
 			if (p1) cout -= route[p1-1].query_single_price(level);
 			money -= cost*number;
 			for (int i = p1;i < p2;++i) route[i].modify_number(level,-number);
@@ -72,7 +82,7 @@ using namespace sjtu
 				if (route[i].location == start_station) p2 = i;
 			}
 			if (p1 == -1||p2 == -1||p1 >= p2) { throw TicketsNotFound("查无此票。\n"); return false; }
-			int cost = route[p2].query_single_price(level);
+			double cost = route[p2].query_single_price(level);
 			if (p1) cout -= route[p1-1].query_single_price(level);
 			money += cost*number;
 			for (int i = p1;i < p2;++i) route[i].modify_number(level,number);
