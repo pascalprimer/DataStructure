@@ -20,7 +20,7 @@ using std::string;
 using sjtu::InconsistentPassword;
 namespace sjtu {
 
-    /*class Compare_Date {
+    class Compare_Date {
 		bool operator()(const pair<string, GeneralUser> &lhs, const pair<string, GeneralUser> &rhs) {
 			if (lhs.first != rhs.first) {
 				return lhs.first < rhs.first;
@@ -33,13 +33,14 @@ namespace sjtu {
 			}
 			return lhs.second.get_day < rhs.second.get_day;
 		}
-    };*/
+    };
 	
 	class User {
 		long long now_id;
-		shared_ptr<GeneralUser> now;
+		//shared_ptr<GeneralUser> now;
+		map<string, GeneralUser>::iterator now;
 		map<string, GeneralUser> user;
-        //map<pair<string, Date>, Train, Compare_Date> train;
+        map<pair<string, Date>, Train, Compare_Date> train;
         string official_identifying_code;
 		
 		//下一个合法user_id
@@ -55,10 +56,10 @@ namespace sjtu {
 		User() {
             //std::cout << "123213211" << std::endl;
 			now_id = 0;
-			now = nullptr;
+			now = user.end();
 			user.clear();
 //			train.clear();
-            official_identifying_code = "";
+            official_identifying_code = "lmxyy";
             //std::cout << "123213211" << std::endl;
 /*if (now.check_null()) {
     std::cout << "123213211" << std::endl;
@@ -70,7 +71,7 @@ namespace sjtu {
 		
 
         bool check_login() {
-            return now != nullptr;
+            return now != user.end();
         }
 
         /*bool check_exist(const string &id, const string &pwd) {
@@ -82,18 +83,18 @@ namespace sjtu {
             }
         }*/
 
-        const string query_now_id() const {
-            if (!!now) {
-                return string("ID: " + now -> get_id() + "  名字: " + now -> get_name());
+        const string query_now_id() {
+            if (now != user.end()) {
+                return string("ID: " + (now -> second).get_id() + "  名字: " + (now ->second).get_name());
             }
         }
 		//普通注册
 		string create_user(const string &user_name, const string &password1, const string &password2) {
 			if (password1 != password2) {
-                throw InconsistentPassword(string("密码不一致。"));
+                throw Exception(string("密码不一致。"));
 			}
 			if (password1.length() < 6||password1.length() > 15)
-				throw PasswordIsNotValid("密码不合法！长度需在6到15之间。");
+                throw Exception("密码不合法！长度需在6到15之间。");
             string user_id = get_next_user_id();
 			//user[user_id] = GeneralUser(user_id, user_name, password1, 0);
 			user.insert(pair<string, GeneralUser>(user_id, GeneralUser(user_id, user_name, password1, 0)));
@@ -104,12 +105,12 @@ namespace sjtu {
 		//admin注册
 		string create_admin(const string &user_name, const string &password1, const string &password2, const string &identifying_code) {
 			if (password1 != password2) {
-				throw InconsistentPassword("密码不一致。");
+				throw Exception("密码不一致。");
 			}
 			if (password1.length() < 6||password1.length() > 15)
-				throw PasswordIsNotValid("密码不合法！长度需在6到15之间。");
+				throw Exception("密码不合法！长度需在6到15之间。");
 			if (identifying_code != official_identifying_code) {
-				throw WrongIdentifyingCode("验证码错误。");
+				throw Exception("验证码错误!你忽悠我的吧!");
 			}
             string user_id = get_next_user_id();
 			user.insert(pair<string, GeneralUser>(user_id, GeneralUser(user_id, user_name, password1, 1)));
@@ -119,7 +120,7 @@ namespace sjtu {
 		
 		//login
 		bool login(const string &user_id, const string &password) {
-            if (!(!now)) {
+            if (now != user.end()) {
 				throw Exception("不能重复登录。");
             }
             map<string, GeneralUser>::iterator it = user.find(user_id);
@@ -127,7 +128,8 @@ namespace sjtu {
 				throw Exception("用户不存在。");
 			}
             if ((it -> second).check_password(password)) {
-                now = &(it -> second);
+                //now = &(it -> second);
+                now = it;
 			} else {
 				throw Exception("密码错误。");
 			}
@@ -136,13 +138,12 @@ namespace sjtu {
 		
 		//logout
         void logout() {
-			now = nullptr;
-			//return true;
+            now = user.end();
 		}
 		
 		//改验证码
 		void set_identifying_code(const string &original_code, const string &new_code) {
-			if (now == nullptr || !(now -> is_admin())) {
+			if (now == user.end() || !((now -> second).is_admin())) {
 				throw NotAdmin("未登录或无管理员权限。");
 			}
 			if (original_code != official_identifying_code) {
@@ -151,7 +152,7 @@ namespace sjtu {
 			official_identifying_code = new_code;
 		}
 		
-        /*shared_ptr<vector<string> > query_station(const string &train_id, const Date &time) {
+        shared_ptr<vector<string> > query_station(const string &train_id, const Date &time) {
 			map<pair<string, Date>, Train>::iterator it = train.find(pair<string, Date>(train_id, time));
 			if (it == train.end()) {
 				throw TrainNotExist("列车不存在。");
@@ -406,7 +407,7 @@ namespace sjtu {
 			return true;
 		}
 		
-        */
+        
 	};
 
 }

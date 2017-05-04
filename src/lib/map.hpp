@@ -8,7 +8,6 @@
 #include <functional>
 #include <cstddef>
 #include <iostream>
-//#include "utility.hpp"
 #include "./pair.hpp"
 #include "../Exceptions.hpp"
 #include "../File.hpp"

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "login.h"
+#include "register.h"
 #include <QDateTimeEdit>
 #include <QDebug>
 #include <QDateTime>
@@ -67,4 +68,11 @@ void MainWindow::on_pushButton_2_clicked()
     user -> logout();
     QMessageBox::information(nullptr, "Notice", "登出");
     ui -> now_user -> setText(tr("未登录"));
+}
+
+void MainWindow::on_regigster_button_clicked()
+{
+    Register reg;
+    reg.set_user(this -> user);
+    reg.exec();
 }

@@ -120,7 +120,7 @@ public:
 		}
 		return;
 	}
-	bool operator < (Date &obj) {
+	bool operator < (const Date &obj) {
 		if (year < obj.year) return true;
 		if (year == obj.year) {
 			if (month < obj.month) return true;
@@ -136,7 +136,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator > (Date &obj) {
+	bool operator > (const Date &obj) {
 		if (year > obj.year) return true;
 		if (year == obj.year) {
 			if (month > obj.month) return true;
@@ -152,7 +152,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator <= (Date &obj) {
+	bool operator <= (const Date &obj) {
 		if (year < obj.year) return true;
 		if (year == obj.year) {
 			if (month < obj.month) return true;
@@ -168,7 +168,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator >= (Date &obj) {
+	bool operator >= (const Date &obj) {
 		if (year > obj.year) return true;
 		if (year == obj.year) {
 			if (month > obj.month) return true;
@@ -183,6 +183,12 @@ public:
 			if (minute >= obj.minute) return true;
 		} 
 		return false;
+	}
+	bool operator == (const Date &obj) {
+		return year == obj.year && month == obj.month && day == obj.day && hour == obj.hour && minute == obj.minute;
+	}
+	bool operator != (const Date &obj) {
+		return !(year == obj.year && month == obj.month && day == obj.day && hour == obj.hour && minute == obj.minute);
 	}
 	string print() {
 		string ans;

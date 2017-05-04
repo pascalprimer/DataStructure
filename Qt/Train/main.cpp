@@ -10,7 +10,11 @@ int main(int argc, char *argv[])
 {
     sjtu::User user;
 
-    std::cout << user.create_user("cyy", "pascalprimer", "pascalprimer") << std::endl;
+    /*std::cout << user.create_user("cyy", "pascalprimer", "pascalprimer") << std::endl;
+    user.login("0", "pascalprimer");
+    user.logout();
+    std::cout << user.check_login() << std::endl;*/
+
    // return 0;
     //return a.exec();
 

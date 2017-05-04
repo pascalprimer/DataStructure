@@ -59,7 +59,7 @@ public:
         pushButton_2->setGeometry(QRect(520, 340, 99, 27));
         now_user = new QLabel(centralWidget);
         now_user->setObjectName(QStringLiteral("now_user"));
-        now_user->setGeometry(QRect(610, 20, 111, 31));
+        now_user->setGeometry(QRect(540, 20, 111, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

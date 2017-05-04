@@ -30,6 +30,7 @@ namespace sjtu
 		}
 
 		//默认析构函数
+        ~GeneralUser() {}
 
 		//返回用户基本信息，包括 user_id，name
 		string query_my_info() const
@@ -73,7 +74,7 @@ namespace sjtu
 		}
 		
 		//买票或失败, 管理员不能买票
-        /*bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const string &start_station,const string &finish_station,const string &level,int num)
+        bool buy_ticket(shared_ptr <Train> obj,const string &train_id,const string &start_station,const string &finish_station,const string &level,int num)
 		{
 			if (admin_or_not) { throw NotUser("您是管理员，无法购票。"); return false; }
 			double tmoney = money, UnitPrice;
@@ -141,7 +142,7 @@ namespace sjtu
 			}
 			return ret;
 		}
-*/
+
     };
 }
 

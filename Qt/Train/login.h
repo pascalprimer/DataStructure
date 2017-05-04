@@ -22,8 +22,6 @@ public:
 private slots:
     void on_loginBtn_clicked();
 
-    void on_exitBtn_destroyed();
-
     void on_logoutBtn_clicked();
 
 private:

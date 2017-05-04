@@ -28,6 +28,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_regigster_button_clicked();
+
 private:
     shared_ptr<User> user;
     Ui::MainWindow *ui;

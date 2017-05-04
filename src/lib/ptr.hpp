@@ -15,7 +15,9 @@ inline void swap(T& a, T& b) {
 template<typename T>
 struct single_deleter {
 	void operator ()(T*& rhs) {
-		delete rhs;
+        //if (rhs) {
+            delete rhs;
+        //}
 		rhs = nullptr;
 	}
 };

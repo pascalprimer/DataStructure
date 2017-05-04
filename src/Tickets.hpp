@@ -13,7 +13,7 @@ namespace sjtu {
 class Tickets{
 	private:
 		string train_id;
-		date departure_time;
+		Date departure_time;
 		string start_station;
 		string finish_station;
 		string level;
@@ -35,7 +35,7 @@ class Tickets{
 
 	//默认拷贝构造和赋值
 	
-		// Tickets(const ticket &obj) {
+		// Tickets(const Tickets &obj) {
 		// 	train_id = obj.train_id;
 		// 	departure_time = obj.departure_time;
 		// 	start_station = obj.start_station;
@@ -44,7 +44,7 @@ class Tickets{
 		// 	number = obj.number;
 		// 	price = obj.price;
 		// }
-		// ticket &operator = (const ticket &obj) {
+		// Tickets &operator = (const Tickets &obj) {
 		// 	train_id = obj.train_id;
 		// 	departure_time = obj.departure_time;
 		// 	start_station = obj.start_station;
@@ -55,18 +55,18 @@ class Tickets{
 			
 		// 	return *this;
 		// }
-/*		bool operator == (const ticket &obj) {
-			if (train_id == obj.train_id && departure_time == obj.departure_time && strat_station == obj.start_station && finish_station == obj.finish_station && level == obj.level) {
+		bool operator == (const Tickets &obj) {
+			if (train_id == obj.train_id && departure_time == obj.departure_time && start_station == obj.start_station && finish_station == obj.finish_station && level == obj.level) {
 				return true;
 			}
 			else return false;
 		}
-		bool operator != (const ticket &obj) {
+		bool operator != (const Tickets &obj) {
 			if (train_id == obj.train_id && departure_time == obj.departure_time && start_station == obj.start_station && finish_station == obj.finish_station && level == obj.level) {
 				return false;
 			}
 			else return true;
-		}*/
+		}
 		bool operator < (const Tickets &obj) {
 			if (train_id < obj.train_id) {
 				return true;
