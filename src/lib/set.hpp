@@ -91,7 +91,7 @@ public:
 		 */
 		iterator & operator++() {
 			if (!p) {
-				throw InvalidIterator();
+                throw InvalidIterator("");
 			}
 			p = p -> next;
 			return *this;
@@ -101,7 +101,7 @@ public:
 		 */
 		iterator operator--(int) {
 			if (which -> empty() || !which || p == which -> min_p) {
-				throw InvalidIterator();
+                throw InvalidIterator("");
 			}
 			iterator temp = *this;
 			if (p) {
@@ -157,9 +157,9 @@ public:
 		inline bool operator!=(const const_iterator &rhs) const {
 			return p != rhs.p || which != rhs.which;
 		}
-/*value_type *operator->() const noexcept {
-	return p -> value;
-}*/
+		Key *operator->() const noexcept {
+			return p -> value;
+		}
 	};
 	class const_iterator {
 		// it should has similar member method as iterator.
@@ -570,7 +570,7 @@ public:
 	 */
 	inline void erase(iterator pos) {
 		if (!pos.p || pos.which != this) {
-			throw InvalidIterator();
+            throw InvalidIterator("");
 		}
 		delete_node(pos.p);
 	}

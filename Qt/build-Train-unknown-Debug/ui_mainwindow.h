@@ -16,6 +16,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -34,7 +35,9 @@ public:
     QPushButton *regigster_button;
     QPushButton *pushButton_2;
     QLabel *now_user;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
+    QMenu *menu;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -60,10 +63,15 @@ public:
         now_user = new QLabel(centralWidget);
         now_user->setObjectName(QStringLiteral("now_user"));
         now_user->setGeometry(QRect(540, 20, 111, 31));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(30, 100, 99, 27));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 765, 25));
+        menuBar->setGeometry(QRect(0, 0, 765, 31));
+        menu = new QMenu(menuBar);
+        menu->setObjectName(QStringLiteral("menu"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -71,6 +79,8 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
+
+        menuBar->addAction(menu->menuAction());
 
         retranslateUi(MainWindow);
 
@@ -84,6 +94,8 @@ public:
         regigster_button->setText(QApplication::translate("MainWindow", "\346\263\250\345\206\214", 0));
         pushButton_2->setText(QApplication::translate("MainWindow", "\347\231\273\345\207\272", 0));
         now_user->setText(QApplication::translate("MainWindow", "\346\234\252\347\231\273\345\275\225", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0));
+        menu->setTitle(QApplication::translate("MainWindow", "\350\275\275\345\205\245\346\226\207\344\273\266", 0));
     } // retranslateUi
 
 };

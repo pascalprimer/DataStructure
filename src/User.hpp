@@ -7,6 +7,7 @@
 #include "File.hpp"
 #include "Exceptions.hpp"
 #include "GeneralUser.hpp"
+#include "Date.hpp"
 //#include "Admin.hpp"
 #include "lib/map.hpp"
 #include "lib/pair.hpp"
@@ -17,23 +18,9 @@
 //#include "Train.hpp"
 
 using std::string;
-using sjtu::InconsistentPassword;
+//using sjtu::InconsistentPassword;
 namespace sjtu {
 
-    class Compare_Date {
-		bool operator()(const pair<string, GeneralUser> &lhs, const pair<string, GeneralUser> &rhs) {
-			if (lhs.first != rhs.first) {
-				return lhs.first < rhs.first;
-			}
-			if (lhs.second.get_year != rhs.second.get_year) {
-				return lhs.get_year < rhs.get_year;
-			}
-			if (lhs.second.get_month != rhs.second.get_month) {
-				return lhs.get_month < rhs.get_month;
-			}
-			return lhs.second.get_day < rhs.second.get_day;
-		}
-    };
 	
 	class User {
 		long long now_id;
@@ -144,192 +131,195 @@ namespace sjtu {
 		//改验证码
 		void set_identifying_code(const string &original_code, const string &new_code) {
 			if (now == user.end() || !((now -> second).is_admin())) {
-				throw NotAdmin("未登录或无管理员权限。");
+				throw Exception("未登录或无管理员权限。");
 			}
 			if (original_code != official_identifying_code) {
-				throw WrongIdentifyingCode("验证码检验错误。");
+				throw Exception("验证码检验错误。");
 			}
 			official_identifying_code = new_code;
 		}
 		
         shared_ptr<vector<string> > query_station(const string &train_id, const Date &time) {
-			map<pair<string, Date>, Train>::iterator it = train.find(pair<string, Date>(train_id, time));
+			map<pair<string, Date>, Train, Compare_Date>::iterator it = train.find(pair<string, Date>(train_id, time));
 			if (it == train.end()) {
-				throw TrainNotExist("列车不存在。");
+				throw Exception("列车不存在。");
 			}
-			return it -> query_station();
+			return (it -> second).query_station();
 		}
 		
 		shared_ptr<vector<Tickets> > query_ticket_by_id(const string &train_id, const string &start_station, const string &finish_station, const Date &start_time, const Date &finish_time, const vector<string> &level, int number) {
-			vector<Tickets> ret;
-			ret.clear();
-			for (map<pair<string, Date>, Train>::iterator it = train.begin(); it != train.end(); ++it) {
-				if (train_id != it -> first -> first) {
+			shared_ptr<vector<Tickets> > ret(new vector<Tickets>());
+			for (map<pair<string, Date>, Train, Compare_Date>::iterator it = train.begin(); it != train.end(); ++it) {
+				if (train_id != (it -> first).first) {
 					continue;
 				}
-				try {
-					ret.push_back(it -> second -> get_ticket(start_station, finish_station, start_time, finish_time, level, number));
-				}
-				catch(...) {
+				for (int i = 0; i < level.size(); ++i) {
+					try {
+						ret -> push_back((it -> second).get_ticket(start_station, finish_station, start_time, finish_time, level[i], number));
+					}
+					catch(...) {
+					}
 				}
 			}
 			return ret;
 		}
 		
 		shared_ptr<vector<Tickets> >query_ticket(const string &start_time, const string &finish_time, const string &start_station, const string &finish_station, const vector<string> &level, int number) {
-			vector<Tickets> ret;
-			ret.clear();
-			for (map<pair<string, Date>, Train>::iterator it = train.begin(); it != train.end(); ++it) {
-				try {
-					ret.push_back(it -> second -> get_ticket(start_station, finish_station, start_time, finish_time, level, number));
-				}
-				catch(...) {
+			shared_ptr<vector<Tickets> > ret(new vector<Tickets>());
+			for (map<pair<string, Date>, Train, Compare_Date>::iterator it = train.begin(); it != train.end(); ++it) {
+				for (int i = 0; i < level.size(); ++i) {
+					try {
+						ret -> push_back((it -> second).get_ticket(start_station, finish_station, start_time, finish_time, level[i], number));
+					}
+					catch(...) {
+					}
 				}
 			}
 			return ret;
 		}
 		
 		string query_info(const string &who) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
 			map<string, GeneralUser>::iterator it = user.find(who);
 			if (it == user.end()) {
-				throw UserNotExist("用户不存在。");
+				throw Exception("用户不存在。");
 			}
-			if (who == now.get_id() || !(it -> second -> is_admin) && now -> !(is_admin)) {
-				return it -> second -> query_my_info();
+			if (who == (now -> second).get_id() || !((it -> second).is_admin()) && (now -> second).is_admin()) {
+				return (it -> second).query_my_info();
 			} else {
-				throw InsufficientPriviledge("权限不足。");
+				throw Exception("权限不足。");
 			}
 		}
 		
 		shared_ptr<vector<Tickets> > query_my_tickets(const string &who) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
 			map<string, GeneralUser>::iterator it = user.find(who);
 			if (it == user.end()) {
-				throw UserNotExist("用户不存在。");
+				throw Exception("用户不存在。");
 			}
-			if (who == now.get_id() || !(it -> second -> is_admin) && now -> !(is_admin)) {
-				return it -> second -> query_my_tickets();
+			if (who == (now -> second).get_id() || !((it -> second).is_admin()) && (now -> second).is_admin()) {
+				return (it -> second).query_my_tickets();
 			} else {
-				throw InsufficientPriviledge("权限不足。");
+				throw Exception("权限不足。");
 			}
 		}
 		
 		shared_ptr<Log> query_log(const string &who, const GeneralUser::LogType &type) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
 			map<string, GeneralUser>::iterator it = user.find(who);
 			if (it == user.end()) {
-				throw UserNotExist("用户不存在。");
+				throw Exception("用户不存在。");
 			}
-			if (who == now.get_id() || !(it -> second -> is_admin) && now -> !(is_admin)) {
-				return it -> second -> query_log();
+			if (who == (now -> second).get_id() || !((it -> second).is_admin()) && (now -> second).is_admin()) {
+				return (it -> second).query_log(type);
 			} else {
-				throw InsufficientPriviledge("权限不足。");
+				throw Exception("权限不足。");
 			}
 		}
 		
 		bool modify_name(const string &new_name) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			} else {
 				if (new_name.size() == 0 || new_name.size() > 15) {
-					throw NameTooLong("名字过长。");
+					throw Exception("名字过长。");
 				}
-				now -> modify_name(new_name);
+				(now -> second).modify_name(new_name);
 				return true;
 			}
 		}
 		
 		bool modify_password(const string &original_password, const string &new_password1, const string &new_password2) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			if (!(now -> check_password(original_password))) {
-				throw InconsistentPassword("密码验证错误。");
+			if (!((now -> second).check_password(original_password))) {
+				throw Exception("密码验证错误。");
 			}
 			if (new_password1 != new_password2) {
-				throw InconsistentPassword("前后密码不一致。");
+				throw Exception("前后密码不一致。");
 			} else {
 				if (new_password1.size() > 15 || new_password1.size() < 6) {
-					throw PasswordIsNotValid("密码不合法！长度需在6到15之间。");
+					throw Exception("密码不合法！长度需在6到15之间。");
 				} else {
-					now -> modify_password(new_password1);
+					(now -> second).modify_password(new_password1);
 				}
 			}
 		}
 		
 		bool charge(double money) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			now -> charge(money);
+			(now -> second).charge(money);
 			return true;
 		}
 		
 		bool buy_ticket(const string &train_id, const Date &time, const string &start_station, const string &finish_station, const string &level, int number) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			map<pair<string, Date>, Train>::iterator it = train.find(pair<string, Date>(train_id, time));
+			map<pair<string, Date>, Train, Compare_Date>::iterator it = train.find(pair<string, Date>(train_id, time));
 			if (it == train.end()) {
-				throw TrainNotExist("列车不存在。");
+				throw Exception("列车不存在。");
 			}
 			try {
-				if (now -> buy_ticket(shared_ptr<Train>((it -> second)), train_id, start_station, finish_station, level, number)) {
+				if ((now -> second).buy_ticket(it, train_id, start_station, finish_station, level, number)) {
 					return true;
 				} else {
-					throw FailBuy("购买失败。");
+					throw Exception("购买失败。");
 				}
 			}
-			catch(NotUser exp) {
+			catch(const Exception &exp) {
 				throw exp;
 			}
 			return false;
 		}
 		
 		bool refund_ticket(const string &train_id, const Date &time, const string &start_station, const string &finish_station, const string &level, int number) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			map<pair<string, Date>, Train>::iterator it = train.find(pair<string, Date>(train_id, time));
+			map<pair<string, Date>, Train, Compare_Date>::iterator it = train.find(pair<string, Date>(train_id, time));
 			if (it == train.end()) {
-				throw TrainNotExist("列车不存在。");
+				throw Exception("列车不存在。");
 			}
 			try {
-				if (now -> refund_ticket(shared_ptr<Train>((it -> second)), train_id, start_station, finish_station, level, number)) {
+				if ((now -> second).refund_ticket(it, train_id, start_station, finish_station, level, number)) {
 					return true;
 				} else {
-					throw Failrefund("退票失败。");
+					throw Exception("退票失败。");
 				}
 			}
-			catch(NotUser exp) {
+			catch(const Exception &exp) {
 				throw exp;
 			}
 			return false;
 		}
 		
-		bool add_daily_route(const Train &train, const Date &date) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+		bool add_daily_route(const Train &_train, const Date &date) {
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			if (!(now -> is_admin)) {
-				throw NotAdmin("无管理员权限。")
+			if (!(now -> second).is_admin()) {
+				throw Exception("无管理员权限。");
 			}
-			string train_id = train -> get_id();
-			map<pair<string, Date>, Train>::iterator it = train.begin(), it2 = it;
-			for (; it != train.end() && it -> first -> first != train_id; ++it);
+			string train_id = _train.get_id();
+			map<pair<string, Date>, Train, Compare_Date>::iterator it = train.begin(), it2 = it;
+			for (; it != train.end() && (it -> first).first != train_id; ++it);
 			
-			for (Date tmp = train.get_time(); tmp <= date; tmp.go_one_day()) {
+			for (Date tmp = _train.get_time(); tmp <= date; tmp.go_one_day()) {
 				while (it != train.end()) {
 					it2 = it;
 					++it2;
-					if (it2 != train.end() && it2 -> first -> first == train_id && it2 -> first -> second < tmp) {
+					//if (it2 != train.end() && (it2 -> first).first == train_id && (it2 -> first).second < tmp) {
+					if (it2 != train.end() && it2 -> first < pair<string, Date>(train_id, tmp)) {
 						++it;
 						continue;
 					} else {
@@ -337,32 +327,32 @@ namespace sjtu {
 					}
 				}
 				if (it == train.end()) {
-					train[pair<string, Date>(train_id, tmp)] = Train(train, tmp);
+					train[pair<string, Date>(train_id, tmp)] = Train(_train, tmp);
 				} else {
 					it2 = it;
 					++it2;
-					if (tmp.is_same_day(it -> second -> get_time()) || it2 != train.end() && it2 -> first -> first == train_id && tmp.is_same_day(it -> first -> first -> get_time())) {
+					if ((it -> first).first == train_id && tmp.is_same_day((it -> first).second) || it2 != train.end() && (it2 -> first).first == train_id && tmp.is_same_day((it2 -> first).second)) {
 						continue;
 					} else {
-						train[pair<string, Date>(train_id, tmp)] = Train(train, tmp);
+						train[pair<string, Date>(train_id, tmp)] = Train(_train, tmp);
 					}
 				}
 			}
 			return true;
 		}
 		
-		bool delete_daily_route(const Train &train, const Date &finish_time) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+		bool delete_daily_route(const Train &_train, const Date &finish_time) {
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			if (!(now -> is_admin)) {
-				throw NotAdmin("无管理员权限。")
+			if (!(now -> second).is_admin()) {
+				throw Exception("无管理员权限。");
 			}
-			string train_id = train -> get_id();
-			Date start_time = train.get_time();
-			map<pair<string, Date>, Train>::iterator it = train.begin(), it2 = it;
+			string train_id = _train.get_id();
+			Date start_time = _train.get_time();
+			map<pair<string, Date>, Train, Compare_Date>::iterator it = train.begin(), it2 = it;
 			for (; it != train.end(); ++it) {
-				if (it -> first -> first == train_id && it -> first -> second >= start_time && it -> first -> second <= finish_time) {
+				if ((it -> first).first == train_id && (it -> first).second >= start_time && (it -> first).second <= finish_time) {
 					it2 = it;
 					it++;
 					train.erase(it2);
@@ -371,37 +361,37 @@ namespace sjtu {
 			return true;
 		}
 		
-		bool start_daily_sale(const Train &train, const Date &finish_time) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+		bool start_daily_sale(const Train &_train, const Date &finish_time) {
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			if (!(now -> is_admin)) {
-				throw NotAdmin("无管理员权限。")
+			if (!(now -> second).is_admin()) {
+				throw Exception("无管理员权限。");
 			}
-			string train_id = train -> get_id();
-			Date start_time = train.get_time();
-			map<pair<string, Date>, Train>::iterator it = train.begin(), it2 = it;
+			string train_id = _train.get_id();
+			Date start_time = _train.get_time();
+			map<pair<string, Date>, Train, Compare_Date>::iterator it = train.begin();
 			for (; it != train.end(); ++it) {
-				if (it -> first -> first == train_id && it -> first -> second >= start_time && it -> first -> second <= finish_time) {
-					it -> start_sale();
+				if ((it -> first).first == train_id && (it -> first).second >= start_time && (it -> first).second  <= finish_time) {
+					(it -> second).start_sale();
 				}
 			}
 			return true;
 		}
 		
-		bool finish_daily_sale(const Train &train, const Date &finish_time) {
-			if (now == nullptr) {
-				throw NotLogin("未登录。");
+		bool finish_daily_sale(const Train &_train, const Date &finish_time) {
+			if (now == user.end()) {
+				throw Exception("未登录。");
 			}
-			if (!(now -> is_admin)) {
-				throw NotAdmin("无管理员权限。")
+			if (!(now -> second).is_admin()) {
+				throw Exception("无管理员权限。");
 			}
-			string train_id = train -> get_id();
-			Date start_time = train.get_time();
-			map<pair<string, Date>, Train>::iterator it = train.begin(), it2 = it;
+			string train_id = _train.get_id();
+			Date start_time = _train.get_time();
+			map<pair<string, Date>, Train, Compare_Date>::iterator it = train.begin(), it2 = it;
 			for (; it != train.end(); ++it) {
-				if (it -> first -> first == train_id && it -> first -> second >= start_time && it -> first -> second <= finish_time) {
-					it -> finish_sale();
+				if ((it -> first).first == train_id && (it -> first).second >= start_time && (it -> first).second  <= finish_time) {
+					(it -> second).finish_sale();
 				}
 			}
 			return true;

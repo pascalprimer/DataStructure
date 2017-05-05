@@ -6,6 +6,8 @@
 #include <climits>
 #include <cstddef>
 
+//using sjtu::Exception;
+
 namespace sjtu {
 /**
  * a data container like std::vector
@@ -354,13 +356,13 @@ public:
 	 *   In STL this operator does not check the boundary but I want you to do.
 	 */
 	T & operator[](const size_t &pos) {
-		if (pos >= sz || pos < 0) throw IndexOutOfBound();
+        if (pos >= sz || pos < 0) throw IndexOutOfBound("");
 		
 		return vec[pos];
 	}
 	const T & operator[](const size_t &pos) const {
-		if (pos >= sz || pos < 0) throw IndexOutOfBound();
-		
+        if (pos >= sz || pos < 0) throw IndexOutOfBound("");
+
 		return vec[pos];
 	}
 	/**

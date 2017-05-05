@@ -18,9 +18,14 @@ namespace sjtu
 	private:
 		bool on_sale; vector <Station> route;
 		string train_id; Date departure_time;
+	public:
 		//构造函数
+        Train() {}
 		Train(const bool &_on_sale,const vector <Station> &_route,const string &_train_id,const Date &_date)
 			:on_sale(_on_sale),route(_route),train_id(_train_id),departure_time(_date){}
+		Train(const Train &lhs, const Date &rhs):
+			on_sale(false), route(lhs.route), train_id(lhs.train_id), departure_time(rhs) {
+		}
 		
 		//默认析构函数
 

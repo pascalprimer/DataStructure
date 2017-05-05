@@ -134,7 +134,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../src/File.hpp \
 		../../src/Station.hpp \
 		../Train/login.h \
-		../Train/register.h ../Train/main.cpp \
+		../Train/register.h \
+		../../src/Train.hpp \
+		../../src/Tickets.hpp ../Train/main.cpp \
 		../Train/mainwindow.cpp \
 		../Train/login.cpp \
 		../Train/register.cpp
@@ -291,7 +293,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/image.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../Train/mainwindow.h ../../src/User.hpp ../../src/GeneralUser.hpp ../../src/lib/vector.hpp ../../src/lib/set.hpp ../../src/lib/ptr.hpp ../../src/lib/pair.hpp ../../src/lib/map.hpp ../../src/Exceptions.hpp ../../src/Date.hpp ../../src/File.hpp ../../src/Station.hpp ../Train/login.h ../Train/register.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/mainwindow.h ../../src/User.hpp ../../src/GeneralUser.hpp ../../src/lib/vector.hpp ../../src/lib/set.hpp ../../src/lib/ptr.hpp ../../src/lib/pair.hpp ../../src/lib/map.hpp ../../src/Exceptions.hpp ../../src/Date.hpp ../../src/File.hpp ../../src/Station.hpp ../Train/login.h ../Train/register.h ../../src/Train.hpp ../../src/Tickets.hpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/main.cpp ../Train/mainwindow.cpp ../Train/login.cpp ../Train/register.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/mainwindow.ui ../Train/login.ui ../Train/register.ui $(DISTDIR)/
 
@@ -329,9 +331,16 @@ moc_mainwindow.cpp: ../../src/lib/ptr.hpp \
 		../../src/GeneralUser.hpp \
 		../../src/Exceptions.hpp \
 		../../src/File.hpp \
-		../../src/User.hpp \
-		../../src/lib/map.hpp \
+		../../src/lib/set.hpp \
 		../../src/lib/pair.hpp \
+		../../src/Train.hpp \
+		../../src/Station.hpp \
+		../../src/Date.hpp \
+		../../src/lib/vector.hpp \
+		../../src/Tickets.hpp \
+		../../src/Log.hpp \
+		../../src/lib/map.hpp \
+		../../src/User.hpp \
 		../Train/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/mainwindow.h -o moc_mainwindow.cpp
 
@@ -340,12 +349,33 @@ moc_login.cpp: ../../src/User.hpp \
 		../../src/Exceptions.hpp \
 		../../src/GeneralUser.hpp \
 		../../src/lib/ptr.hpp \
-		../../src/lib/map.hpp \
+		../../src/lib/set.hpp \
 		../../src/lib/pair.hpp \
+		../../src/Train.hpp \
+		../../src/Station.hpp \
+		../../src/Date.hpp \
+		../../src/lib/vector.hpp \
+		../../src/Tickets.hpp \
+		../../src/Log.hpp \
+		../../src/lib/map.hpp \
 		../Train/login.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/login.h -o moc_login.cpp
 
-moc_register.cpp: ../Train/register.h
+moc_register.cpp: ../../src/User.hpp \
+		../../src/File.hpp \
+		../../src/Exceptions.hpp \
+		../../src/GeneralUser.hpp \
+		../../src/lib/ptr.hpp \
+		../../src/lib/set.hpp \
+		../../src/lib/pair.hpp \
+		../../src/Train.hpp \
+		../../src/Station.hpp \
+		../../src/Date.hpp \
+		../../src/lib/vector.hpp \
+		../../src/Tickets.hpp \
+		../../src/Log.hpp \
+		../../src/lib/map.hpp \
+		../Train/register.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/register.h -o moc_register.cpp
 
 compiler_moc_source_make_all:
@@ -377,9 +407,16 @@ main.o: ../Train/main.cpp ../Train/mainwindow.h \
 		../../src/GeneralUser.hpp \
 		../../src/Exceptions.hpp \
 		../../src/File.hpp \
-		../../src/User.hpp \
+		../../src/lib/set.hpp \
+		../../src/lib/pair.hpp \
+		../../src/Train.hpp \
+		../../src/Station.hpp \
+		../../src/Date.hpp \
+		../../src/lib/vector.hpp \
+		../../src/Tickets.hpp \
+		../../src/Log.hpp \
 		../../src/lib/map.hpp \
-		../../src/lib/pair.hpp
+		../../src/User.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Train/main.cpp
 
 mainwindow.o: ../Train/mainwindow.cpp ../Train/mainwindow.h \
@@ -387,11 +424,19 @@ mainwindow.o: ../Train/mainwindow.cpp ../Train/mainwindow.h \
 		../../src/GeneralUser.hpp \
 		../../src/Exceptions.hpp \
 		../../src/File.hpp \
-		../../src/User.hpp \
-		../../src/lib/map.hpp \
+		../../src/lib/set.hpp \
 		../../src/lib/pair.hpp \
+		../../src/Train.hpp \
+		../../src/Station.hpp \
+		../../src/Date.hpp \
+		../../src/lib/vector.hpp \
+		../../src/Tickets.hpp \
+		../../src/Log.hpp \
+		../../src/lib/map.hpp \
+		../../src/User.hpp \
 		ui_mainwindow.h \
-		../Train/login.h
+		../Train/login.h \
+		../Train/register.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Train/mainwindow.cpp
 
 login.o: ../Train/login.cpp ../Train/login.h \
@@ -400,12 +445,33 @@ login.o: ../Train/login.cpp ../Train/login.h \
 		../../src/Exceptions.hpp \
 		../../src/GeneralUser.hpp \
 		../../src/lib/ptr.hpp \
-		../../src/lib/map.hpp \
+		../../src/lib/set.hpp \
 		../../src/lib/pair.hpp \
+		../../src/Train.hpp \
+		../../src/Station.hpp \
+		../../src/Date.hpp \
+		../../src/lib/vector.hpp \
+		../../src/Tickets.hpp \
+		../../src/Log.hpp \
+		../../src/lib/map.hpp \
 		ui_login.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o login.o ../Train/login.cpp
 
 register.o: ../Train/register.cpp ../Train/register.h \
+		../../src/User.hpp \
+		../../src/File.hpp \
+		../../src/Exceptions.hpp \
+		../../src/GeneralUser.hpp \
+		../../src/lib/ptr.hpp \
+		../../src/lib/set.hpp \
+		../../src/lib/pair.hpp \
+		../../src/Train.hpp \
+		../../src/Station.hpp \
+		../../src/Date.hpp \
+		../../src/lib/vector.hpp \
+		../../src/Tickets.hpp \
+		../../src/Log.hpp \
+		../../src/lib/map.hpp \
 		ui_register.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o register.o ../Train/register.cpp
 

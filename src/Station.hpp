@@ -60,7 +60,7 @@ namespace sjtu {
 					return types[i].left_n;
 				}
 			}
-			throw TicketsNotFound("未找到" + request + "票");
+            throw Exception("未找到" + request + "票");
 		}
 		
 		const double query_single_price(const string &request) const {
@@ -69,7 +69,7 @@ namespace sjtu {
 					return types[i].price;
 				}
 			}
-			throw TicketsNotFound("未找到" + request + "票");
+            throw Exception("未找到" + request + "票");
 		}
 		
 		vector<Node> query_types() {
@@ -82,7 +82,7 @@ namespace sjtu {
 				try {
 					ret.push_back(query_single_price(request[i]));
 				} 
-				catch (const TicketsNotFound &exp) {
+                catch (const Exception &exp) {
 					throw exp;
 				}
 			}
@@ -105,7 +105,7 @@ namespace sjtu {
 					return true;
 				}
 			}
-			throw TicketsNotFound("未找到" + request + "票");
+            throw Exception("未找到" + request + "票");
 			return false;
 		}
 	};

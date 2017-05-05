@@ -15,7 +15,7 @@ namespace sjtu {
 		Exception(const Exception &ec) : detail(ec.detail) {}
 	};
 	
-	class FailBuy: public Exception {
+    /*class FailBuy: public Exception {
 	public:
 		FailBuy(const std::string &rhs): Exception(rhs) {}
 	};
@@ -98,7 +98,7 @@ namespace sjtu {
 	class NotAdmin: public Exception {
 	public:
 		NotAdmin(const std::string &rhs): Exception(rhs) {}
-	};
+    };*/
 
 	class IndexOutOfBound: public Exception {
 	public:
@@ -110,7 +110,7 @@ namespace sjtu {
 		InvalidIterator(const std::string &rhs): Exception(rhs) {}
 	};
 
-	class MoneyNotEnough: public Exception {
+    /*class MoneyNotEnough: public Exception {
 	public:
 		MoneyNotEnough(const std::string &rhs): Exception(rhs) {}
 	};
@@ -124,7 +124,7 @@ namespace sjtu {
 	public:
 		InsufficientPriviledge(const std::string &rhs): Exception(rhs) {}
 	};
-
+*/
 	class ContainerIsEmpty: public Exception {
 	public:
 		ContainerIsEmpty(const std::string &rhs): Exception(rhs) {}
@@ -133,7 +133,7 @@ namespace sjtu {
 	class RunTimeError: public Exception {
 	public:
 		RunTimeError(const std::string &rhs): Exception(rhs) {}
-	};
+    };
 	
 }
 

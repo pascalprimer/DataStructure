@@ -68,8 +68,8 @@ public:
 	const int get_day() const {
 		return day;
 	}
-	bool is_same_day (Date &obj1 , Date &obj2) {
-		return obj1.year == obj2.year && obj1.month == obj2.month && obj1.day == obj2.day && obj1.hour == obj2.hour && obj1.minute == obj2.minute;
+	bool is_same_day (Date &obj) {
+		return year == obj.year && month == obj.month && day == obj.day && hour == obj.hour && minute == obj.minute;
 	}
 	static Date current_time() {
 		time_t tt = time(NULL);
@@ -84,43 +84,43 @@ public:
 		
 		return tmp;
 	}
-	void get_next_day(Date &obj) {
+	void get_next_day() {
 		int m[13] = {0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31};
-		if (obj.year % 4 == 0 && obj.year % 100 != 0 || obj.year % 400 == 0) {
+		if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
 			m[2] = 29;
 		}
-		if (obj.day = m[obj.month]) {
-			obj.day = 1;
-			++obj.month;
-			if (obj.month > 12) {
-				++obj.year;
-				obj.month = 1;
+		if (day = m[month]) {
+			day = 1;
+			++month;
+			if (month > 12) {
+				++year;
+				month = 1;
 			}
 		}
 		else {
-			++obj.day;
+			++day;
 		}
 		return;
 	}
-	void go_one_day (Date &obj) {
+	void go_one_day () {
 		int m[13] = {0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31};
-		if (obj.year % 4 == 0 && obj.year % 100 != 0 || obj.year % 400 == 0) {
+		if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
 			m[2] = 29;
 		}
-		if (obj.day = m[obj.month]) {
-			obj.day = 1;
-			++obj.month;
-			if (obj.month > 12) {
-				++obj.year;
-				obj.month = 1;
+		if (day = m[month]) {
+			day = 1;
+			++month;
+			if (month > 12) {
+				++year;
+				month = 1;
 			}
 		}
 		else {
-			++obj.day;
+			++day;
 		}
 		return;
 	}
-	bool operator < (const Date &obj) {
+    bool operator < (const Date &obj)const {
 		if (year < obj.year) return true;
 		if (year == obj.year) {
 			if (month < obj.month) return true;
@@ -136,7 +136,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator > (const Date &obj) {
+    bool operator > (const Date &obj) const {
 		if (year > obj.year) return true;
 		if (year == obj.year) {
 			if (month > obj.month) return true;
@@ -152,7 +152,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator <= (const Date &obj) {
+    bool operator <= (const Date &obj) const {
 		if (year < obj.year) return true;
 		if (year == obj.year) {
 			if (month < obj.month) return true;
@@ -168,7 +168,7 @@ public:
 		} 
 		return false;
 	}
-	bool operator >= (const Date &obj) {
+    bool operator >= (const Date &obj) const {
 		if (year > obj.year) return true;
 		if (year == obj.year) {
 			if (month > obj.month) return true;
@@ -184,13 +184,13 @@ public:
 		} 
 		return false;
 	}
-	bool operator == (const Date &obj) {
+    bool operator == (const Date &obj)const {
 		return year == obj.year && month == obj.month && day == obj.day && hour == obj.hour && minute == obj.minute;
 	}
 	bool operator != (const Date &obj) {
 		return !(year == obj.year && month == obj.month && day == obj.day && hour == obj.hour && minute == obj.minute);
 	}
-	string print() {
+	string print() const{
 		string ans;
 		ans = year / 1000 + '0';
 		ans += year % 1000 / 100 + '0';

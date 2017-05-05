@@ -5,12 +5,14 @@
 #include<string>
 #include"lib/ptr.hpp"
 #include"Date.hpp"
+//#include "GeneralUser.hpp"
 
 using std::string;
 
 namespace sjtu {
 	
 class Tickets{
+	//friend class GeneralUser;
 	private:
 		string train_id;
 		Date departure_time;
@@ -67,7 +69,7 @@ class Tickets{
 			}
 			else return true;
 		}
-		bool operator < (const Tickets &obj) {
+        bool operator < (const Tickets &obj)const {
 			if (train_id < obj.train_id) {
 				return true;
 			}
@@ -96,19 +98,31 @@ class Tickets{
 			}
 			return false;
 		}
-		const int query_number() const {
+		void set_price(double p) {
+			price = p;
+		}
+		double query_price() const {
+			return price;
+		}
+		string query_id() const {
+			return train_id;
+		}
+		int query_number() const {
 			return number;
 		} 
-		const Date query_date() const {
+		/*inline void modify_number(int delta) {
+			number += delta;
+		}*/
+		Date query_date() const {
 			return departure_time;
 		}
-		const string query_level() const {
+		string query_level() const {
 			return level;
 		}
-		const string query_start_station() const {
+		string query_start_station() const {
 			return start_station;
 		}
-		const string query_finish_station() const {
+		string query_finish_station() const {
 			return finish_station;
 		}
 		bool modify_number (int delta) {

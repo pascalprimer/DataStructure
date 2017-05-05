@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "login.h"
 #include "register.h"
+#include "queryticket.h"
 #include <QDateTimeEdit>
 #include <QDebug>
 #include <QDateTime>
@@ -75,4 +76,10 @@ void MainWindow::on_regigster_button_clicked()
     Register reg;
     reg.set_user(this -> user);
     reg.exec();
+}
+
+void MainWindow::on_queryTicket_clicked()
+{
+    QueryTicket que;
+    que.set_user(this -> user);
 }

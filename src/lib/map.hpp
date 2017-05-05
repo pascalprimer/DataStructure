@@ -16,6 +16,7 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using sjtu::Exception;
 
 namespace sjtu {
 
@@ -79,7 +80,7 @@ public:
 		 */
 		iterator operator++(int) {
 			if (!p) {
-				throw InvalidIterator();
+                throw InvalidIterator("");
 			}
 			iterator temp = *this;
 			p = p -> next;
@@ -90,7 +91,7 @@ public:
 		 */
 		iterator & operator++() {
 			if (!p) {
-				throw InvalidIterator();
+                throw InvalidIterator("");
 			}
 			p = p -> next;
 			return *this;
@@ -100,7 +101,7 @@ public:
 		 */
 		iterator operator--(int) {
 			if (which -> empty() || !which || p == which -> min_p) {
-				throw InvalidIterator();
+                throw InvalidIterator("");
 			}
 			iterator temp = *this;
 			if (p) {
@@ -555,7 +556,7 @@ public:
 	 */
 	inline void erase(iterator pos) {
 		if (!pos.p || pos.which != this) {
-			throw InvalidIterator();
+            throw InvalidIterator("");
 		}
 		delete_node(pos.p);
 	}

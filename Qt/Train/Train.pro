@@ -15,7 +15,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     login.cpp \
-    register.cpp
+    register.cpp \
+    queryticket.cpp
 
 HEADERS  += mainwindow.h \
     ../../src/User.hpp \
@@ -32,11 +33,13 @@ HEADERS  += mainwindow.h \
     login.h \
     register.h \
     ../../src/Train.hpp \
-    ../../src/Tickets.hpp
+    ../../src/Tickets.hpp \
+    queryticket.h
 
 FORMS    += mainwindow.ui \
     login.ui \
-    register.ui
+    register.ui \
+    queryticket.ui
 
 RESOURCES += \
     image.qrc
