@@ -73,8 +73,8 @@ public:
 	}
 	static Date current_time() {
 		time_t tt = time(NULL);
-		//tm *t = localtime(&tt);
-		shared_ptr<tm> t(localtime(&tt));
+		tm *t = localtime(&tt);
+		//shared_ptr<tm> t(localtime(&tt));
 		Date tmp;
 		tmp.year = t -> tm_year + 1900;
 		tmp.month = t -> tm_mon + 1;
