@@ -101,6 +101,11 @@ namespace sjtu {
 		const bool modify_number(const string &request, int delta) {
 			for (int i = 0; i < types.size(); ++i) {
 				if (types[i].level == request) {
+					if (types[i].left_n + delta < 0)
+					{
+						throw Exception(request+"票数目不够");
+						return false;
+					}
 					types[i].left_n += delta;
 					return true;
 				}
@@ -108,8 +113,9 @@ namespace sjtu {
             throw Exception("未找到" + request + "票");
 			return false;
 		}
+
+		const int query_distance() const { return dist; }
 	};
-	
 }
 
 #endif
