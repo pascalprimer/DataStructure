@@ -34,7 +34,7 @@
 	  <tr>
 	    <td>vector</td>
 	    <td>lib</td>
-	    <th>  </th>
+	    <th> finish </th>
 	  </tr>
 	  <tr>
 	    <td>pair</td>
@@ -49,12 +49,12 @@
 	  <tr>
 	    <td>Log</td>
 	    <td>日志</td>
-	    <th>   </th>
+	    <th> 待测  </th>
 	  </tr>
 	  <tr>
 	    <td>Date</td>
 	    <td>时间</td>
-	    <th>  </th>
+	    <th> finished </th>
 	  </tr>
 	  <tr>
 	    <td>Exceptions(哪些要)</td>
@@ -79,17 +79,17 @@
 	  <tr>
 	    <td>Station</td>
 	    <td>火车站点</td>
-	    <th>  </th>
+	    <th>  finish</th>
 	  </tr>
 	  <tr>
 	    <td>Train</td>
 	    <td>单趟单日列车</td>
-	    <th>  </th>
+	    <th>  待测</th>
 	  </tr>
 	  <tr>
 	    <td>Tickets</td>
 	    <td>哪趟火车起点终点张数</td>
-	    <th>  </th>
+	    <th>  待测</th>
 	  </tr>
     </table>
 </div>
