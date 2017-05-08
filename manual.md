@@ -79,12 +79,12 @@
 	  <tr>
 	    <td>Station</td>
 	    <td>火车站点</td>
-	    <th>  finish</th>
+	    <th>  finished</th>
 	  </tr>
 	  <tr>
 	    <td>Train</td>
 	    <td>单趟单日列车</td>
-	    <th>  待测</th>
+	    <th>  finished</th>
 	  </tr>
 	  <tr>
 	    <td>Tickets</td>
