@@ -34,7 +34,7 @@
 	  <tr>
 	    <td>vector</td>
 	    <td>lib</td>
-	    <th> finish </th>
+	    <th> finished </th>
 	  </tr>
 	  <tr>
 	    <td>pair</td>
@@ -89,7 +89,7 @@
 	  <tr>
 	    <td>Tickets</td>
 	    <td>哪趟火车起点终点张数</td>
-	    <th>  待测</th>
+	    <th>finished</th>
 	  </tr>
     </table>
 </div>
