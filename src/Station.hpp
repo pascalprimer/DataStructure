@@ -9,7 +9,7 @@
 using std::string;
 
 namespace sjtu {
-	
+
 	class Station {
 	public:
 		const static int MAXN = 2000;
@@ -115,6 +115,8 @@ namespace sjtu {
 		}
 
 		const int query_distance() const { return dist; }
+
+		void go_one_day() { arrival_time.go_one_day(); departure_time.go_one_day(); }
 	};
 }
 

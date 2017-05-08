@@ -107,7 +107,7 @@ public:
 		if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
 			m[2] = 29;
 		}
-		if (day = m[month]) {
+		if (day == m[month]) {
 			day = 1;
 			++month;
 			if (month > 12) {

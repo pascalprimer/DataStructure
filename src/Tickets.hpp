@@ -58,10 +58,9 @@ class Tickets{
 		// 	return *this;
 		// }
 		bool operator == (const Tickets &obj) {
-			if (train_id == obj.train_id && departure_time == obj.departure_time && start_station == obj.start_station && finish_station == obj.finish_station && level == obj.level) {
+			if (train_id == obj.train_id && departure_time == obj.departure_time && start_station == obj.start_station && finish_station == obj.finish_station && level == obj.level)
 				return true;
-			}
-			else return false;
+			return false;
 		}
 		bool operator != (const Tickets &obj) {
 			if (train_id == obj.train_id && departure_time == obj.departure_time && start_station == obj.start_station && finish_station == obj.finish_station && level == obj.level) {

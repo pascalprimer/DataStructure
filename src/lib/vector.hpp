@@ -144,6 +144,8 @@ public:
 		T& operator*() const{
 			return (*p)[ptr];
 		}
+		// T* operator->() { return p[ptr]; }
+			
 		/**
 		 * a operator to check whether two iterators are same (pointing to the same memory).
 		 */
@@ -266,6 +268,7 @@ public:
 		/**
 		 * a operator to check whether two iterators are same (pointing to the same memory).
 		 */
+		// T* operator->() { return p[ptr]; }
 		bool operator==(const iterator &rhs) const {
 			return rhs.ptr == ptr && rhs.p == p;
 		}
