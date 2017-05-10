@@ -117,9 +117,7 @@ namespace sjtu
 					return true;
 				}
 			}
-			catch (const Exception &exc) {
-				throw exc;
-			}
+			catch (const Exception &exc) {throw exc; }
 			return false;
 		}
 
@@ -129,14 +127,18 @@ namespace sjtu
 			if (admin_or_not) { throw Exception("您是管理员，无法退票。"); return false; }
 			Tickets new_tickets = Tickets(train_id,(obj->second).get_time(), start_station,finish_station,level,num,0);
 			auto it = my_ticket.find(new_tickets);
-			if (it != my_ticket.end()&&it->query_number() >= num)
-				if ((obj->second).refund_ticket(start_station,finish_station,level,num,money))
-				{
-					new_tickets.set_price(it->query_price());
-					my_log.refund_tickets(Date::current_time(),new_tickets);
-					if (it->query_number() > num) it -> modify_number(-num);
-					else my_ticket.erase(it);
-				}
+			try
+			{
+				if (it != my_ticket.end()&&it->query_number() >= num)
+					if ((obj->second).refund_ticket(start_station,finish_station,level,num,money))
+					{
+						new_tickets.set_price(it->query_price());
+						my_log.refund_tickets(Date::current_time(),new_tickets);
+						if (it->query_number() > num) it -> modify_number(-num);
+						else my_ticket.erase(it); return true;
+					}
+			}
+			catch (Exception ex) { throw ex; }
 			throw Exception("您的票数不够，无法退票。");
 			return false;
 		}

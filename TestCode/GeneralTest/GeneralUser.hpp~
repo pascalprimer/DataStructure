@@ -116,6 +116,7 @@ namespace sjtu
 		//退票或失败，管理员不能退票
 		bool refund_ticket(map < pair<string, Date>,Train,Compare_Date > :: iterator obj, const string &train_id, const string &start_station,const string &finish_station,const string &level,int num)
 		{
+			return false;	
 			if (admin_or_not) { throw Exception("您是管理员，无法退票。"); return false; }
 			Tickets new_tickets = Tickets(train_id,(obj->second).get_time(),start_station,finish_station,level,num,0);
 			auto it = my_ticket.find(new_tickets);
@@ -130,9 +131,9 @@ namespace sjtu
 						if (it->query_number() > num) it -> modify_number(-num);
 						else my_ticket.erase(it);
 					}
+				//throw Exception("您的票数不够，无法退票。");
 			}
 			catch (Exception ex) { throw ex; }
-			throw Exception("您的票数不够，无法退票。");
 			return false;
 		}
 		

@@ -82,7 +82,7 @@ namespace sjtu
 				for (int i = p1;i < p2;++i)
 					mn = std::min(mn,route[i].query_single_number(level));
 			}
-			catch (const Exception &ex) { throw ex; }
+			catch (Exception ex) { throw ex; }
 			if (mn < number) throw Exception("票数不足。");
 			double cost = route[p2].query_single_price(level);
 			if (p1) cost -= route[p1].query_single_price(level);

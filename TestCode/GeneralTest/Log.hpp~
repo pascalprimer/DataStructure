@@ -158,7 +158,7 @@ namespace sjtu {
 			}
 		friend std::ostream & operator<<(std::ostream & os,const Log &obj)
 		{
-			for (auto it = (obj.information).cbegin();it != (obj.information).cend();++it)
+			for (auto it = information.begin();it != information.end();++it)
 				os << *it << std::endl;
 			return os;
 		}
