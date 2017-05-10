@@ -9,7 +9,7 @@ namespace sjtu {
 	public:
 		std::string detail;
 	public:
-		Exception() = default;
+		Exception():detail() {}
 		Exception(const std::string &rhs): detail(rhs) {}
 		// Exception(std::string &&rhs): detail(rhs) {}
 		// Exception(Exception &&ec):detail(ec.detail){}
