@@ -215,4 +215,7 @@ void MainWindow::on_userButton_clicked()
     UserOperation oper;
     oper.set_user(user);
     oper.exec();
+    if (user -> check_login()) {
+        ui -> now_user -> setText(QString::fromStdString(user -> query_now_id()));
+    }
 }

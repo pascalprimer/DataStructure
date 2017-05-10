@@ -34,22 +34,22 @@ public:
     {
         if (GetInt->objectName().isEmpty())
             GetInt->setObjectName(QStringLiteral("GetInt"));
-        GetInt->resize(400, 300);
+        GetInt->resize(400, 270);
         numEdit = new QLineEdit(GetInt);
         numEdit->setObjectName(QStringLiteral("numEdit"));
-        numEdit->setGeometry(QRect(210, 140, 113, 27));
+        numEdit->setGeometry(QRect(190, 120, 113, 27));
         label = new QLabel(GetInt);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(100, 140, 111, 31));
+        label->setGeometry(QRect(80, 120, 111, 31));
         request = new QLabel(GetInt);
         request->setObjectName(QStringLiteral("request"));
-        request->setGeometry(QRect(120, 80, 181, 31));
+        request->setGeometry(QRect(80, 60, 221, 31));
         enterBtn = new QPushButton(GetInt);
         enterBtn->setObjectName(QStringLiteral("enterBtn"));
-        enterBtn->setGeometry(QRect(90, 210, 99, 27));
+        enterBtn->setGeometry(QRect(70, 190, 99, 27));
         quitBtn = new QPushButton(GetInt);
         quitBtn->setObjectName(QStringLiteral("quitBtn"));
-        quitBtn->setGeometry(QRect(230, 210, 99, 27));
+        quitBtn->setGeometry(QRect(210, 190, 99, 27));
 
         retranslateUi(GetInt);
 
@@ -59,6 +59,7 @@ public:
     void retranslateUi(QDialog *GetInt)
     {
         GetInt->setWindowTitle(QApplication::translate("GetInt", "Dialog", 0));
+        numEdit->setText(QApplication::translate("GetInt", "0", 0));
         label->setText(QApplication::translate("GetInt", "<html><head/><body><p>\350\257\267\350\276\223\345\205\245\346\225\260\351\207\217</p></body></html>", 0));
         request->setText(QApplication::translate("GetInt", "<html><head/><body><p><br/></p></body></html>", 0));
         enterBtn->setText(QApplication::translate("GetInt", "\347\241\256\350\256\244", 0));

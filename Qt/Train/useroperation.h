@@ -29,6 +29,10 @@ private slots:
 
     void on_nameButton_clicked();
 
+    void on_codeButton_clicked();
+
+    void on_logButton_clicked();
+
 private:
     Ui::UserOperation *ui;
     sjtu::shared_ptr<User> user;

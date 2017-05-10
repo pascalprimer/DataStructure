@@ -196,6 +196,13 @@ namespace sjtu {
             }
         }
 
+        string query_identifying_code() {
+            if (now == user.end()) {
+                throw Exception("未登录。");
+            }
+            return official_identifying_code;
+        }
+
         double query_money() {
             if (now == user.end()) {
                 throw Exception("未登录。");

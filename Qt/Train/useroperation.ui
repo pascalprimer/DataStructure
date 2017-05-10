@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>查看log</string>
+    <string>查看日志</string>
    </property>
   </widget>
   <widget class="QPushButton" name="codeButton">
@@ -89,19 +89,6 @@
    </property>
    <property name="text">
     <string>我的火车票</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="historyButton">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>150</y>
-     <width>99</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>历史记录</string>
    </property>
   </widget>
  </widget>

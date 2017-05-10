@@ -8,6 +8,7 @@
 #include "getint.h"
 #include "getnewpassword.h"
 #include "getstring.h"
+#include "plaintable.h"
 #include <string>
 
 using std::string;
@@ -92,11 +93,14 @@ inline void UserOperation::set_number_with_user(int number)  {
 void UserOperation::on_chargeButton_clicked()
 {
     GetInt getint;
-    getint.set_bound(31415.926);
+    getint.set_bound(31415);
     QDialog::connect(&getint, &GetInt::queried, this, &UserOperation::set_number_with_user);
     try {
         getint.exec();
         user -> charge(number_with_user);
+        if (number_with_user < 0 || number_with_user > 31415.926) {
+            QMessageBox::information(nullptr, "Warning", "充值金额不合法！");
+        }
         QMessageBox::information(nullptr, "Notice", "用户充值" +
                                  QString::number(number_with_user) +
                                  "成功，余额为" +
@@ -144,4 +148,30 @@ void UserOperation::on_nameButton_clicked()
     catch (const Exception &exc) {
         QMessageBox::information(nullptr, "Warning", QString::fromStdString(exc.detail));
     }
+}
+
+void UserOperation::on_codeButton_clicked()
+{
+    GetString getstring;
+    QDialog::connect(&getstring, &GetString::queried, this, &UserOperation::set_single_string);
+    try {
+        getstring.exec();
+        user -> set_identifying_code(user -> query_identifying_code(), s1);
+        QMessageBox::information(nullptr, "Notice", "成功修改用户名为" +
+                                 QString::fromStdString(user -> query_name()));
+    }
+    catch (const Exception &exc) {
+        QMessageBox::information(nullptr, "Warning", QString::fromStdString(exc.detail));
+    }
+}
+
+void UserOperation::on_logButton_clicked()
+{
+    /*GetString getstring;
+    QDialog::connect(&getstring, &GetString::queried, this, &UserOperation::set_single_string);
+    */
+    /*PlainTable ptable;
+    ptable.set_user(user);
+    //ptable.get_type();
+    ptable.exec();*/
 }

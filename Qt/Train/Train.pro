@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     getint.cpp \
     useroperation.cpp \
     getstring.cpp \
-    getnewpassword.cpp
+    getnewpassword.cpp \
+    plaintable.cpp
 
 HEADERS  += mainwindow.h \
     ../../src/User.hpp \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     getint.h \
     useroperation.h \
     getstring.h \
-    getnewpassword.h
+    getnewpassword.h \
+    plaintable.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -51,7 +53,8 @@ FORMS    += mainwindow.ui \
     getint.ui \
     useroperation.ui \
     getstring.ui \
-    getnewpassword.ui
+    getnewpassword.ui \
+    plaintable.ui
 
 RESOURCES += \
     image.qrc
