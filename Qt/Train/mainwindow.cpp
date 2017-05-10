@@ -188,6 +188,10 @@ void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
         get_int.set_bound(bound);
         QDialog::connect(&get_int, &GetInt::queried, this, &MainWindow::buy_tickets_from_list);
         get_int.exec();
+        if (number_with_user < 0) {
+            QMessageBox::information(nullptr, "Warning", "竟敢买负数，你肯定是疯了！！！");
+            return;
+        }
         if (number_with_user == 0) {
             return;
         }
@@ -198,6 +202,7 @@ void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
         string level = model -> item(index.row(), 5) -> text().toStdString();
         try {
             user -> buy_ticket(train_id, train_date, start_station, finish_station, level, number_with_user);
+            QMessageBox::information(nullptr, "Notice", "购票成功！");
         }
         catch (const Exception &exc) {
             QMessageBox::information(nullptr, "Notice", QString::fromStdString(exc.detail));

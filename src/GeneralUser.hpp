@@ -14,17 +14,19 @@
 using std::string;
 namespace sjtu
 {
-    class Compare_Date
-	{
+    class Compare_Date {
     public:
-		bool operator()(const pair<string, Date> &lhs, const pair<string, Date> &rhs)
-		{
-			if (lhs.first != rhs.first) return lhs.first < rhs.first;
-			else if (lhs.second.get_year() != rhs.second.get_year())
+		bool operator()(const pair<string, Date> &lhs, const pair<string, Date> &rhs) {
+			if (lhs.first != rhs.first) {
+				return lhs.first < rhs.first;
+			}
+			if (lhs.second.get_year() != rhs.second.get_year()) {
 				return lhs.second.get_year() < rhs.second.get_year();
-			else if (lhs.second.get_month() != rhs.second.get_month())
+			}
+			if (lhs.second.get_month() != rhs.second.get_month()) {
 				return lhs.second.get_month() < rhs.second.get_month();
-			else return lhs.second.get_day() < rhs.second.get_day();
+			}
+			return lhs.second.get_day() < rhs.second.get_day();
 		}
     };
     
@@ -42,11 +44,15 @@ namespace sjtu
 		enum LogType {All,Buy,Refund,BuyAndRefund,Charge};
 
 		// 构造函数部分
-		GeneralUser(const string &_user_id,const string &_name,const string &_password,bool _admin_or_not = false,double _money = 0):
-			user_id(_user_id),name(_name),password(_password),admin_or_not(_admin_or_not),money(_money){}
+		GeneralUser(const string &_user_id,const string &_name,const string &_password,bool _admin_or_not):
+			user_id(_user_id),name(_name),password(_password),admin_or_not(_admin_or_not), money(0.0)
+		{
+			//if (password.length() < 6||password.length() > 15)
+			//	throw PasswordIsNotValid("密码不合法！长度需在6到15之间。\n");
+		}
 
 		//默认析构函数
-        // ~GeneralUser() {}
+        ~GeneralUser() {}
 
 		//返回用户基本信息，包括 user_id，name
 		string query_my_info() const
@@ -81,45 +87,48 @@ namespace sjtu
 		bool is_admin() const { return admin_or_not; }
 
 		//返回用户id
-		const string get_id() const { return user_id; }
+		string get_id() const { return user_id; }
 
-        const string get_name() const { return name; }
+        string get_name() const {
+            return name;
+        }
 		
-		bool check_password(const string &input_password) { return password == input_password; }
+		bool check_password(const string &input_password) {
+			return password == input_password;
+		}
 		
 		//买票或失败, 管理员不能买票
-        bool buy_ticket(map < pair<string, Date>,Train,Compare_Date> :: iterator obj,const string &train_id,const string &start_station,const string &finish_station,const string &level,int num)
+        bool buy_ticket(map<pair<string, Date>, Train, Compare_Date>::iterator obj,const string &train_id,const string &start_station,const string &finish_station,const string &level,int num)
 		{
 			if (admin_or_not) { throw Exception("您是管理员，无法购票。"); return false; }
 			double tmoney = money, UnitPrice;
-			try
-			{
+			try {
 				if ((obj -> second).buy_ticket(start_station,finish_station,level,num,money))
 				{
 					UnitPrice = int(round((tmoney-money)/num));
-					Tickets new_tickets = Tickets(train_id,(obj -> second).get_time(),start_station,finish_station,level,num,UnitPrice);
+                    Tickets new_tickets = Tickets(train_id, (obj -> second).get_time(), (obj -> second).get_time(), start_station,finish_station,level,num,UnitPrice, 0);
 					my_log.buy_tickets(Date::current_time(),new_tickets);
 					auto it = my_ticket.find(new_tickets);
 					if (it == my_ticket.end()) my_ticket.insert(new_tickets);
-					else it->modify_number(num);
-					// {
-					// 	//it->number += num;
-					// 	it -> modify_number(num);
-					// }
+					else {
+						//it->number += num;
+						it -> modify_number(num);
+					}
 					return true;
 				}
 			}
-			catch (const Exception &exc) { throw exc; }
+			catch (const Exception &exc) {
+				throw exc;
+			}
 			return false;
 		}
 
 		//退票或失败，管理员不能退票
-		bool refund_ticket(map < pair<string, Date>,Train,Compare_Date > :: iterator obj, const string &train_id, const string &start_station,const string &finish_station,const string &level,int num)
+		bool refund_ticket(map<pair<string, Date>, Train, Compare_Date>::iterator obj, const string &train_id, const string &start_station,const string &finish_station,const string &level,int num)
 		{
 			if (admin_or_not) { throw Exception("您是管理员，无法退票。"); return false; }
-			Tickets new_tickets = Tickets(train_id,(obj->second).get_time(),start_station,finish_station,level,num,0);
+            Tickets new_tickets = Tickets(train_id,(obj->second).get_time(), (obj->second).get_time(), start_station,finish_station,level,num);
 			auto it = my_ticket.find(new_tickets);
-			assert(it == my_ticket.end());
 			try
 			{
 				if (it != my_ticket.end()&&it->query_number() >= num)
@@ -131,7 +140,7 @@ namespace sjtu
 						else my_ticket.erase(it);
 					}
 			}
-			catch (Exception ex) { throw ex; }
+			catch (const Exception &ex) { throw ex; }
 			throw Exception("您的票数不够，无法退票。");
 			return false;
 		}
@@ -168,9 +177,8 @@ namespace sjtu
 			default: ret = new Log (my_log.charge_log()); break;
 			}
 			return ret;*/
-			switch (_logtype)
-			{
-				case All: return shared_ptr <Log> (new Log(my_log)); break;	
+			switch (_logtype) {
+				case All: return shared_ptr<Log>(new Log(my_log)); break;	
 				case Buy: return my_log.buy_log(); break;
 				case Refund: return my_log.refund_log(); break;
 				case BuyAndRefund: return my_log.buy_refund_log(); break;

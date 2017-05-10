@@ -15,16 +15,21 @@ class Tickets{
 	//friend class GeneralUser;
 	private:
 		string train_id;
-		Date departure_time;
+        Date departure_time, train_time;
 		string start_station;
 		string finish_station;
 		string level;
 		int number;
+        int dist;
 		double price;
 		
-	public:
-		Tickets(const string &ti ,const Date &d,const string &ss,const string &fs,const string &l,int n,double p)
-			:train_id(ti),departure_time(d),start_station(ss),finish_station(fs),level(l),number(n),price(p){}
+    public:
+        Tickets(const string &ti ,const Date &d,const Date &t_d, const string &ss,const string &fs,const string &l,int n,double p, int _d)
+            :train_id(ti), train_time(t_d), departure_time(d),start_station(ss),finish_station(fs),level(l),number(n),price(p), dist(_d){}
+        Tickets(const string &ti ,const Date &d,const Date &t_d, const string &ss,const string &fs,const string &l,int n,double p)
+            :train_id(ti), train_time(t_d), departure_time(d),start_station(ss),finish_station(fs),level(l),number(n),price(p), dist(0){}
+        Tickets(const string &ti ,const Date &d,const Date &t_d, const string &ss,const string &fs,const string &l,int n)
+            :train_id(ti), train_time(t_d), departure_time(d),start_station(ss),finish_station(fs),level(l),number(n),price(0), dist(0){}
 	// {
 	// 		train_id = ti;
 	// 		departure_time = d;
@@ -73,7 +78,7 @@ class Tickets{
 				return true;
 			}
 			else if (train_id == obj.train_id) {
-				if (departure_time < obj.departure_time) {
+                if (train_time < obj.train_time) {
 					return true;
 				}
 				else if (departure_time == obj.departure_time) {
@@ -112,9 +117,12 @@ class Tickets{
 		/*inline void modify_number(int delta) {
 			number += delta;
 		}*/
-		Date query_date() const {
+        Date query_departure_date() const {
 			return departure_time;
 		}
+        Date query_train_date() const {
+            return train_time;
+        }
 		string query_level() const {
 			return level;
 		}

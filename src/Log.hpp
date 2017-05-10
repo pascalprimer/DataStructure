@@ -7,7 +7,6 @@
 #include "Tickets.hpp"
 #include "Train.hpp" 
 #include <string>
-#include <iostream>
 
 using std::string;
 
@@ -34,7 +33,7 @@ namespace sjtu {
 						return false;
 					}
 				}
-				return true;
+				return true;	
 			}
 		public:
 			Log() {}
@@ -100,7 +99,7 @@ namespace sjtu {
 			}
 			void buy_tickets(const Date &now, const Tickets &new_tickets) {
 				string str = now.print() + ": " + string("购买 ")
-								+ string("时间为 ") + new_tickets.query_date().print()
+                                                                + string("时间为 ") + new_tickets.query_departure_date().print()
 								+ string(" 车次为 ") + new_tickets.query_id()
 								+ string(" 从 ") + new_tickets.query_start_station() 
 								+ string(" 到 ") + new_tickets.query_finish_station()
@@ -112,7 +111,7 @@ namespace sjtu {
 			}
 			void refund_tickets(const Date &now, const Tickets &new_tickets) {
 				string str = now.print() + ": " + string("退购 ")
-								+ string("时间为 ") + new_tickets.query_date().print() 
+                                                                + string("时间为 ") + new_tickets.query_departure_date().print()
 								+ string(" 车次为 ") + new_tickets.query_id()
 								+ string(" 从 ") + new_tickets.query_start_station()
 								+ string(" 到 ") + new_tickets.query_finish_station()
@@ -156,12 +155,7 @@ namespace sjtu {
 								+ string("的列车"); 
 				information.push_back(str);
 			}
-		friend std::ostream & operator<<(std::ostream & os,const Log &obj)
-		{
-			for (auto it = (obj.information).cbegin();it != (obj.information).cend();++it)
-				os << *it << std::endl;
-			return os;
-		}
+		
 	};
 } 
 #endif

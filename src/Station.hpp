@@ -32,15 +32,20 @@ namespace sjtu {
 		Station(const string &_location, const Date &_arrival_time, const Date &_departure_time, const vector<Node> &_types, int _dist): 
 			location(_location), arrival_time(_arrival_time), 
 			departure_time(_departure_time), types(_types), dist(_dist) {
+//std::cout << "create Station: " << departure_time.print() << std::endl;
 		}
 		Station(const string &_location, const Date &_arrival_time, const Date &_departure_time, const vector<string> &_type, const vector<double> &_price, int _dist): 
 			location(_location), arrival_time(_arrival_time), 
-			departure_time(_departure_time), dist(_dist) {
+            departure_time(_departure_time), dist(_dist) {
+//std::cout << "create Station: " << departure_time.print() << std::endl;
 			types.clear();
 			for (int i = 0; i < (int)_price.size(); ++i) {
 				types.push_back(Node(_price[i], _type[i], MAXN));
 			}
 		}
+        Station(const Station &obj): location(obj.location), arrival_time(obj.arrival_time),
+            departure_time(obj.departure_time), types(obj.types), dist(obj.dist) {
+        }
 		
 		const string query_location() const {
 			return location;

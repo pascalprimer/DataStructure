@@ -26,6 +26,8 @@ private:
 	int minute;
 	
 public:
+    Date(int _y, int _m, int _d, int _h, int _minute): year(_y), month(_m), day(_d), hour(_h), minute(_minute) {
+    }
 	Date(string s) {
 		int l = s.length();
 		if (l == 10) {
@@ -51,12 +53,15 @@ public:
 		minute = obj.minute;
 	}
 	Date &operator = (const Date& obj) {
-		Date tmp;
-		tmp.year = obj.year;
-		tmp.month = obj.month;
-		tmp.day = obj.day;
-		tmp.hour = obj.hour;
-		tmp.minute = obj.minute;
+        if (this == &obj) {
+            return *this;
+        }
+        year = obj.year;
+        month = obj.month;
+        day = obj.day;
+        hour = obj.hour;
+        minute = obj.minute;
+        return *this;
 	}
 	Date() : year(0) , month(0) , day(0) , hour(0) , minute(0) {};         //empty constructor 
 	const int get_year() const {
