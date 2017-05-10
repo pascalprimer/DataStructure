@@ -35,7 +35,8 @@ public:
     QPushButton *regigster_button;
     QPushButton *pushButton_2;
     QLabel *now_user;
-    QPushButton *pushButton;
+    QPushButton *queryTicket;
+    QPushButton *userButton;
     QMenuBar *menuBar;
     QMenu *menu;
     QToolBar *mainToolBar;
@@ -62,10 +63,13 @@ public:
         pushButton_2->setGeometry(QRect(520, 340, 99, 27));
         now_user = new QLabel(centralWidget);
         now_user->setObjectName(QStringLiteral("now_user"));
-        now_user->setGeometry(QRect(540, 20, 111, 31));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(30, 100, 99, 27));
+        now_user->setGeometry(QRect(520, 20, 221, 31));
+        queryTicket = new QPushButton(centralWidget);
+        queryTicket->setObjectName(QStringLiteral("queryTicket"));
+        queryTicket->setGeometry(QRect(30, 100, 99, 27));
+        userButton = new QPushButton(centralWidget);
+        userButton->setObjectName(QStringLiteral("userButton"));
+        userButton->setGeometry(QRect(30, 220, 99, 27));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -94,7 +98,8 @@ public:
         regigster_button->setText(QApplication::translate("MainWindow", "\346\263\250\345\206\214", 0));
         pushButton_2->setText(QApplication::translate("MainWindow", "\347\231\273\345\207\272", 0));
         now_user->setText(QApplication::translate("MainWindow", "\346\234\252\347\231\273\345\275\225", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0));
+        queryTicket->setText(QApplication::translate("MainWindow", "\347\201\253\350\275\246\347\245\250\346\237\245\350\257\242", 0));
+        userButton->setText(QApplication::translate("MainWindow", "\347\224\250\346\210\267\346\223\215\344\275\234", 0));
         menu->setTitle(QApplication::translate("MainWindow", "\350\275\275\345\205\245\346\226\207\344\273\266", 0));
     } // retranslateUi
 

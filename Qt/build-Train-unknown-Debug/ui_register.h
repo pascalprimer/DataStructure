@@ -41,7 +41,7 @@ public:
     {
         if (Register->objectName().isEmpty())
             Register->setObjectName(QStringLiteral("Register"));
-        Register->resize(447, 327);
+        Register->resize(415, 333);
         registerBtn = new QPushButton(Register);
         registerBtn->setObjectName(QStringLiteral("registerBtn"));
         registerBtn->setGeometry(QRect(80, 260, 101, 31));

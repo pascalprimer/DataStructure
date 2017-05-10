@@ -16,7 +16,11 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     login.cpp \
     register.cpp \
-    queryticket.cpp
+    queryticket.cpp \
+    getint.cpp \
+    useroperation.cpp \
+    getstring.cpp \
+    getnewpassword.cpp
 
 HEADERS  += mainwindow.h \
     ../../src/User.hpp \
@@ -34,12 +38,20 @@ HEADERS  += mainwindow.h \
     register.h \
     ../../src/Train.hpp \
     ../../src/Tickets.hpp \
-    queryticket.h
+    queryticket.h \
+    getint.h \
+    useroperation.h \
+    getstring.h \
+    getnewpassword.h
 
 FORMS    += mainwindow.ui \
     login.ui \
     register.ui \
-    queryticket.ui
+    queryticket.ui \
+    getint.ui \
+    useroperation.ui \
+    getstring.ui \
+    getnewpassword.ui
 
 RESOURCES += \
     image.qrc
