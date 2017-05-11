@@ -33,6 +33,12 @@ private slots:
 
     void on_logButton_clicked();
 
+    void on_ticketButton_clicked();
+
+    void on_infoButton_clicked();
+
+    void on_chargeButton_2_clicked();
+
 private:
     Ui::UserOperation *ui;
     sjtu::shared_ptr<User> user;

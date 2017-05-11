@@ -11,6 +11,27 @@
 using std::string;
 
 namespace sjtu {
+
+    inline string double_to_string(double x) {
+        if (x < 1e-5 && x > -1e-5) {
+            return "0.00";
+        }
+        string ret = "";
+        if (x < 0.0) {
+            ret += "-";
+            x = -x;
+        }
+        int a = int(x * 100) / 100;
+        x -= a;
+        if (x < 0) {
+            x += 1;
+            a -= 1;
+        }
+        ret += std::to_string(a) + ".";
+        int y = int(x * 100) / 100;
+        ret += y < 10 ? "0" + std::to_string(y) : std::to_string(y);
+        return ret;
+    }
 	
 	class Log {
 		private:
@@ -23,8 +44,9 @@ namespace sjtu {
 				}
 			}
 			inline bool check_type(int i, const string &str) {
-				int j = get_pos(information[i]) + 1;
+                int j = get_pos(information[i]) + 2;
 				if ((int)information[i].size() < j + str.size() - 1) {
+                    //std::cout << "length short" << std::endl;
 					return false;
 				}
 				bool flag = true;
@@ -39,14 +61,24 @@ namespace sjtu {
 			Log() {}
 			Log(const Log &rhs): information(rhs.information) {
 			}
+			inline int size() {
+				return information.size();
+			}
+            inline string &operator [](int index) {
+                if (index < 0 || index >= information.size()) {
+                    throw Exception("Log下标越界");
+                }
+				return information[index];
+			}
 			shared_ptr<Log> buy_log() {
 				int sz = information.size();
 				string str("购买");
 				shared_ptr<Log> ret(new Log());
 				for (int i = 0;i < sz; ++i) {
-					if (check_type(i, str)) {
+                    std::cout << information[i] << " " << check_type(i, str) << " " << std::endl;
+                    if (check_type(i, str)) {
 						ret -> add_information(information[i]);
-					}
+                    }
 				}
 				return ret;
 			}
@@ -98,14 +130,14 @@ namespace sjtu {
 				information.push_back(str);
 			}
 			void buy_tickets(const Date &now, const Tickets &new_tickets) {
-				string str = now.print() + ": " + string("购买 ")
+                string str = now.print() + ": " + string("购买 ")
                                                                 + string("时间为 ") + new_tickets.query_departure_date().print()
 								+ string(" 车次为 ") + new_tickets.query_id()
 								+ string(" 从 ") + new_tickets.query_start_station() 
 								+ string(" 到 ") + new_tickets.query_finish_station()
 								+ string(" 的") + std::to_string(new_tickets.query_number())
 								+ string("张") + new_tickets.query_level() + string("票")
-								+ string("，共计") + std::to_string(new_tickets.query_price())
+                                + string("，共计") + double_to_string(new_tickets.query_price())
 								+ string("元");
 				information.push_back(str);
 			}
@@ -117,13 +149,13 @@ namespace sjtu {
 								+ string(" 到 ") + new_tickets.query_finish_station()
 								+ string(" 的") + std::to_string(new_tickets.query_number())
 								+ string("张") + new_tickets.query_level() + string("票")
-								+ string("，共计") + std::to_string(new_tickets.query_price())
+                                + string("，共计") + double_to_string(new_tickets.query_price())
 								+ string("元"); 
 				information.push_back(str);
 			}
 			void charge(const Date &now, double money) {
 				string str = now.print() + ": " + string("充值 ")
-								+ string("金额为 ") + std::to_string(money)
+                                + string("金额为 ") + double_to_string(money)
 								+ string("元"); 
 				information.push_back(str);
 			}

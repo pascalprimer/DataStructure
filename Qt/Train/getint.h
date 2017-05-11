@@ -15,8 +15,8 @@ class GetInt : public QDialog
 public:
     explicit GetInt(QWidget *parent = 0);
     ~GetInt();
-    inline void set_bound(int _bound);
-    inline void send_int(int number) {
+    void set_bound(int _bound);
+    void send_int(int number) {
         //std::cout << "get_int emit number" << std::endl;
         emit queried(number);
     }

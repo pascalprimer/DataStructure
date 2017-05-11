@@ -18,8 +18,8 @@ class GetString : public QDialog
 public:
     explicit GetString(QWidget *parent = 0);
     ~GetString();
-    inline void give_information(const string &obj);
-    inline void send_string(const string &obj) {
+    void give_information(const string &obj);
+    void send_string(const string &obj) {
         emit queried(obj);
     }
 

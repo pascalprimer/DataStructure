@@ -176,7 +176,8 @@ namespace sjtu
 			case BuyAndRefund: ret = new Log (my_log.buy_refund_log())break;
 			default: ret = new Log (my_log.charge_log()); break;
 			}
-			return ret;*/
+            return ret;*/
+std::cout << _logtype << std::endl;
 			switch (_logtype) {
 				case All: return shared_ptr<Log>(new Log(my_log)); break;	
 				case Buy: return my_log.buy_log(); break;

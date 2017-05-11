@@ -54,21 +54,25 @@ namespace sjtu
                     !route[i].is_same_location(start_station)) {
                     continue;
                 }
+                int min_number = 1 << 30;
 //std::cout << route[i].query_location() << " " << train_id << std::endl;
-                for (int j = i + 1; j < route.size(); ++j) {
-                    if (!route[j].is_same_location(finish_station)) {
-                        continue;
-                    }
-//std::cout << route[i].query_location() << " " << route[j].query_location() << " " << train_id << std::endl;
-                    int min_number = 1 << 30;
+                for (int j = i + 1; j < route.size() && min_number >= number; j++) {
                     try {
-                        for (int k = i; k < j; ++k) {
-                            min_number = std::min(min_number, route[i].query_single_number(level));
-                        }
+                        min_number = std::min(min_number, route[j - 1].query_single_number(level));
                     }
                     catch (const Exception &ex) {
                         return ret;
                     }
+                    if (!route[j].is_same_location(finish_station)) {
+                        continue;
+                    }
+//std::cout << route[i].query_location() << " " << route[j].query_location() << " " << train_id << std::endl;
+                    /*int min_number = 1 << 30;
+                    try {
+                        for (int k = i; k < j; ++k) {
+                            min_number = std::min(min_number, route[i].query_single_number(level));
+                        }
+                    }*/
                     if (min_number < number) {
                         continue;
                     }

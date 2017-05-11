@@ -17,11 +17,12 @@ SOURCES += main.cpp\
     login.cpp \
     register.cpp \
     queryticket.cpp \
-    getint.cpp \
     useroperation.cpp \
     getstring.cpp \
     getnewpassword.cpp \
-    plaintable.cpp
+    plaintable.cpp \
+    getint.cpp \
+    tickettable.cpp
 
 HEADERS  += mainwindow.h \
     ../../src/User.hpp \
@@ -40,21 +41,24 @@ HEADERS  += mainwindow.h \
     ../../src/Train.hpp \
     ../../src/Tickets.hpp \
     queryticket.h \
-    getint.h \
     useroperation.h \
     getstring.h \
     getnewpassword.h \
-    plaintable.h
+    plaintable.h \
+    getint.h \
+    ../../src/Log.hpp \
+    tickettable.h
 
 FORMS    += mainwindow.ui \
     login.ui \
     register.ui \
     queryticket.ui \
-    getint.ui \
     useroperation.ui \
     getstring.ui \
     getnewpassword.ui \
-    plaintable.ui
+    plaintable.ui \
+    getint.ui \
+    tickettable.ui
 
 RESOURCES += \
     image.qrc

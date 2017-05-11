@@ -1,5 +1,6 @@
 #include "getint.h"
 #include "ui_getint.h"
+#include <QDebug>
 
 GetInt::GetInt(QWidget *parent) :
     QDialog(parent),
@@ -13,7 +14,7 @@ GetInt::~GetInt()
     delete ui;
 }
 
-inline void GetInt::set_bound(int _bound) {
+void GetInt::set_bound(int _bound) {
     bound = _bound;
 //std::cout << bound << std::endl;
     ui ->request ->setText(tr("请输入数量，上限为") + QString::number(bound));

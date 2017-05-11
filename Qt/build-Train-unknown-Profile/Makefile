@@ -60,11 +60,11 @@ SOURCES       = ../Train/main.cpp \
 		moc_login.cpp \
 		moc_register.cpp \
 		moc_queryticket.cpp \
-		moc_getint.cpp \
 		moc_useroperation.cpp \
 		moc_getstring.cpp \
 		moc_getnewpassword.cpp \
-		moc_plaintable.cpp
+		moc_plaintable.cpp \
+		moc_getint.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		login.o \
@@ -78,11 +78,11 @@ OBJECTS       = main.o \
 		moc_login.o \
 		moc_register.o \
 		moc_queryticket.o \
-		moc_getint.o \
 		moc_useroperation.o \
 		moc_getstring.o \
 		moc_getnewpassword.o \
-		moc_plaintable.o
+		moc_plaintable.o \
+		moc_getint.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -160,11 +160,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../src/Train.hpp \
 		../../src/Tickets.hpp \
 		../Train/queryticket.h \
-		../Train/getint.h \
 		../Train/useroperation.h \
 		../Train/getstring.h \
 		../Train/getnewpassword.h \
-		../Train/plaintable.h ../Train/main.cpp \
+		../Train/plaintable.h \
+		../Train/getint.h \
+		../../src/Log.hpp ../Train/main.cpp \
 		../Train/mainwindow.cpp \
 		../Train/login.cpp \
 		../Train/register.cpp \
@@ -180,7 +181,7 @@ TARGET        = Train
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_login.h ui_register.h ui_queryticket.h ui_getint.h ui_useroperation.h ui_getstring.h ui_getnewpassword.h ui_plaintable.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_login.h ui_register.h ui_queryticket.h ui_useroperation.h ui_getstring.h ui_getnewpassword.h ui_plaintable.h ui_getint.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 	objcopy --only-keep-debug Train Train.debug && objcopy --strip-debug Train && objcopy --add-gnu-debuglink=Train.debug Train && chmod -x Train.debug
 
@@ -330,9 +331,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/image.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents ../Train/mainwindow.h ../../src/User.hpp ../../src/GeneralUser.hpp ../../src/lib/vector.hpp ../../src/lib/set.hpp ../../src/lib/ptr.hpp ../../src/lib/pair.hpp ../../src/lib/map.hpp ../../src/Exceptions.hpp ../../src/Date.hpp ../../src/File.hpp ../../src/Station.hpp ../Train/login.h ../Train/register.h ../../src/Train.hpp ../../src/Tickets.hpp ../Train/queryticket.h ../Train/getint.h ../Train/useroperation.h ../Train/getstring.h ../Train/getnewpassword.h ../Train/plaintable.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/mainwindow.h ../../src/User.hpp ../../src/GeneralUser.hpp ../../src/lib/vector.hpp ../../src/lib/set.hpp ../../src/lib/ptr.hpp ../../src/lib/pair.hpp ../../src/lib/map.hpp ../../src/Exceptions.hpp ../../src/Date.hpp ../../src/File.hpp ../../src/Station.hpp ../Train/login.h ../Train/register.h ../../src/Train.hpp ../../src/Tickets.hpp ../Train/queryticket.h ../Train/useroperation.h ../Train/getstring.h ../Train/getnewpassword.h ../Train/plaintable.h ../Train/getint.h ../../src/Log.hpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Train/main.cpp ../Train/mainwindow.cpp ../Train/login.cpp ../Train/register.cpp ../Train/useroperation.cpp ../Train/getstring.cpp ../Train/getnewpassword.cpp ../Train/plaintable.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Train/mainwindow.ui ../Train/login.ui ../Train/register.ui ../Train/queryticket.ui ../Train/getint.ui ../Train/useroperation.ui ../Train/getstring.ui ../Train/getnewpassword.ui ../Train/plaintable.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Train/mainwindow.ui ../Train/login.ui ../Train/register.ui ../Train/queryticket.ui ../Train/useroperation.ui ../Train/getstring.ui ../Train/getnewpassword.ui ../Train/plaintable.ui ../Train/getint.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -362,9 +363,9 @@ compiler_rcc_clean:
 qrc_image.cpp: ../Train/image.qrc
 	/usr/lib/x86_64-linux-gnu/qt5/bin/rcc -name image ../Train/image.qrc -o qrc_image.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_login.cpp moc_register.cpp moc_queryticket.cpp moc_getint.cpp moc_useroperation.cpp moc_getstring.cpp moc_getnewpassword.cpp moc_plaintable.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_login.cpp moc_register.cpp moc_queryticket.cpp moc_useroperation.cpp moc_getstring.cpp moc_getnewpassword.cpp moc_plaintable.cpp moc_getint.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_login.cpp moc_register.cpp moc_queryticket.cpp moc_getint.cpp moc_useroperation.cpp moc_getstring.cpp moc_getnewpassword.cpp moc_plaintable.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_login.cpp moc_register.cpp moc_queryticket.cpp moc_useroperation.cpp moc_getstring.cpp moc_getnewpassword.cpp moc_plaintable.cpp moc_getint.cpp
 moc_mainwindow.cpp: ../../src/lib/ptr.hpp \
 		../../src/GeneralUser.hpp \
 		../../src/Exceptions.hpp \
@@ -433,9 +434,6 @@ moc_queryticket.cpp: ../../src/User.hpp \
 		../Train/queryticket.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/queryticket.h -o moc_queryticket.cpp
 
-moc_getint.cpp: ../Train/getint.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/getint.h -o moc_getint.cpp
-
 moc_useroperation.cpp: ../../src/User.hpp \
 		../../src/File.hpp \
 		../../src/Exceptions.hpp \
@@ -476,11 +474,14 @@ moc_plaintable.cpp: ../../src/lib/ptr.hpp \
 		../Train/plaintable.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/plaintable.h -o moc_plaintable.cpp
 
+moc_getint.cpp: ../Train/getint.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/pascalprimer/curriculum/Date_Structure/DataStructure/Qt/Train -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/6 -I/usr/include/x86_64-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/x86_64-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Train/getint.h -o moc_getint.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_login.h ui_register.h ui_queryticket.h ui_getint.h ui_useroperation.h ui_getstring.h ui_getnewpassword.h ui_plaintable.h
+compiler_uic_make_all: ui_mainwindow.h ui_login.h ui_register.h ui_queryticket.h ui_useroperation.h ui_getstring.h ui_getnewpassword.h ui_plaintable.h ui_getint.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_login.h ui_register.h ui_queryticket.h ui_getint.h ui_useroperation.h ui_getstring.h ui_getnewpassword.h ui_plaintable.h
+	-$(DEL_FILE) ui_mainwindow.h ui_login.h ui_register.h ui_queryticket.h ui_useroperation.h ui_getstring.h ui_getnewpassword.h ui_plaintable.h ui_getint.h
 ui_mainwindow.h: ../Train/mainwindow.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/mainwindow.ui -o ui_mainwindow.h
 
@@ -493,9 +494,6 @@ ui_register.h: ../Train/register.ui
 ui_queryticket.h: ../Train/queryticket.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/queryticket.ui -o ui_queryticket.h
 
-ui_getint.h: ../Train/getint.ui
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/getint.ui -o ui_getint.h
-
 ui_useroperation.h: ../Train/useroperation.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/useroperation.ui -o ui_useroperation.h
 
@@ -507,6 +505,9 @@ ui_getnewpassword.h: ../Train/getnewpassword.ui
 
 ui_plaintable.h: ../Train/plaintable.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/plaintable.ui -o ui_plaintable.h
+
+ui_getint.h: ../Train/getint.ui
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../Train/getint.ui -o ui_getint.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -638,11 +639,11 @@ plaintable.o: ../Train/plaintable.cpp ../../src/Log.hpp \
 		../../src/File.hpp \
 		../../src/Station.hpp \
 		../../src/lib/pair.hpp \
-		../Train/plaintable.h \
-		../../src/User.hpp \
 		../../src/GeneralUser.hpp \
 		../../src/lib/set.hpp \
 		../../src/lib/map.hpp \
+		../Train/plaintable.h \
+		../../src/User.hpp \
 		ui_plaintable.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plaintable.o ../Train/plaintable.cpp
 
@@ -661,9 +662,6 @@ moc_register.o: moc_register.cpp
 moc_queryticket.o: moc_queryticket.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_queryticket.o moc_queryticket.cpp
 
-moc_getint.o: moc_getint.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_getint.o moc_getint.cpp
-
 moc_useroperation.o: moc_useroperation.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_useroperation.o moc_useroperation.cpp
 
@@ -675,6 +673,9 @@ moc_getnewpassword.o: moc_getnewpassword.cpp
 
 moc_plaintable.o: moc_plaintable.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_plaintable.o moc_plaintable.cpp
+
+moc_getint.o: moc_getint.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_getint.o moc_getint.cpp
 
 ####### Install
 

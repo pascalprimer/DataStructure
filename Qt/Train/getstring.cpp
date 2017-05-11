@@ -13,7 +13,7 @@ GetString::~GetString()
     delete ui;
 }
 
-inline void GetString::give_information(const string &obj) {
+void GetString::give_information(const string &obj) {
     ui -> label -> setText("请输入" + QString::fromStdString(obj));
 }
 
@@ -25,6 +25,8 @@ void GetString::on_quitBtn_clicked()
 void GetString::on_enterBtn_clicked()
 {
     send_string(ui -> stringEdit -> text().toStdString());
+
+    //emit queried(ui -> stringEdit -> text().toStdString());
     //send_int(ui -> numEdit -> text().toInt());
     close();
 }
