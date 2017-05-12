@@ -19,9 +19,9 @@ public:
     explicit UserOperation(QWidget *parent = 0);
     ~UserOperation();
     void set_user(sjtu::shared_ptr<User> _user);
-    inline void set_number_with_user(int number);
-    inline void set_string(const string &_s1, const string &_s2, const string &_s3);
-    inline void set_single_string(const string &_s1);
+    void set_number_with_user(int number);
+    void set_string(const string &_s1, const string &_s2, const string &_s3);
+    void set_single_string(const string &_s1);
 private slots:
     void on_chargeButton_clicked();
 

@@ -16,7 +16,7 @@ namespace sjtu {
 		struct Node {
 			double price;
 			string level;
-			int left_n;
+            int left_n;
 			Node(double _price, const string &_level, int _left_n): 
 				price(_price), level(_level), left_n(_left_n) {
 			}
@@ -46,6 +46,15 @@ namespace sjtu {
         Station(const Station &obj): location(obj.location), arrival_time(obj.arrival_time),
             departure_time(obj.departure_time), types(obj.types), dist(obj.dist) {
         }
+        
+        inline bool check_empty() {
+            for (int i = 0; i < (int)types.size(); ++i) {
+        		if (types[i].left_n < MAXN) {
+        			return false;
+        		}
+        	}
+        	return true;
+        }
 		
 		const string query_location() const {
 			return location;
@@ -60,7 +69,7 @@ namespace sjtu {
 		}
 		
 		const int query_single_number(const string &request) const {
-			for (int i = 0; i < types.size(); ++i) {
+            for (int i = 0; i < (int)types.size(); ++i) {
 				if (types[i].level == request) {
 					return types[i].left_n;
 				}
@@ -69,7 +78,7 @@ namespace sjtu {
 		}
 		
 		const double query_single_price(const string &request) const {
-			for (int i = 0; i < types.size(); ++i) {
+            for (int i = 0; i < (int)types.size(); ++i) {
 				if (types[i].level == request) {
 					return types[i].price;
 				}
@@ -95,7 +104,7 @@ namespace sjtu {
 		}
 		
 		const bool is_same_location(const string &another) const {
-			for (int i = 0; i < 6 && i < location.size() && i < another.size(); ++i) {
+            for (int i = 0; i < 6 && i < (int)location.size() && i < another.size(); ++i) {
 				if (another[i] != location[i]) {
 					return false;
 				}
@@ -104,7 +113,7 @@ namespace sjtu {
 		}
 		
 		const bool modify_number(const string &request, int delta) {
-			for (int i = 0; i < types.size(); ++i) {
+            for (int i = 0; i < (int)types.size(); ++i) {
 				if (types[i].level == request) {
 					if (types[i].left_n + delta < 0)
 					{

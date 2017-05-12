@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "fromfile.h"
 #include "ui_mainwindow.h"
 #include "login.h"
 #include "register.h"
@@ -7,6 +8,7 @@
 #include "getint.h"
 #include "getint.cpp"
 #include "useroperation.h"
+#include "adminoperation.h"
 #include <QDateTimeEdit>
 #include <QStandardItem>
 #include <QStandardItemModel>
@@ -30,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui -> setupUi(this);
     setWindowTitle("羊羊火车票");
-    setWindowIcon(QIcon(":images/pictures/班徽.png"));
+   // setWindowIcon(QIcon(":images/pictures/班徽.png"));
     /*QDateTime time = QDateTime::currentDateTime();
     QString str = time.toString("yyyy-MM-dd hh:mm:ss ddd");
     ui -> label -> setText(str);
@@ -65,7 +67,7 @@ vector<string> get_all_level(string &obj) {
     ret.clear();
     obj = obj + ',';
     string s = "";
-    for (int i = 0; i < obj.size(); ++i) {
+    for (int i = 0; i < (int)obj.size(); ++i) {
         if (obj[i] == ',') {
             ret.push_back(s);
             s = "";
@@ -115,7 +117,7 @@ void MainWindow::list_tickets(const string &train_id, const string &start_lo, co
          model->item(i,0)->setTextAlignment(Qt::AlignCenter);
          model->setItem(i,1,new QStandardItem(QString::fromLocal8Bit("哈哈")));
     }*/
-    for (int i = 0; i < ticket -> size(); ++i) {
+    for (int i = 0; i < (int)ticket -> size(); ++i) {
         model -> setItem(i, 0, new QStandardItem(QString::fromStdString((*ticket)[i].query_id())));
         model -> setItem(i, 1, new QStandardItem(QString::fromStdString((*ticket)[i].query_train_date().print())));
         model -> setItem(i, 2, new QStandardItem(QString::fromStdString((*ticket)[i].query_departure_date().print())));
@@ -200,9 +202,12 @@ void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
         string start_station = model -> item(index.row(), 3) -> text().toStdString();
         string finish_station = model -> item(index.row(), 4) -> text().toStdString();
         string level = model -> item(index.row(), 5) -> text().toStdString();
+        int num = model -> item(index.row(), 6) ->text().toInt();
         try {
             user -> buy_ticket(train_id, train_date, start_station, finish_station, level, number_with_user);
             QMessageBox::information(nullptr, "Notice", "购票成功！");
+
+            model -> setItem(index.row(), 6, new QStandardItem(QString::number(num - number_with_user)));
         }
         catch (const Exception &exc) {
             QMessageBox::information(nullptr, "Notice", QString::fromStdString(exc.detail));
@@ -218,4 +223,35 @@ void MainWindow::on_userButton_clicked()
     if (user -> check_login()) {
         ui -> now_user -> setText(QString::fromStdString(user -> query_now_id()));
     }
+}
+
+void MainWindow::on_adminButton_clicked()
+{
+    AdminOperation oper;
+    oper.set_user(user);
+    oper.exec();
+}
+
+#include "QFileDialog"
+
+void MainWindow::on_action_triggered()
+{
+    QFileDialog w;
+    w.setAcceptMode(QFileDialog::AcceptOpen);   //AcceptOpen打开,AcceptSave保存文件
+    w.setFileMode(QFileDialog::ExistingFiles);
+    w.setOption(QFileDialog::ReadOnly, true);
+
+    w.setWindowTitle(QString("Include train"));
+    w.setDirectory(QString("./"));
+    w.setNameFilter(QString("所有文件(*.*)"));
+
+    try {
+        sjtu::FromFile::get_train_from_file(user, w.getOpenFileName().toStdString(), User::CheckExist::Must);
+        QMessageBox::information(nullptr, "Notice", "添加车次成功");
+    }
+    catch (const Exception &exc) {
+        QMessageBox::information(nullptr, "Notice", QString::fromStdString(exc.detail));
+    }
+    //sjtu::FromFile::get_train_from_file(user, "../origin_train", User::CheckExist::Opt);
+    std::cout << "load train ok" << std::endl;
 }

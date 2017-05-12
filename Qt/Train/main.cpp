@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <iostream>
 #include <string>
+#include "fromfile.h"
 #include "../../src/Exceptions.hpp"
 #include "../../src/Station.hpp"
 #include "../../src/Train.hpp"
@@ -14,7 +15,7 @@
 using namespace sjtu;
 using std::string;
 
-string get_str(const string &str, int &i) {
+/*string get_str(const string &str, int &i) {
     string ret = "";
     for (; str[i] != ','; ++i) {
         ret += str[i];
@@ -75,7 +76,7 @@ void get_train(shared_ptr<User> user, const string &file_name) {
     while (file >> str, str != "endl") {
         if (str.size() < 20) {
             if (id != "") {
-                Train temp(false, route, id, route[0].query_departure_time());
+                Train temp(true, route, id, route[0].query_departure_time());
                 try {
                     user -> add_daily_route(temp, route[0].query_departure_time());
                 }
@@ -129,7 +130,7 @@ void get_train(shared_ptr<User> user, const string &file_name) {
         route.push_back(Station(loca, time1, time2, level, price, dist));
     }
 
-    Train temp(false, route, id, route[0].query_departure_time());
+    Train temp(true, route, id, route[0].query_departure_time());
     //temp.search();
     try {
         user -> add_daily_route(temp, route[0].query_departure_time());
@@ -138,26 +139,19 @@ void get_train(shared_ptr<User> user, const string &file_name) {
         std::cout << "error: " << exc.detail << std::endl;
        // return 0;
     }
-}
+}*/
+
+
 
 int main(int argc, char *argv[])
 {
     shared_ptr<User> user(new User());
+    std::cout << "build ok" << std::endl;
     user -> login(user -> create_admin("pascalprimer", "123456789", "123456789", "lmxyy"), "123456789");
-    get_train(user, "../train_small");
+    std::cout << "admin ok" << std::endl;
     user -> logout();
     user -> create_user("cyy", "111111111", "111111111");
     user -> login(string("1"), string("111111111"));
-    user -> charge(21312.22);
-    //vector<string> temp;
-    //temp.push_back(string("一等座"));
-    //std::cout << "-------------waterloo--------------" << std::endl;
-   // user -> query_ticket(string("2016-03-03,07:25"), string("2018-03-03,03:03"), string("北京"), string("唐山"), temp, 123);
-   // return 0;
-    //return a.exec();
-
-    //user.login("0", "pascalprimer");
-    //std::cout << user.check_login() << std::endl;
     QApplication a(argc, argv);
     MainWindow w;
     w.set_user(user);

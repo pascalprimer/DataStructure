@@ -56,7 +56,7 @@ void PlainTable::output_log(const string &user_id, const GeneralUser::LogType &t
         border-top:0;\
                                                     }");
     try {
-        shared_ptr<Log> log = user -> query_log(user_id, type);
+        shared_ptr<Log> log = (user_id == "系统日志") ? user -> get_local_log() : user -> query_log(user_id, type);
         int size = log->size();
         for (int i = 0; i < size; ++i) {
             model -> setItem(i, 0, new QStandardItem(QString::fromStdString((*log)[i])));
@@ -68,6 +68,17 @@ void PlainTable::output_log(const string &user_id, const GeneralUser::LogType &t
         QMessageBox::information(nullptr, "Warning", QString::fromStdString(exc.detail));
         return;
     }
+    /*for (int i = 0; i < ticket -> size(); ++i) {
+        model -> setItem(i, 0, new QStandardItem(QString::fromStdString((*ticket)[i].query_id())));
+        model -> setItem(i, 1, new QStandardItem(QString::fromStdString((*ticket)[i].query_train_date().print())));
+        model -> setItem(i, 2, new QStandardItem(QString::fromStdString((*ticket)[i].query_departure_date().print())));
+        model -> setItem(i, 3, new QStandardItem(QString::fromStdString((*ticket)[i].query_start_station())));
+        model -> setItem(i, 4, new QStandardItem(QString::fromStdString((*ticket)[i].query_finish_station())));
+        model -> setItem(i, 5, new QStandardItem(QString::fromStdString((*ticket)[i].query_level())));
+        model -> setItem(i, 6, new QStandardItem(QString::number((*ticket)[i].query_number())));
+        model -> setItem(i, 7, new QStandardItem(QString::number((*ticket)[i].query_price())));
+        //model -> setItem(i, 7, new QStandardItem(*ticket)[i]);
+    }*/
 }
 
 void PlainTable::on_quitButton_clicked()
@@ -78,6 +89,10 @@ void PlainTable::on_quitButton_clicked()
 void PlainTable::on_enterButton_clicked()
 {
     string str = ui -> userEdit ->text().toStdString();
+    if (str == "系统日志") {
+        output_log(str, GeneralUser::LogType::All);
+        return;
+    }
     if (ui -> radioButton -> isChecked()) {
         output_log(str, GeneralUser::LogType::All);
         return;

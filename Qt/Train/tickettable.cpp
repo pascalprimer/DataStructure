@@ -1,5 +1,6 @@
 #include "tickettable.h"
 #include "ui_tickettable.h"
+#include "getint.h"
 #include "../../src/Log.hpp"
 #include "../../src/GeneralUser.hpp"
 #include "../../src/lib/ptr.hpp"
@@ -27,7 +28,7 @@ void TicketTable::set_user(shared_ptr<User> _user) {
 void TicketTable::output_ticket(const string &user_id) {
     try {
         shared_ptr<vector<Tickets> > ticket = user -> query_my_tickets(user_id);
-        QStandardItemModel *model = new QStandardItemModel();
+        model = new QStandardItemModel();
         model -> setColumnCount(8);
         model -> setHeaderData(0, Qt::Horizontal, tr("车次"));
         model -> setHeaderData(1, Qt::Horizontal, tr("发车时间"));
@@ -78,4 +79,47 @@ void TicketTable::on_enterButton_clicked()
 {
     string str = ui -> userEdit ->text().toStdString();
     output_ticket(str);
+}
+
+void TicketTable::refund_tickets_from_list(int number) {
+    number_with_user = number;
+}
+
+void TicketTable::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    QMessageBox box;
+    box.setWindowTitle("Notice");
+    box.setIcon(QMessageBox::Warning);
+    box.setText(tr("确定要退该种该票吗，大哥？"));
+    box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    if (box.exec() == QMessageBox::No) {
+        QMessageBox::information(nullptr, "Notice", "老哥，还是这么稳啊！");
+    } else {
+        GetInt get_int;
+        int bound = (model -> item(index.row(), 7) -> text()).toInt();
+        get_int.set_bound(bound);
+        QDialog::connect(&get_int, &GetInt::queried, this, &TicketTable::refund_tickets_from_list);
+        get_int.exec();
+        if (number_with_user < 0) {
+            QMessageBox::information(nullptr, "Warning", "竟敢买负数，你肯定是疯了！！！");
+            return;
+        }
+        if (number_with_user == 0) {
+            return;
+        }
+        string train_id = model -> item(index.row(), 0) -> text().toStdString();
+        Date train_date = Date(model -> item(index.row(), 1) -> text().toStdString());
+        string start_station = model -> item(index.row(), 2) -> text().toStdString();
+        string finish_station = model -> item(index.row(), 3) -> text().toStdString();
+        string level = model -> item(index.row(), 5) -> text().toStdString();
+        try {
+            user -> refund_ticket(train_id, train_date, start_station, finish_station, level, number_with_user);
+            int i = index.row();
+            model -> setItem(i, 7, new QStandardItem(QString::number(bound - number_with_user)));
+            QMessageBox::information(nullptr, "Notice", "退票成功！");
+        }
+        catch (const Exception &exc) {
+            QMessageBox::information(nullptr, "Warning", QString::fromStdString(exc.detail));
+        }
+    }
 }

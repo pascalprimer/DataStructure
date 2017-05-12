@@ -40,6 +40,10 @@ private slots:
 
     void on_userButton_clicked();
 
+    void on_adminButton_clicked();
+
+    void on_action_triggered();
+
 private:
     shared_ptr<User> user;
     Ui::MainWindow *ui;

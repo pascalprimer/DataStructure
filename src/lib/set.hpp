@@ -301,6 +301,7 @@ public:
 //std::cerr << "up" << std::endl;
 //cout << "up" << endl;
 		}
+        return out;
 	}
 	
 	friend BinaryOutput &operator << (BinaryOutput &out, const set &obj) {

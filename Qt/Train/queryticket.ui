@@ -85,7 +85,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>北京</string>
+    <string>利川</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -111,7 +111,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>唐山</string>
+    <string>黄冈</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -173,7 +173,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>一等座</string>
+    <string>二等座,一等座,无座</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">

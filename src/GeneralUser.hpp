@@ -131,16 +131,23 @@ namespace sjtu
 			auto it = my_ticket.find(new_tickets);
 			try
 			{
-				if (it != my_ticket.end()&&it->query_number() >= num)
+                if (it != my_ticket.end()&&it->query_number() >= num) {
+//std::cout << "number ok" << std::endl;
 					if ((obj->second).refund_ticket(start_station,finish_station,level,num,money))
 					{
+//std::cout << "train refund ok " << std::endl;
 						new_tickets.set_price(it->query_price());
 						my_log.refund_tickets(Date::current_time(),new_tickets);
 						if (it->query_number() > num) it -> modify_number(-num);
 						else my_ticket.erase(it);
-					}
+                    }
+                } else {
+                    throw Exception("您的票数不够或没有这种票，无法退票。");
+                }
+                return true;
 			}
 			catch (const Exception &ex) { throw ex; }
+//std::cout << "error" << std::endl;
 			throw Exception("您的票数不够，无法退票。");
 			return false;
 		}
@@ -177,7 +184,7 @@ namespace sjtu
 			default: ret = new Log (my_log.charge_log()); break;
 			}
             return ret;*/
-std::cout << _logtype << std::endl;
+//std::cout << _logtype << std::endl;
 			switch (_logtype) {
 				case All: return shared_ptr<Log>(new Log(my_log)); break;	
 				case Buy: return my_log.buy_log(); break;

@@ -298,7 +298,7 @@ public:
 		cap = other.capacity();
 		sz = other.size();
 		vec = reinterpret_cast<T*> (operator new (sizeof(T) * cap));
-		for (int i = 0; i < sz; ++i) {
+        for (int i = 0; i < (int)sz; ++i) {
 			new (static_cast<void*> (&vec[i])) T(other[i]);
 		}
 	}
@@ -315,8 +315,8 @@ public:
 	 * TODO Destructor
 	 */
 	~vector() {
-		int n = sz;
-		for (int i = 0; i < sz; ++i) {
+        int n = (int)sz;
+        for (int i = 0; i < (int)sz; ++i) {
 			vec[i].~T(); 
 		} 
 		operator delete (vec);
@@ -325,14 +325,14 @@ public:
 	 * TODO Assignment operator
 	 */
 	vector &operator=(const vector &other) {
-		for (int i = 0; i < sz; ++i) {
+        for (int i = 0; i < (int)sz; ++i) {
 			vec[i].~T();
 		}
 		operator delete(vec);
 		cap = other.capacity();
 		sz = other.size();
 		vec = reinterpret_cast<T*> (operator new (sizeof(T) * (other.capacity())));
-		for (int i = 0; i < other.size(); ++i) {
+        for (int i = 0; i < (int)other.size(); ++i) {
 			new (static_cast<void*> (&vec[i])) T(other[i]);
 		}
 		
@@ -424,7 +424,7 @@ public:
 	 * clears the contents
 	 */
 	void clear() {
-		for (int i = 0; i < sz; ++i) {
+        for (int i = 0; i < (int)sz; ++i) {
 			vec[i].~T();
 		}
 		operator delete(vec);

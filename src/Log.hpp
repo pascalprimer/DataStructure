@@ -45,12 +45,12 @@ namespace sjtu {
 			}
 			inline bool check_type(int i, const string &str) {
                 int j = get_pos(information[i]) + 2;
-				if ((int)information[i].size() < j + str.size() - 1) {
+                if ((int)information[i].size() < j + (int)str.size() - 1) {
                     //std::cout << "length short" << std::endl;
 					return false;
 				}
-				bool flag = true;
-				for (int k = 0; k < str.size(); ++k) {
+//				bool flag = true;
+                for (int k = 0; k < (int)str.size(); ++k) {
 					if (str[k] != information[i][k + j]) {
 						return false;
 					}
@@ -65,7 +65,7 @@ namespace sjtu {
 				return information.size();
 			}
             inline string &operator [](int index) {
-                if (index < 0 || index >= information.size()) {
+                if (index < 0 || index >= (int)information.size()) {
                     throw Exception("Log下标越界");
                 }
 				return information[index];
@@ -75,7 +75,7 @@ namespace sjtu {
 				string str("购买");
 				shared_ptr<Log> ret(new Log());
 				for (int i = 0;i < sz; ++i) {
-                    std::cout << information[i] << " " << check_type(i, str) << " " << std::endl;
+                    //std::cout << information[i] << " " << check_type(i, str) << " " << std::endl;
                     if (check_type(i, str)) {
 						ret -> add_information(information[i]);
                     }
@@ -99,7 +99,7 @@ namespace sjtu {
 				string str2("退购");
 				shared_ptr<Log> ret(new Log());
 				for (int i = 0;i < sz; ++i) {
-					if (check_type(i, str1) && check_type(i, str2)) {
+                    if (check_type(i, str1) || check_type(i, str2)) {
 						ret -> add_information(information[i]);
 					}
 				}
@@ -137,11 +137,11 @@ namespace sjtu {
 								+ string(" 到 ") + new_tickets.query_finish_station()
 								+ string(" 的") + std::to_string(new_tickets.query_number())
 								+ string("张") + new_tickets.query_level() + string("票")
-                                + string("，共计") + double_to_string(new_tickets.query_price())
+                                + string("，共计") + double_to_string(new_tickets.query_price() * new_tickets.query_number())
 								+ string("元");
-				information.push_back(str);
+                information.push_back(str);
 			}
-			void refund_tickets(const Date &now, const Tickets &new_tickets) {
+            void refund_tickets(const Date &now, const Tickets &new_tickets) {
 				string str = now.print() + ": " + string("退购 ")
                                                                 + string("时间为 ") + new_tickets.query_departure_date().print()
 								+ string(" 车次为 ") + new_tickets.query_id()
@@ -149,7 +149,7 @@ namespace sjtu {
 								+ string(" 到 ") + new_tickets.query_finish_station()
 								+ string(" 的") + std::to_string(new_tickets.query_number())
 								+ string("张") + new_tickets.query_level() + string("票")
-                                + string("，共计") + double_to_string(new_tickets.query_price())
+                                + string("，共计") + double_to_string(new_tickets.query_price() * new_tickets.query_number())
 								+ string("元"); 
 				information.push_back(str);
 			}

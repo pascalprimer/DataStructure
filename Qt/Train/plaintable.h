@@ -5,6 +5,7 @@
 #include <QButtonGroup>
 #include <QRadioButton>
 #include <QHBoxLayout>
+#include <QStandardItemModel>
 #include "../../src/lib/ptr.hpp"
 #include "../../src/User.hpp"
 #include "../../src/GeneralUser.hpp"

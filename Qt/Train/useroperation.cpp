@@ -29,63 +29,8 @@ UserOperation::~UserOperation()
 {
     delete ui;
 }
-/*
 
-void Login::on_loginBtn_clicked()
-{
-    string user_id = (ui -> usrLineEdit -> text()).toStdString();
-    string user_pwd = (ui -> pwdLineEdit -> text()).toStdString();
-    try {
-        user -> login(user_id, user_pwd);
-    }
-    catch (const sjtu::Exception &exp) {
-        QMessageBox::information(nullptr, "Warning", QString::fromStdString(exp.detail));
-        return;
-    }
-    QMessageBox::information(nullptr, "Notice", "登录成功");
-}
-
-void Login::on_logoutBtn_clicked()
-{
-    close();
-}*/
-
-/*void Register::on_quitBtn_clicked()
-{
-    close();
-}
-
-void Register::on_registerBtn_clicked()
-{
-    string user_name = (ui -> usrLineEdit -> text()).toStdString();
-    string user_pwd = (ui -> pwdLineEdit -> text()).toStdString();
-    string user_pwd2 = (ui -> pwd2LineEdit -> text()).toStdString();
-    string code = (ui -> codeLineEdit -> text()).toStdString();
-    string user_id;
-    if (ui -> checkBox -> isChecked()) {
-        try {
-            user_id = user -> create_admin(user_name, user_pwd, user_pwd2, code);
-        }
-        catch (const sjtu::Exception &exp) {
-            QMessageBox::information(nullptr, "Warning", QString::fromStdString(exp.detail));
-            return;
-        }
-        //QMessageBox::information(nullptr, "Notice", "管理员注册");
-
-    } else {
-        try {
-            user_id = user -> create_user(user_name, user_pwd, user_pwd2);
-        }
-        catch (const sjtu::Exception &exp) {
-            QMessageBox::information(nullptr, "Warning", QString::fromStdString(exp.detail));
-            return;
-        }
-       // QMessageBox::information(nullptr, "Notice", "普通用户注册");
-    }
-    QMessageBox::information(nullptr, "Notice", QString::fromStdString("注册成功！\n ID为" + user_id));
-}*/
-
-inline void UserOperation::set_number_with_user(int number)  {
+void UserOperation::set_number_with_user(int number)  {
 //std::cout << "充值 " << number << std::endl;
     number_with_user = number;
 }
@@ -120,7 +65,7 @@ void UserOperation::on_chargeButton_clicked()
     }
 }
 
-inline void UserOperation::set_string(const string &_s1, const string &_s2, const string &_s3) {
+void UserOperation::set_string(const string &_s1, const string &_s2, const string &_s3) {
     s1 = _s1;
     s2 = _s2;
     s3 = _s3;
@@ -170,6 +115,9 @@ void UserOperation::on_nameButton_clicked()
 
 void UserOperation::on_codeButton_clicked()
 {
+    QMessageBox::information(nullptr, "Warning", "逗你玩儿呢！去管理员菜单找找吧！");
+    return;
+
     GetString getstring;
     s1 = "";
     getstring.give_information("新的公司验证码");
@@ -180,8 +128,8 @@ void UserOperation::on_codeButton_clicked()
             return;
         }
         user -> set_identifying_code(user -> query_identifying_code(), s1);
-        QMessageBox::information(nullptr, "Notice", "成功修改用户名为" +
-                                 QString::fromStdString(user -> query_name()));
+        QMessageBox::information(nullptr, "Notice", "成功修改公司验证码为" +
+                                 QString::fromStdString(s1));
     }
     catch (const Exception &exc) {
         QMessageBox::information(nullptr, "Warning", QString::fromStdString(exc.detail));

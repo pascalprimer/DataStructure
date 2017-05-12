@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     getnewpassword.cpp \
     plaintable.cpp \
     getint.cpp \
-    tickettable.cpp
+    tickettable.cpp \
+    adminoperation.cpp \
+    gettraininfo.cpp
 
 HEADERS  += mainwindow.h \
     ../../src/User.hpp \
@@ -47,7 +49,10 @@ HEADERS  += mainwindow.h \
     plaintable.h \
     getint.h \
     ../../src/Log.hpp \
-    tickettable.h
+    tickettable.h \
+    adminoperation.h \
+    gettraininfo.h \
+    fromfile.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -58,7 +63,11 @@ FORMS    += mainwindow.ui \
     getnewpassword.ui \
     plaintable.ui \
     getint.ui \
-    tickettable.ui
+    tickettable.ui \
+    adminoperation.ui \
+    gettraininfo.ui
 
 RESOURCES += \
     image.qrc
+
+DISTFILES +=
